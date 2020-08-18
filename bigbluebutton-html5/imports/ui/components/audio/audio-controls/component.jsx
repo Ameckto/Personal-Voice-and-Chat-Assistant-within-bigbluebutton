@@ -119,6 +119,29 @@ class AudioControls extends PureComponent {
           accessKey={inAudio ? shortcuts.leaveaudio : shortcuts.joinaudio}
         />
       </span>
+
+      <span className={styles.container}>
+        {muted ? <MutedAlert {...{ inputStream, isViewer, isPresenter }} /> : null}
+        {showMute && isVoiceUser ? toggleMuteBtn : null}
+        <Button
+          className={cx(inAudio || styles.btn)}
+          onClick={inAudio ? handleLeaveAudio : handleJoinAudio}
+          disabled={disable}
+          hideLabel
+          aria-label={inAudio ? intl.formatMessage(intlMessages.leaveAudio)
+            : intl.formatMessage(intlMessages.joinAudio)}
+          label={inAudio ? intl.formatMessage(intlMessages.leaveAudio)
+            : intl.formatMessage(intlMessages.joinAudio)}
+          color={inAudio ? 'primary' : 'default'}
+          ghost={!inAudio}
+          icon={joinIcon}
+          size="lg"
+          circle
+          accessKey={inAudio ? shortcuts.leaveaudio : shortcuts.joinaudio}
+        />
+      </span>
+
+      
     );
   }
 }
