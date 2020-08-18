@@ -53,6 +53,7 @@ class AudioControls extends PureComponent {
 
   render() {
     const {
+      muteUser,
       handleToggleMuteMicrophone,
       handleJoinAudio,
       handleLeaveAudio,
