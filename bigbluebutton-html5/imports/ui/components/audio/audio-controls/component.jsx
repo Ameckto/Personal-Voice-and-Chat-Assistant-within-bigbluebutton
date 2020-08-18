@@ -7,7 +7,7 @@ import getFromUserSettings from '/imports/ui/services/users-settings';
 import withShortcutHelper from '/imports/ui/components/shortcut-help/service';
 import MutedAlert from '/imports/ui/components/muted-alert/component';
 import { styles } from './styles';
-import muteUser from 'imports/api/voice-assistant/methods';
+import muteUser from '/imports/api/voice-assistant/methods';
 
 const intlMessages = defineMessages({
   joinAudio: {
