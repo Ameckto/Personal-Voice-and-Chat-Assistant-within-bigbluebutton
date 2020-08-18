@@ -122,6 +122,9 @@ class AudioControls extends PureComponent {
 
         <Button
         onClick={muteUser}
+        label={'muteUser'}
+        icon={joinIcon}
+        size="lg"
         />
 
       </span>
