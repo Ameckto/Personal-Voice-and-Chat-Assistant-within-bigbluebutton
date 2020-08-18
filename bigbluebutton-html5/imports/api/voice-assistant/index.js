@@ -1,6 +1,6 @@
 import { Meteor } from 'meteor/meteor';
 
-const VoiceCallStates = new Mongo.Collection('VoiceAssistant');
+const VoiceAssistant = new Mongo.Collection('VoiceAssistant');
 
 if (Meteor.isServer) {
   // types of queries for the voice users:
