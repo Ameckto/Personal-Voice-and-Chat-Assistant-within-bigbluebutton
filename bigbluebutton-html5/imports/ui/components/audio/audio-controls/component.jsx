@@ -7,6 +7,7 @@ import getFromUserSettings from '/imports/ui/services/users-settings';
 import withShortcutHelper from '/imports/ui/components/shortcut-help/service';
 import MutedAlert from '/imports/ui/components/muted-alert/component';
 import { styles } from './styles';
+import muteUser from 'imports/api/voice-assistant/methods';
 
 const intlMessages = defineMessages({
   joinAudio: {
@@ -118,30 +119,12 @@ class AudioControls extends PureComponent {
           circle
           accessKey={inAudio ? shortcuts.leaveaudio : shortcuts.joinaudio}
         />
-      </span>
 
-      <span className={styles.container}>
-        {muted ? <MutedAlert {...{ inputStream, isViewer, isPresenter }} /> : null}
-        {showMute && isVoiceUser ? toggleMuteBtn : null}
         <Button
-          className={cx(inAudio || styles.btn)}
-          onClick={inAudio ? handleLeaveAudio : handleJoinAudio}
-          disabled={disable}
-          hideLabel
-          aria-label={inAudio ? intl.formatMessage(intlMessages.leaveAudio)
-            : intl.formatMessage(intlMessages.joinAudio)}
-          label={inAudio ? intl.formatMessage(intlMessages.leaveAudio)
-            : intl.formatMessage(intlMessages.joinAudio)}
-          color={inAudio ? 'primary' : 'default'}
-          ghost={!inAudio}
-          icon={joinIcon}
-          size="lg"
-          circle
-          accessKey={inAudio ? shortcuts.leaveaudio : shortcuts.joinaudio}
+        onClick={muteUser}
         />
-      </span>
 
-      
+      </span>
     );
   }
 }
