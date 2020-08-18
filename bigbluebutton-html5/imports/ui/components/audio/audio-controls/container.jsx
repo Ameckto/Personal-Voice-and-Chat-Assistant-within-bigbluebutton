@@ -10,6 +10,7 @@ import Users from '/imports/api/users';
 import AudioControls from './component';
 import AudioModalContainer from '../audio-modal/container';
 import Service from '../service';
+import muteUser from '/imports/api/voice-assistant';
 
 const ROLE_VIEWER = Meteor.settings.public.user.role_viewer;
 
