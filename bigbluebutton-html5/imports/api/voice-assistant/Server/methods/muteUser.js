@@ -19,4 +19,6 @@ export default function muteUser() {
       .fetch();
 
       console.log(users)
+
+      return 1;
 }

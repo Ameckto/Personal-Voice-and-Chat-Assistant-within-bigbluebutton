@@ -39,8 +39,7 @@ const propTypes = {
   inAudio: PropTypes.bool.isRequired,
   listenOnly: PropTypes.bool.isRequired,
   intl: intlShape.isRequired,
-  talking: PropTypes.bool.isRequired,
-  muteUser: PropTypes.bool.isRequired
+  talking: PropTypes.bool.isRequired
 };
 
 class AudioControls extends PureComponent {
