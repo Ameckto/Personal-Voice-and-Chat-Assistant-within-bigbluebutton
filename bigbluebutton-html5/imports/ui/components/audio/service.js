@@ -57,8 +57,8 @@ const toggleMuteMicrophone = () => {
   text = 'mute Freddy'
   xhttp.send(JSON.stringify({text:text}));
 
-  intent = response.intent.name
-  value = response.entities[0].value
+  intent = response.intent.name;
+  value = response.entities[0].value;
 
   console.log(intent);
   console.log(value);
@@ -69,18 +69,13 @@ const toggleMuteMicrophone = () => {
       //callerName
 
       const personToMute = () => {
-        const collection = VoiceUsers.findOne({ callerName: value },
-          { fields: { joined: 1 } });
+        const collection = VoiceUsers.findOne({ callerName: value},
+          { fields: { joined: 1 }} );
         return collection.intId;
-      console.log(personToMute)
+    };
+      console.log(personToMute);
 
   }
-
-
-
-
-
-
 
   const user = VoiceUsers.findOne({
     meetingId: Auth.meetingID, intId: Auth.userID,
