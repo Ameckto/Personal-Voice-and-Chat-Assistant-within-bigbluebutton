@@ -13,10 +13,8 @@ VoiceUsers.allow({
     update(userId, doc, fields, modifier) {
       // Can only change your own documents.
       return doc.owner === userId;
-  },
-    },
+  }
 });
-
 
 
 const ROLE_MODERATOR = Meteor.settings.public.user.role_moderator;
