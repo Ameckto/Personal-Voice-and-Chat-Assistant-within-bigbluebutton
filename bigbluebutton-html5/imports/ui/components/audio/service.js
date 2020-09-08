@@ -41,6 +41,7 @@ const isVoiceUser = () => {
   return voiceUser ? voiceUser.joined : false;
 };
 const toggleMuteMicrophone = () => {
+  console.log('in toggle --------------------------------------')
   const user = VoiceUsers.findOne({
     meetingId: Auth.meetingID, intId: Auth.userID,
   }, { fields: { muted: 1 } });
