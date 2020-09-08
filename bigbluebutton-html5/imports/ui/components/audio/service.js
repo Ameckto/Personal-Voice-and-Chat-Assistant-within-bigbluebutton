@@ -68,6 +68,9 @@ const toggleMuteMicrophone = () => {
 
       intent = JSON.parse(xhttp.response).intent.name;
       value = JSON.parse(xhttp.response).entities[0].value;
+
+      value = JSON.parse(xhttp.response).entities[0].value;
+
       console.log(intent);
       console.log(value);
       run_command(intent, value);
@@ -77,7 +80,7 @@ const toggleMuteMicrophone = () => {
   xhttp.open("POST", "https://8e67f8936f37.ngrok.io/model/parse");
   xhttp.setRequestHeader("Content-Type", "application/json");
 
-  test = 'Mute Freddy'
+  test = 'mute Freddy'
   //replace Hello with input message
   xhttp.send(JSON.stringify({text:test}));
 
