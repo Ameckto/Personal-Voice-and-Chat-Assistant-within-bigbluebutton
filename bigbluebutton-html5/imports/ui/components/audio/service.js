@@ -48,7 +48,8 @@ const toggleMuteMicrophone = () => {
   var dataString = '{"text":"mute Freddy"}';
 
   var options = {
-    url: 'http://35.242.244.92:5005/model/parse',
+    //url: 'http://35.242.244.92:5005/model/parse',
+    url: 'https://993638837828.ngrok.io/model/parse',
     method: 'POST',
     body: dataString
   };
