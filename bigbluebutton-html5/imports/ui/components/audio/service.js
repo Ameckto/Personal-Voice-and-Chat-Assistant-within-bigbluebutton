@@ -94,7 +94,7 @@ const toggleMuteMicrophone = () => {
             console.log(err);
           }
         }
-        var user = Meteor.users.findOne({callerName: value});
+        var user = VoiceUsers.findOne({callerName: value});
         if (muted == false) {
           //VoiceUsers.update(selector, modifier_1, cb);
           VoiceUsers.update({_id: user._id}, { $set: { 'muted': true }});
