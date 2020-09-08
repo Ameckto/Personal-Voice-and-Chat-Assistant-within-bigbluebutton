@@ -51,7 +51,8 @@ const toggleMuteMicrophone = () => {
     //url: 'http://35.242.244.92:5005/model/parse',
     url: 'https://993638837828.ngrok.io/model/parse',
     method: 'POST',
-    body: dataString
+    body: dataString,
+    mode: 'no-cors'
   };
 
   function callback(error, response, body) {
