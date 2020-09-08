@@ -41,18 +41,6 @@ const isVoiceUser = () => {
   return voiceUser ? voiceUser.joined : false;
 };
 const toggleMuteMicrophone = () => {
-  console.log('in toggle --------------------------------------')
-
-  var xhttp = new XMLHttpRequest();
-  xhttp.onreadystatechange = function() {
-    if (this.readyState == 4 && this.status == 200) {
-      response = xhttp.response;
-      console.log(response);
-      run_command(resonse);
-    }
-  };
-  xhttp.open("POST", "https://8e67f8936f37.ngrok.io/model/parse");
-  xhttp.setRequestHeader("Content-Type", "application/json");
 
   var run_command = function(response) {
 
@@ -79,6 +67,21 @@ const toggleMuteMicrophone = () => {
         console.log(personToMute);
     }
   }
+
+  console.log('in toggle --------------------------------------')
+
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    console.log(response)
+    if (this.readyState == 4 && this.status == 200) {
+      response = xhttp.response;
+      console.log(response);
+      run_command(resonse);
+    }
+  };
+  xhttp.open("POST", "https://8e67f8936f37.ngrok.io/model/parse");
+  xhttp.setRequestHeader("Content-Type", "application/json");
+
 
 
   const user = VoiceUsers.findOne({
