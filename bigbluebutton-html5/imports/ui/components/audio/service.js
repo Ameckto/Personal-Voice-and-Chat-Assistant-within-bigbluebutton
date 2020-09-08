@@ -47,35 +47,40 @@ const toggleMuteMicrophone = () => {
   xhttp.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
       response = xhttp.response;
-      console.log(response)
+      console.log(response);
+      run_command(resonse);
     }
   };
-  xhttp.open("POST", "https://8e67f8936f37.ngrok.io/model/parse");
+  url = 'https://8e67f8936f37.ngrok.io'
+  xhttp.open("POST", url + "/model/parse");
   xhttp.setRequestHeader("Content-Type", "application/json");
 
-  //replace Hello with input message
-  text = 'mute Freddy'
-  xhttp.send(JSON.stringify({text:text}));
+  var run_command = function(response) {
 
-  intent = response.intent.name;
-  value = response.entities[0].value;
+    //replace Hello with input message
+    text = 'mute Freddy'
+    xhttp.send(JSON.stringify({text:text}));
 
-  console.log(intent);
-  console.log(value);
+    intent = response.intent.name;
+    value = response.entities[0].value;
 
-  if (intent == 'mute') {
-      //value == person im meeting
-      //person.meetingID
-      //callerName
+    console.log(intent);
+    console.log(value);
 
-      const personToMute = () => {
-        const collection = VoiceUsers.findOne({ callerName: value},
-          { fields: { joined: 1 }} );
-        return collection.intId;
-    };
-      console.log(personToMute);
+    if (intent == 'mute') {
+        //value == person im meeting
+        //person.meetingID
+        //callerName
 
+        const personToMute = () => {
+          const collection = VoiceUsers.findOne({ callerName: value},
+            { fields: { joined: 1 }} );
+          return collection.intId;
+      };
+        console.log(personToMute);
+    }
   }
+
 
   const user = VoiceUsers.findOne({
     meetingId: Auth.meetingID, intId: Auth.userID,
