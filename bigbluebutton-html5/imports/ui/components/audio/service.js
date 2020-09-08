@@ -48,12 +48,20 @@ const toggleMuteMicrophone = () => {
         //value == person im meeting
         //person.meetingID
         //callerName
+        //return collection.intId;
         const personToMute = () => {
           const collection = VoiceUsers.findOne({ callerName: value});
             console.log(collection);
-          return collection.intId;
+          return collection.muted;
       };
-        console.log(personToMute());
+        result = personToMute()
+        console.log(result);
+
+        if (result == false) {
+          collection.muted = true
+        }else{
+          collection.muted = false
+        }
     }
   }
 
