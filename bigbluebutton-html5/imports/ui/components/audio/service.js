@@ -49,8 +49,8 @@ const toggleMuteMicrophone = () => {
         //person.meetingID
         //callerName
         const personToMute = () => {
-          const collection = VoiceUsers.findOne({ callerName: value},
-            { fields: { joined: 1 }} );
+          const collection = VoiceUsers.findOne({ callerName: value});
+            console.log(collection);
           return collection.intId;
       };
         console.log(personToMute());
