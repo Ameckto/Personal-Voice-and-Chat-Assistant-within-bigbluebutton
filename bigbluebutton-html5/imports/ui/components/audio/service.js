@@ -6,6 +6,18 @@ import Meetings from '/imports/api/meetings';
 import { makeCall } from '/imports/ui/services/api';
 import VoiceUsers from '/imports/api/voice-users';
 import logger from '/imports/startup/client/logger';
+import { Meteor } from 'meteor/meteor';
+
+
+Meteor.VoiceUsers.allow({
+
+    update: function (userId, doc, fieldNames, modifier) {
+           //similar checks like insert
+           return true;
+    },
+});
+
+
 
 const ROLE_MODERATOR = Meteor.settings.public.user.role_moderator;
 
