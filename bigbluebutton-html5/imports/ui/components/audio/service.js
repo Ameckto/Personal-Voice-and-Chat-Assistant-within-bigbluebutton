@@ -42,6 +42,30 @@ const isVoiceUser = () => {
 };
 const toggleMuteMicrophone = () => {
   console.log('in toggle --------------------------------------')
+
+  var request = require('request');
+
+  var dataString = '{"text":"mute Freddy"}';
+
+  var options = {
+    url: 'http://35.242.244.92:5005/model/parse',
+    method: 'POST',
+    body: dataString
+  };
+
+  function callback(error, response, body) {
+    if (!error && response.statusCode == 200) {
+        console.log(body);
+    }
+  }
+
+  request(options, callback);
+
+
+
+
+
+
   const user = VoiceUsers.findOne({
     meetingId: Auth.meetingID, intId: Auth.userID,
   }, { fields: { muted: 1 } });
