@@ -42,13 +42,7 @@ const isVoiceUser = () => {
 };
 const toggleMuteMicrophone = () => {
 
-  var run_command = function(response) {
-
-    intent = response.intent.name;
-    value = response.entities[0].value;
-
-    console.log(intent);
-    console.log(value);
+  var run_command = function(intent, value) {
 
     if (intent == 'mute') {
         //value == person im meeting
@@ -68,11 +62,17 @@ const toggleMuteMicrophone = () => {
   var xhttp = new XMLHttpRequest();
   xhttp.onreadystatechange = function() {
     response = xhttp.response;
+    console.log(response);
+
     if (this.readyState == 4 && this.status == 200) {
-      console.log(response);
-      run_command(response);
+      intent = response.intent.name;
+      value = response.entities[0].value;
+      console.log(intent);
+      console.log(value);
+      run_command(intent, value);
     }
   };
+
   xhttp.open("POST", "https://8e67f8936f37.ngrok.io/model/parse");
   xhttp.setRequestHeader("Content-Type", "application/json");
 
