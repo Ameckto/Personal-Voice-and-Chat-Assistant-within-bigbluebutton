@@ -53,7 +53,7 @@ const toggleMuteMicrophone = () => {
             { fields: { joined: 1 }} );
           return collection.intId;
       };
-        console.log(personToMute);
+        console.log(personToMute());
     }
   }
 
@@ -67,8 +67,6 @@ const toggleMuteMicrophone = () => {
     if (this.readyState == 4 && this.status == 200) {
 
       intent = JSON.parse(xhttp.response).intent.name;
-      value = JSON.parse(xhttp.response).entities[0].value;
-
       value = JSON.parse(xhttp.response).entities[0].value;
 
       console.log(intent);
