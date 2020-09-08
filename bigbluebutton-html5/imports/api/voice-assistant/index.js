@@ -14,5 +14,22 @@ var in_test = function() {
   console.log('in module');
 }
 
+export default function muteUser() {
+
+  console.log('in export')
+
+  const getUsers = () => {
+
+    console.log('in muteUser')
+
+    let users = Users
+      .find({
+        meetingId: Auth.meetingID,
+        connectionStatus: 'online',
+      }, userFindSorting)
+      .fetch();
+
+      console.log(users)
+}
 
 export default VoiceAssistant;
