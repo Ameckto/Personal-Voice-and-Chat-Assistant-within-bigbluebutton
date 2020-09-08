@@ -10,9 +10,10 @@ import { Meteor } from 'meteor/meteor';
 
 
 VoiceUsers.allow({
-    update: function (userId, doc, fieldNames, modifier) {
-           //similar checks like insert
-           return true;
+    update(userId, doc, fields, modifier) {
+      // Can only change your own documents.
+      return doc.owner === userId;
+  },
     },
 });
 
