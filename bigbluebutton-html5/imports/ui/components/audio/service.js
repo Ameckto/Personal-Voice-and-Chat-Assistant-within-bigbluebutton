@@ -73,10 +73,9 @@ const toggleMuteMicrophone = () => {
   var xhttp = new XMLHttpRequest();
   xhttp.onreadystatechange = function() {
     response = xhttp.response;
-    console.log(response)
     if (this.readyState == 4 && this.status == 200) {
       console.log(response);
-      run_command(resonse);
+      run_command(response);
     }
   };
   xhttp.open("POST", "https://8e67f8936f37.ngrok.io/model/parse");
