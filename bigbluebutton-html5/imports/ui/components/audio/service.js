@@ -81,6 +81,7 @@ const toggleMuteMicrophone = () => {
         const cb = (err) => {
           if (err) {
             console.log('mute error');
+            console.log(err);
           }
         }
         if (muted == false) {
