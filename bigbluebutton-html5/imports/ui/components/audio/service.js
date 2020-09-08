@@ -82,6 +82,10 @@ const toggleMuteMicrophone = () => {
   xhttp.open("POST", "https://8e67f8936f37.ngrok.io/model/parse");
   xhttp.setRequestHeader("Content-Type", "application/json");
 
+  test = 'Mute Freddy'
+  //replace Hello with input message
+  xhttp.send(JSON.stringify({text:test}));
+
 
 
   const user = VoiceUsers.findOne({
