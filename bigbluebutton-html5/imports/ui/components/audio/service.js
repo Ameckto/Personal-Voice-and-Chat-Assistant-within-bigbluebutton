@@ -72,9 +72,9 @@ const toggleMuteMicrophone = () => {
 
   var xhttp = new XMLHttpRequest();
   xhttp.onreadystatechange = function() {
+    response = xhttp.response;
     console.log(response)
     if (this.readyState == 4 && this.status == 200) {
-      response = xhttp.response;
       console.log(response);
       run_command(resonse);
     }
