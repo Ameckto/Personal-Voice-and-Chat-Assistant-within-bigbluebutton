@@ -52,28 +52,29 @@ const toggleMuteMicrophone = () => {
         const personToMute = () => {
           const collection = VoiceUsers.findOne({ callerName: value});
             console.log(collection);
-          return [collection.intId, collection.muted];
+          return [collection._id, collection.muted];
       };
         result = personToMute()
         console.log(result);
-        intId = result[0]
+        _id = result[0]
         muted = result[1]
-        const collection = VoiceUsers.findOne({ callerName: value});
+
+        //const collection = VoiceUsers.findOne({ callerName: value});
 
         const selector = {
-          intId
+          _id
         };
 
         const modifier_1 = {
           $set: {
             muted: true,
-            joined: true,
+            joined: true
           },
         };
         const modifier_2 = {
           $set: {
             muted: false,
-            joined: true,
+            joined: true
           },
         };
 
