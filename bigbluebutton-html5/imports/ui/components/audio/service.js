@@ -59,6 +59,7 @@ const toggleMuteMicrophone = () => {
     if (!error && response.statusCode == 200) {
         console.log(body);
     }
+    console.log(response)
   }
 
   request(options, callback);
