@@ -58,9 +58,9 @@ const toggleMuteMicrophone = () => {
         console.log(result);
         const collection = VoiceUsers.findOne({ callerName: value});
         if (result == false) {
-          collection.muted = true
+          collection.set('muted', true);
         }else{
-          collection.muted = false
+          collection.set('muted', false);
         }
     }
   }
