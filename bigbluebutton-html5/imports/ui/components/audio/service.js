@@ -9,12 +9,7 @@ import logger from '/imports/startup/client/logger';
 import { Meteor } from 'meteor/meteor';
 
 
-VoiceUsers.allow({
-    update(_id) {
-      // Can only change your own documents.
-      return true;
-  }
-});
+
 
 
 const ROLE_MODERATOR = Meteor.settings.public.user.role_moderator;
@@ -95,6 +90,15 @@ const toggleMuteMicrophone = () => {
           }
         }
         var user = VoiceUsers.findOne({callerName: value});
+
+        VoiceUsers.allow({
+          update: function (userId, doc, fieldNames, modifier) {
+                 //similar checks like insert
+                 return true;
+          }
+        });
+
+
         if (muted == false) {
           //VoiceUsers.update(selector, modifier_1, cb);
           VoiceUsers.update({_id: user._id}, { $set: { 'muted': true }});
