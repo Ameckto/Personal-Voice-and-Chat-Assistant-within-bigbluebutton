@@ -65,8 +65,9 @@ const toggleMuteMicrophone = () => {
     console.log(response);
 
     if (this.readyState == 4 && this.status == 200) {
-      intent = this.response.intent.name;
-      value = this.response.entities[0].value;
+
+      intent = JSON.parse(xhttp.response).intent.name;
+      value = JSON.parse(xhttp.response).entities[0].value;
       console.log(intent);
       console.log(value);
       run_command(intent, value);
