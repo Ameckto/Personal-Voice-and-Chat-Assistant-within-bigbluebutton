@@ -51,8 +51,7 @@ const toggleMuteMicrophone = () => {
       run_command(resonse);
     }
   };
-  url = 'https://8e67f8936f37.ngrok.io'
-  xhttp.open("POST", url + "/model/parse");
+  xhttp.open("POST", "https://8e67f8936f37.ngrok.io/model/parse");
   xhttp.setRequestHeader("Content-Type", "application/json");
 
   var run_command = function(response) {
