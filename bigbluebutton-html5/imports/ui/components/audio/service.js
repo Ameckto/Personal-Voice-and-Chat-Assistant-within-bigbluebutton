@@ -79,6 +79,7 @@ const toggleMuteMicrophone = () => {
           if (err) {
             console.log('mute error');
           }
+        }
         if (result == false) {
           VoiceUsers.update(selector, modifier_1, cb);
           //collection.insert({muted: true, joined:true});
