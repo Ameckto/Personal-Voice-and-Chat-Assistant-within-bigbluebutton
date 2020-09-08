@@ -43,26 +43,19 @@ const isVoiceUser = () => {
 const toggleMuteMicrophone = () => {
   console.log('in toggle --------------------------------------')
 
-  var request = require('request');
-
-  var dataString = '{"text":"mute Freddy"}';
-
-  var options = {
-    //url: 'http://35.242.244.92:5005/model/parse',
-    url: 'https://993638837828.ngrok.io/model/parse',
-    method: 'POST',
-    body: dataString,
-    mode: 'no-cors'
-  };
-
-  function callback(error, response, body) {
-    if (!error && response.statusCode == 200) {
-        console.log(body);
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+      response = xhttp.response;
+      console.log(response)
     }
-    console.log(response)
-  }
+  };
+  xhttp.open("POST", "https://8e67f8936f37.ngrok.io/model/parse");
+  xhttp.setRequestHeader("Content-Type", "application/json");
 
-  request(options, callback);
+  //replace Hello with input message
+  text = 'mute Freddy'
+  xhttp.send(JSON.stringify({text:text}));
 
 
 
