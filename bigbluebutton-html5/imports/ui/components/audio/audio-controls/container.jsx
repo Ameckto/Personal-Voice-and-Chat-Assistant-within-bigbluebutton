@@ -39,6 +39,7 @@ const processToggleMuteFromOutside = (e) => {
 };
 
 const handleLeaveAudio = () => {
+  console.log('in leave audio')
   Service.exitAudio();
   logger.info({
     logCode: 'audiocontrols_leave_audio',
