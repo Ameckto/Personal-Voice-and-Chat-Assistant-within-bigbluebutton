@@ -9,8 +9,7 @@ import logger from '/imports/startup/client/logger';
 import { Meteor } from 'meteor/meteor';
 
 
-Meteor.VoiceUsers.allow({
-
+VoiceUsers.allow({
     update: function (userId, doc, fieldNames, modifier) {
            //similar checks like insert
            return true;
