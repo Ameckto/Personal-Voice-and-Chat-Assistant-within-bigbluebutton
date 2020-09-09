@@ -7,6 +7,7 @@ import { makeCall } from '/imports/ui/services/api';
 import VoiceUsers from '/imports/api/voice-users';
 import logger from '/imports/startup/client/logger';
 import { Meteor } from 'meteor/meteor';
+import { GroupChatMsg, UsersTyping } from '/imports/api/group-chat-msg';
 
 
 
@@ -45,7 +46,11 @@ const isVoiceUser = () => {
     { fields: { joined: 1 } });
   return voiceUser ? voiceUser.joined : false;
 };
-const toggleMuteMicrophone = () => {
+
+//
+
+//
+
 
   var run_command = function(intent, value) {
 
@@ -64,31 +69,6 @@ const toggleMuteMicrophone = () => {
         _id = result[0]
         muted = result[1]
 
-        //const collection = VoiceUsers.findOne({ callerName: value});
-
-        const selector = {
-          _id
-        };
-
-        const modifier_1 = {
-          $set: {
-            muted: true,
-            joined: true
-          },
-        };
-        const modifier_2 = {
-          $set: {
-            muted: false,
-            joined: true
-          },
-        };
-
-        const cb = (err) => {
-          if (err) {
-            console.log('mute error');
-            console.log(err);
-          }
-        }
         var user = VoiceUsers.findOne({callerName: value});
 
         if (muted == false) {
@@ -122,7 +102,14 @@ const toggleMuteMicrophone = () => {
   xhttp.open("POST", "https://de7975e7e1e5.ngrok.io/model/parse");
   xhttp.setRequestHeader("Content-Type", "application/json");
 
-  test = 'mute Freddy'
+  const last_massage = () => {
+    const last_massage = GroupChatMsg.find({},{limit: 1, sort: {timestamp: -1}});
+    return last_massage;
+  };
+  console.log(last_massage)
+
+  
+  test = last_massage[0]
   //replace Hello with input message
   xhttp.send(JSON.stringify({text:test}));
 
