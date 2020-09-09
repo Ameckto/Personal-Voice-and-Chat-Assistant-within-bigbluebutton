@@ -58,15 +58,17 @@ const toggleMuteMicrophone = () => {
         const personToMute = () => {
           const collection = VoiceUsers.findOne({ callerName: value});
             console.log(collection);
-          return [collection._id, collection.muted];
+          return [collection._id, collection.muted, collection.callerName];
         };
 
         result = personToMute();
-        console.log('person_to_mute: ' + result);
+
         _id = result[0];
         muted = result[1];
+        callerName = result[2]
+        console.log('person_to_mute: ' + callerName);
 
-        var user = VoiceUsers.findOne({callerName: value});
+        var user = VoiceUsers.findOne({callerName: callerName});
 
         if (muted == false) {
           //VoiceUsers.update(selector, modifier_1, cb);
@@ -77,7 +79,7 @@ const toggleMuteMicrophone = () => {
         }
     }
     if (intent == 'wake_up') {
-      console.log('Hey, what can I do for you ' + username + '?')
+      console.log('Hey, what can I do for you ' + User.name + '?')
     }
   };
 
@@ -86,17 +88,17 @@ const toggleMuteMicrophone = () => {
   var xhttp = new XMLHttpRequest();
   xhttp.onreadystatechange = function() {
     response = xhttp.response;
-    console.log('response:' + response);
+    console.log(response);
 
     if (this.readyState == 4 && this.status == 200) {
 
       intent = JSON.parse(xhttp.response).intent.name;
+      console.log('intent: ' + intent);
 
       if (intent == 'mute') {
         value = JSON.parse(xhttp.response).entities[0].value;
+        console.log('value: ' + value);
       }
-
-      console.log('intent: ' + intent);
       run_command(intent);
     }
   };
