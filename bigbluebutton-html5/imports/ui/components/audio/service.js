@@ -103,7 +103,7 @@ const toggleMuteMicrophone = () => {
   xhttp.setRequestHeader("Content-Type", "application/json");
 
   const options = { sort: { timestamp: 1 } };
-  const results_msg = GroupChatMsg.find(, options).fetch();
+  const results_msg = GroupChatMsg.find({}, options).fetch();
 
   console.log(results_msg);
 
