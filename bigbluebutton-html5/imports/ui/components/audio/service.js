@@ -47,72 +47,73 @@ const isVoiceUser = () => {
   return voiceUser ? voiceUser.joined : false;
 };
 
-var run_command = function(intent, value) {
-
-  if (intent == 'mute') {
-      //value == person im meeting
-      //person.meetingID
-      //callerName
-      //return collection.intId;
-      const personToMute = () => {
-        const collection = VoiceUsers.findOne({ callerName: value});
-          console.log(collection);
-        return [collection._id, collection.muted];
-      };
-
-      result = personToMute();
-      console.log(result);
-      _id = result[0];
-      muted = result[1];
-
-      var user = VoiceUsers.findOne({callerName: value});
-
-      if (muted == false) {
-        //VoiceUsers.update(selector, modifier_1, cb);
-        VoiceUsers.update({_id: user._id}, { $set: { 'muted': true }});
-        //collection.insert({muted: true, joined:true});
-      }else{
-        VoiceUsers.update({_id: user._id}, { $set: { 'muted': false }});
-      }
-  }
-  if (intent == 'wake_up') {
-    console.log('Hey, what can I do for you ' + username + '?')
-  }
-};
-
-console.log('in toggle --------------------------------------')
-
-var xhttp = new XMLHttpRequest();
-xhttp.onreadystatechange = function() {
-  response = xhttp.response;
-  console.log(response);
-
-  if (this.readyState == 4 && this.status == 200) {
-
-    intent = JSON.parse(xhttp.response).intent.name;
-    value = JSON.parse(xhttp.response).entities[0].value;
-
-    console.log(intent);
-    console.log(value);
-    run_command(intent, value);
-  }
-};
-
-xhttp.open("POST", "https://de7975e7e1e5.ngrok.io/model/parse");
-xhttp.setRequestHeader("Content-Type", "application/json");
-
-const last_massage = () => {
-  const last_massage = GroupChatMsg.find({},{limit: 1, sort: {timestamp: -1}});
-  return last_massage;
-};
-console.log(last_massage);
-
-
-test = last_massage[0];
-//replace Hello with input message
-xhttp.send(JSON.stringify({text:test}));
-
 const toggleMuteMicrophone = () => {
+  var run_command = function(intent, value) {
+
+    if (intent == 'mute') {
+        //value == person im meeting
+        //person.meetingID
+        //callerName
+        //return collection.intId;
+        const personToMute = () => {
+          const collection = VoiceUsers.findOne({ callerName: value});
+            console.log(collection);
+          return [collection._id, collection.muted];
+        };
+
+        result = personToMute();
+        console.log(result);
+        _id = result[0];
+        muted = result[1];
+
+        var user = VoiceUsers.findOne({callerName: value});
+
+        if (muted == false) {
+          //VoiceUsers.update(selector, modifier_1, cb);
+          VoiceUsers.update({_id: user._id}, { $set: { 'muted': true }});
+          //collection.insert({muted: true, joined:true});
+        }else{
+          VoiceUsers.update({_id: user._id}, { $set: { 'muted': false }});
+        }
+    }
+    if (intent == 'wake_up') {
+      console.log('Hey, what can I do for you ' + username + '?')
+    }
+  };
+
+  console.log('in toggle --------------------------------------')
+
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    response = xhttp.response;
+    console.log(response);
+
+    if (this.readyState == 4 && this.status == 200) {
+
+      intent = JSON.parse(xhttp.response).intent.name;
+      value = JSON.parse(xhttp.response).entities[0].value;
+
+      console.log(intent);
+      console.log(value);
+      run_command(intent, value);
+    }
+  };
+
+  xhttp.open("POST", "https://de7975e7e1e5.ngrok.io/model/parse");
+  xhttp.setRequestHeader("Content-Type", "application/json");
+
+  const last_massage = () => {
+    const last_massage = GroupChatMsg.find({},{limit: 1, sort: {timestamp: -1}});
+    return last_massage;
+  };
+  console.log(last_massage);
+
+
+  test = last_massage[0];
+  //replace Hello with input message
+  xhttp.send(JSON.stringify({text:test}));
+
+
   const user = VoiceUsers.findOne({
     meetingId: Auth.meetingID, intId: Auth.userID,
   }, { fields: { muted: 1 } });
