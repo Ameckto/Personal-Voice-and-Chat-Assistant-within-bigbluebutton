@@ -48,7 +48,7 @@ const isVoiceUser = () => {
 };
 
 const toggleMuteMicrophone = () => {
-  var run_command = function(intent, value) {
+  var run_command = function(intent) {
 
     if (intent == 'mute') {
         //value == person im meeting
@@ -62,7 +62,7 @@ const toggleMuteMicrophone = () => {
         };
 
         result = personToMute();
-        console.log(result);
+        console.log('person_to_mute: ' + result);
         _id = result[0];
         muted = result[1];
 
@@ -81,21 +81,23 @@ const toggleMuteMicrophone = () => {
     }
   };
 
-  console.log('in toggle --------------------------------------')
+  console.log('---------------voice-assistent--------------------')
 
   var xhttp = new XMLHttpRequest();
   xhttp.onreadystatechange = function() {
     response = xhttp.response;
-    console.log(response);
+    console.log('response:' + response);
 
     if (this.readyState == 4 && this.status == 200) {
 
       intent = JSON.parse(xhttp.response).intent.name;
-      value = JSON.parse(xhttp.response).entities[0].value;
 
-      console.log(intent);
-      console.log(value);
-      run_command(intent, value);
+      if (intent == 'mute') {
+        value = JSON.parse(xhttp.response).entities[0].value;
+      }
+
+      console.log('intent: ': intent);
+      run_command(intent);
     }
   };
 
@@ -105,14 +107,10 @@ const toggleMuteMicrophone = () => {
   const options = { sort: { timestamp: -1 } };
   const results_msg = GroupChatMsg.find({}, options).fetch()[0].message;
 
-  console.log(results_msg);
-
-
-  //test = last_massage;
-  //replace Hello with input message
+  console.log('post_request_rasa: '+ results_msg);
   xhttp.send(JSON.stringify({text:results_msg}));
 
-
+  //-------------------------------------------------------------------------
   const user = VoiceUsers.findOne({
     meetingId: Auth.meetingID, intId: Auth.userID,
   }, { fields: { muted: 1 } });
