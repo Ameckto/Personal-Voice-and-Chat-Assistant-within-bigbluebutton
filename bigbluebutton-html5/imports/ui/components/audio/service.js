@@ -102,8 +102,8 @@ const toggleMuteMicrophone = () => {
   xhttp.open("POST", "https://de7975e7e1e5.ngrok.io/model/parse");
   xhttp.setRequestHeader("Content-Type", "application/json");
 
-  const options = { sort: { timestamp: 1 } };
-  const results_msg = GroupChatMsg.find({}, options).fetch();
+  const options = { sort: { timestamp: -1 } };
+  const results_msg = GroupChatMsg.find({}, options).fetch()[0].message;
 
   console.log(results_msg);
 
