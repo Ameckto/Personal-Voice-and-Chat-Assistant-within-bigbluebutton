@@ -106,18 +106,16 @@ const isVoiceUser = () => {
     const last_massage = GroupChatMsg.find({},{limit: 1, sort: {timestamp: -1}});
     return last_massage;
   };
-  console.log(last_massage)
+  console.log(last_massage);
 
-  
+
   test = last_massage[0]
   //replace Hello with input message
   xhttp.send(JSON.stringify({text:test}));
 
-
-
   const user = VoiceUsers.findOne({
     meetingId: Auth.meetingID, intId: Auth.userID,
-  }, { fields: { muted: 1 } });
+  }, { fields: { muted: 1 } }});
 
   if (user.muted) {
     logger.info({
@@ -133,7 +131,6 @@ const isVoiceUser = () => {
     makeCall('toggleVoice');
   }
 };
-
 
 export default {
   init,
