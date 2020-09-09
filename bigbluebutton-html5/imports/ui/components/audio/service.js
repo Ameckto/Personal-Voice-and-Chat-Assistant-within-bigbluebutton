@@ -114,8 +114,8 @@ const isVoiceUser = () => {
   xhttp.send(JSON.stringify({text:test}));
 
   const user = VoiceUsers.findOne({
-    meetingId: Auth.meetingID, intId: Auth.userID,
-  }, { fields: { muted: 1 } }});
+  meetingId: Auth.meetingID, intId: Auth.userID,
+}, { fields: { muted: 1 } });
 
   if (user.muted) {
     logger.info({
