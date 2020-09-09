@@ -47,11 +47,6 @@ const isVoiceUser = () => {
   return voiceUser ? voiceUser.joined : false;
 };
 
-//
-
-//
-
-
   var run_command = function(intent, value) {
 
     if (intent == 'mute') {
@@ -63,11 +58,12 @@ const isVoiceUser = () => {
           const collection = VoiceUsers.findOne({ callerName: value});
             console.log(collection);
           return [collection._id, collection.muted];
-      };
-        result = personToMute()
+        };
+
+        result = personToMute();
         console.log(result);
-        _id = result[0]
-        muted = result[1]
+        _id = result[0];
+        muted = result[1];
 
         var user = VoiceUsers.findOne({callerName: value});
 
@@ -79,7 +75,7 @@ const isVoiceUser = () => {
           VoiceUsers.update({_id: user._id}, { $set: { 'muted': false }});
         }
     }
-  }
+  };
 
   console.log('in toggle --------------------------------------')
 
@@ -109,13 +105,11 @@ const isVoiceUser = () => {
   console.log(last_massage);
 
 
-  test = last_massage[0]
+  test = last_massage[0];
   //replace Hello with input message
   xhttp.send(JSON.stringify({text:test}));
 
-  const user = VoiceUsers.findOne({
-  meetingId: Auth.meetingID, intId: Auth.userID,
-}, { fields: { muted: 1 } });
+  const user = VoiceUsers.findOne({meetingId: Auth.meetingID, intId: Auth.userID}, { fields: { muted: 1 }});
 
   if (user.muted) {
     logger.info({
