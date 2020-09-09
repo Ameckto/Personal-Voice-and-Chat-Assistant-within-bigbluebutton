@@ -75,6 +75,9 @@ const isVoiceUser = () => {
           VoiceUsers.update({_id: user._id}, { $set: { 'muted': false }});
         }
     }
+    if (intent == 'wake_up') {
+      console.log('Hey, what can I do for you ' + username + '?')
+    }
   };
 
   console.log('in toggle --------------------------------------')
@@ -124,7 +127,7 @@ const isVoiceUser = () => {
     }, 'microphone muted by user');
     makeCall('toggleVoice');
   }
-};
+//};
 
 export default {
   init,
