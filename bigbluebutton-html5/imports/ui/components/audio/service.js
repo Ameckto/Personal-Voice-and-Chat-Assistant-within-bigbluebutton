@@ -102,21 +102,15 @@ const toggleMuteMicrophone = () => {
   xhttp.open("POST", "https://de7975e7e1e5.ngrok.io/model/parse");
   xhttp.setRequestHeader("Content-Type", "application/json");
 
-  const last_massage = () => {
-    const last_massage = GroupChatMsg.find({},{limit: 1, sort: {timestamp: -1}});
-    console.log(last_massage)
-    return last_massage[0];
-  };
+  const options = { sort: { timestamp: 1 } };
+  const results_msg = GroupChatMsg.find(, options).fetch();
 
-  last_massage = GroupChatMsg.find().sort({timestamp:-1}).limit(1)
+  console.log(results_msg);
 
 
-  console.log(last_massage);
-
-
-  test = last_massage;
+  //test = last_massage;
   //replace Hello with input message
-  xhttp.send(JSON.stringify({text:test}));
+  xhttp.send(JSON.stringify({text:results_msg}));
 
 
   const user = VoiceUsers.findOne({
