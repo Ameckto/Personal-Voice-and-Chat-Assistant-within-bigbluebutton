@@ -83,8 +83,11 @@ const toggleMuteMicrophone = () => {
       const user = VoiceUsers.findOne({
         meetingId: Auth.meetingID, intId: Auth.userID)
       };
-
-      console.log('Hey, what can I do for you ' + user.callerName + '?')
+      console.log(user)
+      sentence = 'Hey, what can I do for you ' + user.callerName + '?';
+      console.log(sentence);
+      const utterance = new SpeechSynthesisUtterance(sentence);
+      window.speechSynthesis.speak(utterance);
     }
   };
 
