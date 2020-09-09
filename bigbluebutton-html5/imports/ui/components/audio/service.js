@@ -79,7 +79,12 @@ const toggleMuteMicrophone = () => {
         }
     }
     if (intent == 'wake_up') {
-      console.log('Hey, what can I do for you ' + User.name + '?')
+
+      const user = VoiceUsers.findOne({
+        meetingId: Auth.meetingID, intId: Auth.userID)
+      };
+
+      console.log('Hey, what can I do for you ' + user.callerName + '?')
     }
   };
 
