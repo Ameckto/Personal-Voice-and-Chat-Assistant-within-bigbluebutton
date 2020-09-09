@@ -119,7 +119,7 @@ const toggleMuteMicrophone = () => {
     }
   };
 
-  xhttp.open("POST", "https://bd2660b79248.ngrok.io/model/parse");
+  xhttp.open("POST", "https://de7975e7e1e5.ngrok.io/model/parse");
   xhttp.setRequestHeader("Content-Type", "application/json");
 
   test = 'mute Freddy'
