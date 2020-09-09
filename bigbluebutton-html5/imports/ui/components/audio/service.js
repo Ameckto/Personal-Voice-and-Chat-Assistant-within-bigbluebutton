@@ -47,72 +47,75 @@ const isVoiceUser = () => {
   return voiceUser ? voiceUser.joined : false;
 };
 
-  var run_command = function(intent, value) {
+var run_command = function(intent, value) {
 
-    if (intent == 'mute') {
-        //value == person im meeting
-        //person.meetingID
-        //callerName
-        //return collection.intId;
-        const personToMute = () => {
-          const collection = VoiceUsers.findOne({ callerName: value});
-            console.log(collection);
-          return [collection._id, collection.muted];
-        };
+  if (intent == 'mute') {
+      //value == person im meeting
+      //person.meetingID
+      //callerName
+      //return collection.intId;
+      const personToMute = () => {
+        const collection = VoiceUsers.findOne({ callerName: value});
+          console.log(collection);
+        return [collection._id, collection.muted];
+      };
 
-        result = personToMute();
-        console.log(result);
-        _id = result[0];
-        muted = result[1];
+      result = personToMute();
+      console.log(result);
+      _id = result[0];
+      muted = result[1];
 
-        var user = VoiceUsers.findOne({callerName: value});
+      var user = VoiceUsers.findOne({callerName: value});
 
-        if (muted == false) {
-          //VoiceUsers.update(selector, modifier_1, cb);
-          VoiceUsers.update({_id: user._id}, { $set: { 'muted': true }});
-          //collection.insert({muted: true, joined:true});
-        }else{
-          VoiceUsers.update({_id: user._id}, { $set: { 'muted': false }});
-        }
-    }
-    if (intent == 'wake_up') {
-      console.log('Hey, what can I do for you ' + username + '?')
-    }
-  };
+      if (muted == false) {
+        //VoiceUsers.update(selector, modifier_1, cb);
+        VoiceUsers.update({_id: user._id}, { $set: { 'muted': true }});
+        //collection.insert({muted: true, joined:true});
+      }else{
+        VoiceUsers.update({_id: user._id}, { $set: { 'muted': false }});
+      }
+  }
+  if (intent == 'wake_up') {
+    console.log('Hey, what can I do for you ' + username + '?')
+  }
+};
 
-  console.log('in toggle --------------------------------------')
+console.log('in toggle --------------------------------------')
 
-  var xhttp = new XMLHttpRequest();
-  xhttp.onreadystatechange = function() {
-    response = xhttp.response;
-    console.log(response);
+var xhttp = new XMLHttpRequest();
+xhttp.onreadystatechange = function() {
+  response = xhttp.response;
+  console.log(response);
 
-    if (this.readyState == 4 && this.status == 200) {
+  if (this.readyState == 4 && this.status == 200) {
 
-      intent = JSON.parse(xhttp.response).intent.name;
-      value = JSON.parse(xhttp.response).entities[0].value;
+    intent = JSON.parse(xhttp.response).intent.name;
+    value = JSON.parse(xhttp.response).entities[0].value;
 
-      console.log(intent);
-      console.log(value);
-      run_command(intent, value);
-    }
-  };
+    console.log(intent);
+    console.log(value);
+    run_command(intent, value);
+  }
+};
 
-  xhttp.open("POST", "https://de7975e7e1e5.ngrok.io/model/parse");
-  xhttp.setRequestHeader("Content-Type", "application/json");
+xhttp.open("POST", "https://de7975e7e1e5.ngrok.io/model/parse");
+xhttp.setRequestHeader("Content-Type", "application/json");
 
-  const last_massage = () => {
-    const last_massage = GroupChatMsg.find({},{limit: 1, sort: {timestamp: -1}});
-    return last_massage;
-  };
-  console.log(last_massage);
+const last_massage = () => {
+  const last_massage = GroupChatMsg.find({},{limit: 1, sort: {timestamp: -1}});
+  return last_massage;
+};
+console.log(last_massage);
 
 
-  test = last_massage[0];
-  //replace Hello with input message
-  xhttp.send(JSON.stringify({text:test}));
+test = last_massage[0];
+//replace Hello with input message
+xhttp.send(JSON.stringify({text:test}));
 
-  const user = VoiceUsers.findOne({meetingId: Auth.meetingID, intId: Auth.userID}, { fields: { muted: 1 }});
+const toggleMuteMicrophone = () => {
+  const user = VoiceUsers.findOne({
+    meetingId: Auth.meetingID, intId: Auth.userID,
+  }, { fields: { muted: 1 } });
 
   if (user.muted) {
     logger.info({
@@ -127,7 +130,7 @@ const isVoiceUser = () => {
     }, 'microphone muted by user');
     makeCall('toggleVoice');
   }
-//};
+};
 
 export default {
   init,
