@@ -90,8 +90,6 @@ const toggleMuteMicrophone = () => {
           }
         }
         var user = VoiceUsers.findOne({callerName: value});
-        });
-
 
         if (muted == false) {
           //VoiceUsers.update(selector, modifier_1, cb);

@@ -16,4 +16,5 @@ VoiceUsers.allow({
          //similar checks like insert
          return true;
   }
+});
 export default VoiceUsers;
