@@ -107,6 +107,10 @@ const toggleMuteMicrophone = () => {
     console.log(last_massage)
     return last_massage[0];
   };
+
+  last_massage = GroupChatMsg.find().sort({timestamp:-1}).limit(1)
+
+
   console.log(last_massage);
 
 
