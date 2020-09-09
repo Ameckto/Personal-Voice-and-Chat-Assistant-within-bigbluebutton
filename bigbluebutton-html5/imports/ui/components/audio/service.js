@@ -104,13 +104,13 @@ const toggleMuteMicrophone = () => {
 
   const last_massage = () => {
     const last_massage = GroupChatMsg.find({},{limit: 1, sort: {timestamp: -1}});
-    return last_massage;
+    console.log(last_massage)
+    return last_massage[0];
   };
-  last_massage = last_massage()
   console.log(last_massage);
 
 
-  test = last_massage[0];
+  test = last_massage;
   //replace Hello with input message
   xhttp.send(JSON.stringify({text:test}));
 
