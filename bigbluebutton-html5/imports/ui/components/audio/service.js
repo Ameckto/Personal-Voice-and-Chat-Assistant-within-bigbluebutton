@@ -90,12 +90,6 @@ const toggleMuteMicrophone = () => {
           }
         }
         var user = VoiceUsers.findOne({callerName: value});
-
-        VoiceUsers.allow({
-          update: function (userId, doc, fieldNames, modifier) {
-                 //similar checks like insert
-                 return true;
-          }
         });
 
 
@@ -127,7 +121,7 @@ const toggleMuteMicrophone = () => {
     }
   };
 
-  xhttp.open("POST", "https://8e67f8936f37.ngrok.io/model/parse");
+  xhttp.open("POST", "https://bd2660b79248.ngrok.io/model/parse");
   xhttp.setRequestHeader("Content-Type", "application/json");
 
   test = 'mute Freddy'

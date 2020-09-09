@@ -11,4 +11,9 @@ if (Meteor.isServer) {
   VoiceUsers._ensureIndex({ meetingId: 1, intId: 1 });
 }
 
+VoiceUsers.allow({
+  update: function (userId, doc, fieldNames, modifier) {
+         //similar checks like insert
+         return true;
+  }
 export default VoiceUsers;
