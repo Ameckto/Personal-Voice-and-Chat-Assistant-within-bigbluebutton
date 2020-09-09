@@ -124,17 +124,17 @@ const toggleMuteMicrophone = () => {
   }, { fields: { muted: 1 } });
 
   if (user.muted) {
-    logger.info({
-      logCode: 'audiomanager_unmute_audio',
-      extraInfo: { logType: 'user_action' },
-    }, 'microphone unmuted by user');
-    makeCall('toggleVoice');
+    //logger.info({
+    //  logCode: 'audiomanager_unmute_audio',
+    //  extraInfo: { logType: 'user_action' },
+    //}, 'microphone unmuted by user');
+    //makeCall('toggleVoice');
   } else {
-    logger.info({
-      logCode: 'audiomanager_mute_audio',
-      extraInfo: { logType: 'user_action' },
-    }, 'microphone muted by user');
-    makeCall('toggleVoice');
+    //logger.info({
+    //  logCode: 'audiomanager_mute_audio',
+    //  extraInfo: { logType: 'user_action' },
+    //}, 'microphone muted by user');
+    //makeCall('toggleVoice');
   }
 };
 
