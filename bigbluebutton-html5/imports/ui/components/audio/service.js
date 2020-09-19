@@ -48,6 +48,7 @@ const isVoiceUser = () => {
 };
 
 const toggleMuteMicrophone = () => {
+  console.log('----------------Example--------------------')
   var run_command = function(intent) {
 
     if (intent == 'mute') {
