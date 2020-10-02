@@ -5,6 +5,36 @@ import { Meteor } from 'meteor/meteor';
 
 console.log('in new voice assistaent')
 
+// retrun intents in array >= min_confidence
+var filter_intent = function(intent_arr, min_confidence) {
+  var result_arr = []
+  var arrayLength = intent_arr.length;
+  for (var i = 0; i < arrayLength; i++) {
+      var intent =  intent_arr[i].name;
+      var confidence =  intent_arr[i].confidence;
+      console.log(confidence)
+      console.log(intent)
+      if (confidence >= min_confidence) {
+        console.log('true')
+        result_arr.push(intent)
+      }
+  }
+  return result_arr
+}
+
+// return true if intend is in array
+var check_intent = function(intent_arr, name) {
+  var result_arr = []
+  var arrayLength = intent_arr.length;
+  for (var i = 0; i < arrayLength; i++) {
+      var intent =  intent_arr[i].name;
+      if (intent == name) {
+        return true
+      }
+  }
+  return false
+}
+
 class Voice_Assistant {
   constructor(item) {
     this._message = item.message;
@@ -12,37 +42,6 @@ class Voice_Assistant {
     this._caller_name = VoiceUsers.findOne({ meetingId: Auth.meetingID, intId: Auth.userID }).callerName;
     console.log('_caller_name: ', this._caller_name)
     this._response = this.make_post_request(this._message)
-    this._min_confidence = 0.3
-  }
-
-  // retrun intents in array >= min_confidence
-  function filter_intent(intent_arr, min_confidence) {
-    var result_arr = []
-    var arrayLength = intent_arr.length;
-    for (var i = 0; i < arrayLength; i++) {
-        var intent =  intent_arr[i].name;
-        var confidence =  intent_arr[i].confidence;
-        console.log(confidence)
-        console.log(intent)
-        if (confidence >= min_confidence) {
-          console.log('true')
-          result_arr.push(intent)
-        }
-    }
-    return result_arr
-  }
-
-  // return true if intend is in array
-  check_intent(intent_arr, name) {
-    var result_arr = []
-    var arrayLength = intent_arr.length;
-    for (var i = 0; i < arrayLength; i++) {
-        var intent =  intent_arr[i].name;
-        if (intent == name) {
-          return true
-        }
-    }
-    return false
   }
 
   make_post_request(message) {
@@ -61,7 +60,7 @@ class Voice_Assistant {
         console.log('intent_arr: ', intent_arr)
 
         // filter all intends < _min_confidence
-        intent_arr = filter_intent(intent_arr, Voice_Assistant.prototype._min_confidence)
+        intent_arr = filter_intent(intent_arr, min_confidence)
 
         console.log('intent_arr_filter: ', intent_arr)
 
@@ -69,7 +68,7 @@ class Voice_Assistant {
             // Do 2 intents
             if (intent_arr.length == 2) {
               // check if wake_up is in intent_arr
-              if (Voice_Assistant.prototype.check_intent(intent_arr, 'wake_up')){
+              if (check_intent(intent_arr, 'wake_up')){
                 //get index of wake_up
                 var index = intent_arr.indexOf('wake_up')
                 intent_arr.splice(index, 1);
@@ -86,7 +85,7 @@ class Voice_Assistant {
                   console.log('1 intent: ', intent)
                   last_intent = null
                 } else {
-                  if (Voice_Assistant.prototype.check_intent(intent_arr, 'wake_up')) {
+                  if (check_intent(intent_arr, 'wake_up')) {
                     last_intent = 'wake_up'
                   } else {
                     console.log('pls wake up bbb first')
@@ -113,7 +112,7 @@ class Voice_Assistant {
 var initializing = true;
 
 var last_intent = null;
-
+var min_confidence = 0.3
 var handle = GroupChatMsg.find().observe({
   added: function (item) {
     if (!initializing)
@@ -121,7 +120,7 @@ var handle = GroupChatMsg.find().observe({
         //
         console.log('something changed')
         console.log(item)
-        a = new Voice_Assistant(item)
+        a = new Voice_Assistant(item, min_confidence)
         console.log('last_intent', last_intent)
   }
 });
