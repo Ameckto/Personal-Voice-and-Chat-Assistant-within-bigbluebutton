@@ -14,6 +14,19 @@ class Voice_Assistant {
     this._response = this.make_post_request(this._message)
   }
 
+  check_intent(intent_arr, name) {
+    result_arr = []
+    var arrayLength = intent_arr.length;
+    for (var i = 0; i < arrayLength; i++) {
+        intent =  intent_arr[i].name;
+        if (intent == name) {
+          return true
+        }
+    }
+
+    return false
+  }
+
   make_post_request(message) {
     console.log('message',message);
 
@@ -25,8 +38,27 @@ class Voice_Assistant {
         var response = this.response || 'No Response'
         console.log('response: ', response)
 
-        var intent = JSON.parse(response).intent.name || 'No Intent';
-        console.log('intent: ', intent)
+        var intent_arr = JSON.parse(response).intent_ranking || 'no_intents';
+
+        console.log('intent_arr: ', intent_arr)
+
+        if (intent_arr != 'no_intents') {
+          if (check_intent(intent_arr, 'wake_up')){
+            if (intent_arr.length > 1) {
+              // Do 2 intend
+              console.log('do 2 intents')
+              intent_1 = intent_arr[0].name
+              intent_2 = intent_arr[0].name
+              console.log(intent_1, intent_2)
+            }
+          }
+          if (intent_arr.length == 1)
+            // Do 2 intend
+            console.log('do 1 intent')
+            intent = intent_arr[0].name
+          }
+        }
+
 
         var value = JSON.parse(response).entities[0].value || 'No Value';
         console.log('value: ', value)
