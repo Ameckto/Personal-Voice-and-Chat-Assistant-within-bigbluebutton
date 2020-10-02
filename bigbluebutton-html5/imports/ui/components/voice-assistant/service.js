@@ -12,10 +12,7 @@ var filter_intent = function(intent_arr, min_confidence) {
   for (var i = 0; i < arrayLength; i++) {
       var intent =  intent_arr[i].name;
       var confidence =  intent_arr[i].confidence;
-      console.log(confidence)
-      console.log(intent)
       if (confidence >= min_confidence) {
-        console.log('true')
         result_arr.push(intent)
       }
   }
@@ -27,7 +24,7 @@ var check_intent = function(intent_arr, name) {
   var result_arr = []
   var arrayLength = intent_arr.length;
   for (var i = 0; i < arrayLength; i++) {
-      var intent =  intent_arr[i].name;
+      var intent =  intent_arr[i];
       if (intent == name) {
         return true
       }
