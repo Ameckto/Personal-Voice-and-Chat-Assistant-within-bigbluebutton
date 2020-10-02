@@ -22,13 +22,14 @@ class Voice_Assistant {
     xhttp.onreadystatechange = function() {
       if (this.readyState == 4 && this.status == 200) {
         console.log(xhttp)
-        var response = xhttp.response || 'No Response'
-        var intent = JSON.parse(xhttp.response).intent.name || 'No Intent';
-        var value = JSON.parse(xhttp.response).entities[0].value || 'No Value';
+        var response = this.response || 'No Response'
+        console.log('response: ', response)
 
-        console.log('response', response)
-        console.log('intent', intent)
-        console.log('value', value)
+        var intent = JSON.parse(response).intent.name || 'No Intent';
+        console.log('intent: ', intent)
+
+        var value = JSON.parse(response).entities[0].value || 'No Value';
+        console.log('value: ', value)
 
         return null;
       }
