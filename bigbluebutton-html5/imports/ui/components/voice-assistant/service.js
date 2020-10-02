@@ -95,6 +95,9 @@ var execute_intent = function(intent, response) {
   if (intent == 'mute') {
       // the persons the client wants to mute
       person_arr = get_person_of_intent(response, intent)
+      if (person_arr.length == 0) {
+        console.log('Could not identify a person')
+      }
       person_arr.forEach(person => mute_user(person))
   }
 
@@ -187,3 +190,13 @@ var handle = GroupChatMsg.find().observe({
 });
 
 initializing = false;
+
+
+var domNotifications = require('dom-notifications')
+var notifications = domNotifications(options)
+
+document.body.appendChild(notifications.render())
+
+notifications.add({message: 'You are now logged in'}) // defaults to `info`
+notifications.add({message: 'This is a warning', type: 'warning'})
+notifications.error('Oh noes: File not found')
