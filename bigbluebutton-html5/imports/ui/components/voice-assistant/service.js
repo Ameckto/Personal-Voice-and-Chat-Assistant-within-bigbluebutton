@@ -3,7 +3,7 @@ import VoiceUsers from '/imports/api/voice-users';
 import Auth from '/imports/ui/services/auth';
 import { Meteor } from 'meteor/meteor';
 
-console.log('in new voice assistaent')
+//console.log('in new voice assistaent')
 
 //gets PERSONS of intent and returns them in an array, can be multiple
 var get_person_of_intent = function(response, intent){
@@ -52,23 +52,31 @@ var mute_user = function(user) {
   //get the _id, muted boolean and the name of the person to mute
   const personToMute = () => {
     const collection = VoiceUsers.findOne({ callerName: user});
-      console.log(collection);
-    return [collection._id, collection.muted, collection.callerName];
+    if (typeof(collection) != 'undefined') {
+      return [collection._id, collection.muted, collection.callerName];
+    } else {
+      return ['none', user]
+    }
   };
 
   person = personToMute();
 
-  _id = person[0];
-  muted_boolean = person[1];
-  person_to_mute = person[2]
+  if (person != 'none') {
 
-  console.log('person_to_mute: ' + person_to_mute);
+    _id = person[0];
+    muted_boolean = person[1];
+    person_to_mute = person[2]
 
-  if (muted == false) {
-    //var user = VoiceUsers.findOne({callerName: person_to_mute});
-    VoiceUsers.update({_id: _id}, { $set: { 'muted': true }});
-  }else{
-    console.log('User is already muted')
+    console.log('person_to_mute: ' + person_to_mute);
+
+    if (muted == false) {
+      //var user = VoiceUsers.findOne({callerName: person_to_mute});
+      VoiceUsers.update({_id: _id}, { $set: { 'muted': true }});
+    } else {
+      console.log(user + ' is already muted')
+    }
+  } else {
+    console.log('There is no Person called: ' user)
   }
 }
 
@@ -130,10 +138,11 @@ var make_post_request = function(message) {
           } else {
 
             if (intent_arr.length == 1) {
+              var intent = intent_arr[0]
               // Do 1 intend
               // frage ob letzter Intend wake_up war
               if (last_intent == 'wake_up') {
-                var intent = intent_arr[0]
+
                 console.log('1 intent: ', intent)
                 execute_intent(intent, response)
                 last_intent = null
@@ -141,6 +150,9 @@ var make_post_request = function(message) {
               } else {
                 if (check_intent(intent_arr, 'wake_up')) {
                   last_intent = 'wake_up'
+                  if (intent == 'wake_up') {
+                    execute_intent(intent, response)
+                  }
                 } else {
                   console.log('pls wake up bbb first')
                 }
@@ -148,9 +160,6 @@ var make_post_request = function(message) {
             }
           }
         }
-      //var value = JSON.parse(response).entities[0].value || 'No Value';
-      //console.log('value: ', value)
-
       return null;
     }
   };
@@ -170,8 +179,8 @@ var handle = GroupChatMsg.find().observe({
   added: function (item) {
     if (!initializing)
         // do stuff with newly added items, this check skips the first run
-        console.log('something changed')
-        console.log(item)
+        //console.log('something changed')
+        //console.log(item)
         make_post_request(item.message)
         //a = new Voice_Assistant(item, min_confidence)
         console.log('last_intent', last_intent)
