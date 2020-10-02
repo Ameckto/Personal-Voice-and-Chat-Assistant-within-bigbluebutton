@@ -3,17 +3,17 @@ import VoiceUsers from '/imports/api/voice-users';
 import Auth from '/imports/ui/services/auth';
 import { Meteor } from 'meteor/meteor';
 
-var notify = function() {
+var notify = function(text, title, type) {
   window.notificationService.notify({
 
     // title
-    title: 'Error!',
+    title: title,
 
     // notification message
-    text: 'Data failed to save',
+    text: text,
 
     // 'success', 'warning', 'error'
-    type: 'success',
+    type: type,
 
     // 'top-right', 'bottom-right', 'top-left', 'bottom-left'
     position: 'bottom-right',
@@ -95,7 +95,7 @@ var mute_user = function(user) {
 
     console.log('person_to_mute: ' + person_to_mute);
 
-    if (muted == false) {
+    if (muted_boolean == false) {
       //var user = VoiceUsers.findOne({callerName: person_to_mute});
       VoiceUsers.update({_id: _id}, { $set: { 'muted': true }});
     } else {
@@ -183,6 +183,10 @@ var make_post_request = function(message) {
                   }
                 } else {
                   console.log('pls wake up bbb first')
+                  text='pls wake up bbb first'
+                  title='Personal Voice Assistant'
+                  type='warning'
+                  notify(text, title, type)
                 }
               }
             }
@@ -212,7 +216,6 @@ var handle = GroupChatMsg.find().observe({
         make_post_request(item.message)
         //a = new Voice_Assistant(item, min_confidence)
         console.log('last_intent', last_intent)
-        notify()
   }
 });
 
