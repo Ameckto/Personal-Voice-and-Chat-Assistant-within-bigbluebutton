@@ -12,7 +12,7 @@ class Voice_Assistant {
     this._caller_name = VoiceUsers.findOne({ meetingId: Auth.meetingID, intId: Auth.userID }).callerName;
     console.log('_caller_name: ', this._caller_name)
     this._response = this.make_post_request(this._message)
-    this._min_confidence= 0.3
+    this._min_confidence = 0.3
   }
 
   // retrun intents in array >= min_confidence
@@ -22,7 +22,10 @@ class Voice_Assistant {
     for (var i = 0; i < arrayLength; i++) {
         var intent =  intent_arr[i].name;
         var confidence =  intent_arr[i].confidence;
+        console.log(confidence)
+        console.log(intent)
         if (confidence >= min_confidence) {
+          console.log('true')
           result_arr.push(intent)
         }
     }
