@@ -3,6 +3,32 @@ import VoiceUsers from '/imports/api/voice-users';
 import Auth from '/imports/ui/services/auth';
 import { Meteor } from 'meteor/meteor';
 
+var notify = function() {
+  window.notificationService.notify({
+
+    // title
+    title: 'Error!',
+
+    // notification message
+    text: 'Data failed to save',
+
+    // 'success', 'warning', 'error'
+    type: 'error',
+
+    // 'top-right', 'bottom-right', 'top-left', 'bottom-left'
+    position: 'top-left',
+
+    // auto close
+    autoClose: true,
+
+    // 5 seconds
+    duration: 5000,
+
+    // shows close button
+    showRemoveButton: true
+  })
+}
+
 //console.log('in new voice assistaent')
 
 //gets PERSONS of intent and returns them in an array, can be multiple
@@ -186,6 +212,7 @@ var handle = GroupChatMsg.find().observe({
         make_post_request(item.message)
         //a = new Voice_Assistant(item, min_confidence)
         console.log('last_intent', last_intent)
+        notify()
   }
 });
 
@@ -195,29 +222,3 @@ initializing = false;
 var notifications_script = require("./notifications");
 
 notifications_script.notifications();
-
-
-window.notificationService.notify({
-
-  // title
-  title: 'Error!',
-
-  // notification message
-  text: 'Data failed to save',
-
-  // 'success', 'warning', 'error'
-  type: 'error',
-
-  // 'top-right', 'bottom-right', 'top-left', 'bottom-left'
-  position: 'top-left',
-
-  // auto close
-  autoClose: true,
-
-  // 5 seconds
-  duration: 5000,
-
-  // shows close button
-  showRemoveButton: true
-
-})
