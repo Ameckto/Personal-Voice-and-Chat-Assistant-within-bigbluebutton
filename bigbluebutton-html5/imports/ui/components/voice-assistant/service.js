@@ -9,9 +9,9 @@ class Voice_Assistant {
   constructor(item) {
     this._message = item.message;
     //this._int_id = item.sender;
-    this._caller_name = VoiceUsers.findOne({ meetingId: Auth.meetingID, intId: Auth.userID });
+    this._caller_name = VoiceUsers.findOne({ meetingId: Auth.meetingID, intId: Auth.userID }).callerName;
     console.log('_caller_name', this._caller_name)
-    this._response = make_post_request(this._message)
+    this._response = this.make_post_request(this._message)
   }
 
   make_post_request(message) {
