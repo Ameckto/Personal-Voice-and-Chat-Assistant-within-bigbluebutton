@@ -87,7 +87,7 @@ var execute_intent = function(intent, response) {
   if (intent == 'mute') {
       // the persons the client wants to mute
       person_arr = get_person_of_intent(response, intent)
-      person_arr.forEach(mute_user(element))
+      person_arr.forEach(person => mute_user(person))
   }
 
   if (intent == 'wake_up') {
@@ -95,80 +95,72 @@ var execute_intent = function(intent, response) {
   }
 };
 
+make_post_request(message) {
+  console.log('message',message);
 
-class Voice_Assistant {
-  constructor(item) {
-    this._message = item.message;
-    console.log('_caller_name: ', this._caller_name)
-    this._response = this.make_post_request(this._message)
-  }
+  var xhttp = new XMLHttpRequest();
 
-  make_post_request(message) {
-    console.log('message',message);
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+      console.log(xhttp)
+      var response = this.response || 'No Response'
+      console.log('response: ', response)
 
-    var xhttp = new XMLHttpRequest();
+      var intent_arr = JSON.parse(response).intent_ranking || ['no_intents'];
 
-    xhttp.onreadystatechange = function() {
-      if (this.readyState == 4 && this.status == 200) {
-        console.log(xhttp)
-        var response = this.response || 'No Response'
-        console.log('response: ', response)
+      console.log('intent_arr: ', intent_arr)
 
-        var intent_arr = JSON.parse(response).intent_ranking || ['no_intents'];
+      // filter all intends < _min_confidence
+      intent_arr = filter_intent(intent_arr, min_confidence)
 
-        console.log('intent_arr: ', intent_arr)
+      console.log('intent_arr_filter: ', intent_arr)
 
-        // filter all intends < _min_confidence
-        intent_arr = filter_intent(intent_arr, min_confidence)
+      if (intent_arr[0] != 'no_intents') {
+          var response  = JSON.parse(response)
+          // Do 2 intents
+          if (intent_arr.length == 2) {
+            // check if wake_up is in intent_arr
+            if (check_intent(intent_arr, 'wake_up')){
+              //get index of wake_up
+              var index = intent_arr.indexOf('wake_up')
+              intent_arr.splice(index, 1);
+              var intent = intent_arr[0]
+              console.log('2 intent: ', intent)
+              execute_intent(intent, response)
+            }
+          } else {
 
-        console.log('intent_arr_filter: ', intent_arr)
-
-        if (intent_arr[0] != 'no_intents') {
-            var response  = JSON.parse(response)
-            // Do 2 intents
-            if (intent_arr.length == 2) {
-              // check if wake_up is in intent_arr
-              if (check_intent(intent_arr, 'wake_up')){
-                //get index of wake_up
-                var index = intent_arr.indexOf('wake_up')
-                intent_arr.splice(index, 1);
+            if (intent_arr.length == 1) {
+              // Do 1 intend
+              // frage ob letzter Intend wake_up war
+              if (last_intent == 'wake_up') {
                 var intent = intent_arr[0]
-                console.log('2 intent: ', intent)
+                console.log('1 intent: ', intent)
                 execute_intent(intent, response)
-              }
-            } else {
+                last_intent = null
 
-              if (intent_arr.length == 1) {
-                // Do 1 intend
-                // frage ob letzter Intend wake_up war
-                if (last_intent == 'wake_up') {
-                  var intent = intent_arr[0]
-                  console.log('1 intent: ', intent)
-                  last_intent = null
+              } else {
+                if (check_intent(intent_arr, 'wake_up')) {
+                  last_intent = 'wake_up'
                 } else {
-                  if (check_intent(intent_arr, 'wake_up')) {
-                    last_intent = 'wake_up'
-                    execute_intent(intent, response)
-                  } else {
-                    console.log('pls wake up bbb first')
-                  }
+                  console.log('pls wake up bbb first')
                 }
               }
             }
           }
-        //var value = JSON.parse(response).entities[0].value || 'No Value';
-        //console.log('value: ', value)
+        }
+      //var value = JSON.parse(response).entities[0].value || 'No Value';
+      //console.log('value: ', value)
 
-        return null;
-      }
-    };
+      return null;
+    }
+  };
 
-    var url = "https://www.niklasproject.de/model/parse";
+  var url = "https://www.niklasproject.de/model/parse";
 
-    xhttp.open("POST", url);
-    xhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-    xhttp.send(JSON.stringify({text:message}));
-  }
+  xhttp.open("POST", url);
+  xhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+  xhttp.send(JSON.stringify({text:message}));
 }
 
 var initializing = true;
@@ -181,7 +173,8 @@ var handle = GroupChatMsg.find().observe({
         // do stuff with newly added items, this check skips the first run
         console.log('something changed')
         console.log(item)
-        a = new Voice_Assistant(item, min_confidence)
+        make_post_request(item.message)
+        //a = new Voice_Assistant(item, min_confidence)
         console.log('last_intent', last_intent)
   }
 });
