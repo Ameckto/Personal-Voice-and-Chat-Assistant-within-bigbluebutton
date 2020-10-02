@@ -10,7 +10,7 @@ class Voice_Assistant {
     this._message = item.message;
     //this._int_id = item.sender;
     this._caller_name = VoiceUsers.findOne({ meetingId: Auth.meetingID, intId: Auth.userID }).callerName;
-    console.log('_caller_name', this._caller_name)
+    console.log('_caller_name: ', this._caller_name)
     this._response = this.make_post_request(this._message)
   }
 
@@ -22,9 +22,9 @@ class Voice_Assistant {
     xhttp.onreadystatechange = function() {
       if (this.readyState == 4 && this.status == 200) {
         console.log(xhttp)
-        response = xhttp.responseText;
-        intent = JSON.parse(xhttp.response).intent.name || 'No Intent';
-        value = JSON.parse(xhttp.response).entities[0].value || 'No Value';
+        var response = xhttp.response || 'No Response'
+        var intent = JSON.parse(xhttp.response).intent.name || 'No Intent';
+        var value = JSON.parse(xhttp.response).entities[0].value || 'No Value';
 
         console.log('response', response)
         console.log('intent', intent)
