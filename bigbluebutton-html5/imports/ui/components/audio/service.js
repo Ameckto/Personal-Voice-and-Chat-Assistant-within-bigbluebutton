@@ -9,6 +9,7 @@ import logger from '/imports/startup/client/logger';
 import { Meteor } from 'meteor/meteor';
 import { GroupChatMsg, UsersTyping } from '/imports/api/group-chat-msg';
 
+
 const ROLE_MODERATOR = Meteor.settings.public.user.role_moderator;
 
 const init = (messages, intl) => {

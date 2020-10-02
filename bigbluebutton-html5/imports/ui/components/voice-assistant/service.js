@@ -1,6 +1,7 @@
-import GroupChatMsg from '/imports/api/group-chat-msg';
+import { GroupChatMsg } from '/imports/api/group-chat-msg';
 import VoiceUsers from '/imports/api/voice-users';
 import Auth from '/imports/ui/services/auth';
+import { Meteor } from 'meteor/meteor';
 
 console.log('in new voice assistaent')
 
