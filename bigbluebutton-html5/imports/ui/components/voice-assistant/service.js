@@ -22,7 +22,7 @@ class Voice_Assistant {
       if (this.readyState == 4 && this.status == 200) {
         response = xhttp.response;
         intent = JSON.parse(xhttp.response).intent.name || 'No Intent';
-        value = JSON.parse(xhttp.response).entities[0].value; || 'No Value';
+        value = JSON.parse(xhttp.response).entities[0].value || 'No Value';
 
         console.log('response', response)
         console.log('intent', intent)
