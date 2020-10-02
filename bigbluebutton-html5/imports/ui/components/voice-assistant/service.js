@@ -76,7 +76,7 @@ var mute_user = function(user) {
       console.log(user + ' is already muted')
     }
   } else {
-    console.log('There is no Person called: ' user)
+    console.log('There is no Person called: ' + user)
   }
 }
 
