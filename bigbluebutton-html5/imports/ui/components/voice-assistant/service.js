@@ -95,9 +95,8 @@ var execute_intent = function(intent, response) {
   }
 };
 
-make_post_request(message) {
+var make_post_request = function(message) {
   console.log('message',message);
-
   var xhttp = new XMLHttpRequest();
 
   xhttp.onreadystatechange = function() {
@@ -163,8 +162,8 @@ make_post_request(message) {
   xhttp.send(JSON.stringify({text:message}));
 }
 
-var initializing = true;
 
+var initializing = true;
 var last_intent = null;
 var min_confidence = 0.3
 var handle = GroupChatMsg.find().observe({
