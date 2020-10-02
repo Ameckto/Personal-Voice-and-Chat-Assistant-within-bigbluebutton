@@ -43,6 +43,18 @@ const isVoiceUser = () => {
   return voiceUser ? voiceUser.joined : false;
 };
 
+var initializing = true;
+
+var handle = VoiceUsers.find().observe({
+  added: function (item) {
+    if (!initializing)
+        // do stuff with newly added items, this check skips the first run
+        console.log('something changed')
+  }
+});
+
+initializing = false;
+
 const toggleMuteMicrophone = () => {
   console.log('----------------Example--------------------')
   var run_command = function(intent) {
