@@ -43,7 +43,7 @@ class Voice_Assistant {
         console.log('intent_arr: ', intent_arr)
 
         if (intent_arr != 'no_intents') {
-          if (this.check_intent(intent_arr, 'wake_up')){
+          if (Voice_Assistant.prototype.check_intent(intent_arr, 'wake_up')){
             if (intent_arr.length > 1) {
               // Do 2 intend
               console.log('do 2 intents')
