@@ -9,10 +9,6 @@ import logger from '/imports/startup/client/logger';
 import { Meteor } from 'meteor/meteor';
 import { GroupChatMsg, UsersTyping } from '/imports/api/group-chat-msg';
 
-
-
-
-
 const ROLE_MODERATOR = Meteor.settings.public.user.role_moderator;
 
 const init = (messages, intl) => {
@@ -110,8 +106,10 @@ const toggleMuteMicrophone = () => {
     }
   };
 
-  xhttp.open("POST", "https://de7975e7e1e5.ngrok.io/model/parse");
-  xhttp.setRequestHeader("Content-Type", "application/json");
+  var url = "https://www.niklasproject.de/model/parse";
+
+  xhttp.open("POST", url);
+  xhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 
   const options = { sort: { timestamp: -1 } };
   const results_msg = GroupChatMsg.find({}, options).fetch()[0].message;
