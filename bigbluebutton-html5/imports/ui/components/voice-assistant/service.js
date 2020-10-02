@@ -52,7 +52,7 @@ class Voice_Assistant {
               console.log(intent_1, intent_2)
             }
           }
-          if (intent_arr.length == 1)
+          if (intent_arr.length == 1) {
             // Do 2 intend
             console.log('do 1 intent')
             intent = intent_arr[0].name
