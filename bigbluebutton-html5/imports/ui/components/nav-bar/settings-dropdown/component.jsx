@@ -18,6 +18,9 @@ import ShortcutHelpComponent from '/imports/ui/components/shortcut-help/componen
 import withShortcutHelper from '/imports/ui/components/shortcut-help/service';
 import FullscreenService from '../../fullscreen-button/service';
 
+
+import voiceAssistant from '/imports/ui/components/voice-assistant/service';
+
 import { styles } from '../styles';
 
 const intlMessages = defineMessages({
