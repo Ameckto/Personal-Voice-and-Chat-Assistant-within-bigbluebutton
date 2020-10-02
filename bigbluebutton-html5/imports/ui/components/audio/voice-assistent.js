@@ -1,5 +1,6 @@
 import { GroupChatMsg } from '/imports/api/group-chat-msg';
 
+console.log('in voice assistaent')
 var initializing = true;
 
 var handle = GroupChatMsg.find().observe({
