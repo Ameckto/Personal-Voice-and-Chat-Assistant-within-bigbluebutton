@@ -16,7 +16,7 @@ class Voice_Assistant {
   }
 
   // retrun intents in array >= min_confidence
-  filter_intent(intent_arr, min_confidence) {
+  var filter_intent = function(intent_arr, min_confidence) {
     var result_arr = []
     var arrayLength = intent_arr.length;
     for (var i = 0; i < arrayLength; i++) {
@@ -61,7 +61,7 @@ class Voice_Assistant {
         console.log('intent_arr: ', intent_arr)
 
         // filter all intends < _min_confidence
-        intent_arr = Voice_Assistant.prototype.filter_intent(intent_arr, Voice_Assistant.prototype._min_confidence)
+        intent_arr = filter_intent(intent_arr, Voice_Assistant.prototype._min_confidence)
 
         console.log('intent_arr_filter: ', intent_arr)
 
