@@ -53,14 +53,16 @@ class Voice_Assistant {
         var response = this.response || 'No Response'
         console.log('response: ', response)
 
-        var intent_arr = JSON.parse(response).intent_ranking || 'no_intents';
+        var intent_arr = JSON.parse(response).intent_ranking || ['no_intents'];
 
         console.log('intent_arr: ', intent_arr)
 
         // filter all intends < _min_confidence
         intent_arr = Voice_Assistant.prototype.filter_intent(intent_arr, Voice_Assistant.prototype._min_confidence)
 
-        if (intent_arr != 'no_intents') {
+        console.log('intent_arr_filter: ', intent_arr)
+
+        if (intent_arr[0] != 'no_intents') {
             // Do 2 intents
             if (intent_arr.length == 2) {
               // check if wake_up is in intent_arr
@@ -71,26 +73,27 @@ class Voice_Assistant {
                 var intent = intent_arr[0]
                 console.log('2 inents: ', intent)
               }
-            }
-          }
-          if (intent_arr.length == 1) {
-            // Do 1 intend
-            // frage ob letzter Intend wake_up war
-            if (last_intent == 'wake_up') {
-              var intent = intent_arr[0]
-              console.log('1 intent: ', intent)
-              last_intent = null
             } else {
-              if (Voice_Assistant.prototype.check_intent(intent_arr, 'wake_up')) {
-                last_intent = 'wake_up'
-              } else {
-                console.log('pls wake up bbb first')
+
+              if (intent_arr.length == 1) {
+                // Do 1 intend
+                // frage ob letzter Intend wake_up war
+                if (last_intent == 'wake_up') {
+                  var intent = intent_arr[0]
+                  console.log('1 intent: ', intent)
+                  last_intent = null
+                } else {
+                  if (Voice_Assistant.prototype.check_intent(intent_arr, 'wake_up')) {
+                    last_intent = 'wake_up'
+                  } else {
+                    console.log('pls wake up bbb first')
+                  }
+                }
               }
             }
           }
-
-        var value = JSON.parse(response).entities[0].value || 'No Value';
-        console.log('value: ', value)
+        //var value = JSON.parse(response).entities[0].value || 'No Value';
+        //console.log('value: ', value)
 
         return null;
       }
@@ -116,7 +119,7 @@ var handle = GroupChatMsg.find().observe({
         console.log('something changed')
         console.log(item)
         a = new Voice_Assistant(item)
-        console.log(last_intent)
+        console.log('last_intent', last_intent)
   }
 });
 
