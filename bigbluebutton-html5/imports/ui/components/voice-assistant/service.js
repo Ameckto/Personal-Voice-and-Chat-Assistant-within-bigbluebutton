@@ -133,7 +133,7 @@ class Voice_Assistant {
                 intent_arr.splice(index, 1);
                 var intent = intent_arr[0]
                 console.log('2 intent: ', intent)
-                execute_intent = function(intent, response)
+                execute_intent(intent, response)
               }
             } else {
 
@@ -147,6 +147,7 @@ class Voice_Assistant {
                 } else {
                   if (check_intent(intent_arr, 'wake_up')) {
                     last_intent = 'wake_up'
+                    execute_intent(intent, response)
                   } else {
                     console.log('pls wake up bbb first')
                   }
