@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
-import { defineMessages, intlShape, injectIntl } from 'react-intl';
+import { defineMessages, injectIntl } from 'react-intl';
 import Button from '/imports/ui/components/button/component';
 import getFromUserSettings from '/imports/ui/services/users-settings';
 import withShortcutHelper from '/imports/ui/components/shortcut-help/service';
@@ -37,8 +37,8 @@ const propTypes = {
   showMute: PropTypes.bool.isRequired,
   inAudio: PropTypes.bool.isRequired,
   listenOnly: PropTypes.bool.isRequired,
-  intl: intlShape.isRequired,
-  talking: PropTypes.bool.isRequired
+  intl: PropTypes.object.isRequired,
+  talking: PropTypes.bool.isRequired,
 };
 
 class AudioControls extends PureComponent {
@@ -118,6 +118,7 @@ class AudioControls extends PureComponent {
           circle
           accessKey={inAudio ? shortcuts.leaveaudio : shortcuts.joinaudio}
         />
+      </span>
     );
   }
 }
