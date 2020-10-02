@@ -16,7 +16,7 @@ class Voice_Assistant {
   }
 
   // retrun intents in array >= min_confidence
-  var filter_intent = function(intent_arr, min_confidence) {
+  function filter_intent(intent_arr, min_confidence) {
     var result_arr = []
     var arrayLength = intent_arr.length;
     for (var i = 0; i < arrayLength; i++) {
