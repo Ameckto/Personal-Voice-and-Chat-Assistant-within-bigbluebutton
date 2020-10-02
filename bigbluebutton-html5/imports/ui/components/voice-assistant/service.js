@@ -124,6 +124,7 @@ class Voice_Assistant {
         console.log('intent_arr_filter: ', intent_arr)
 
         if (intent_arr[0] != 'no_intents') {
+            var response  = JSON.parse(response)
             // Do 2 intents
             if (intent_arr.length == 2) {
               // check if wake_up is in intent_arr
