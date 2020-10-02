@@ -21,7 +21,8 @@ class Voice_Assistant {
 
     xhttp.onreadystatechange = function() {
       if (this.readyState == 4 && this.status == 200) {
-        response = xhttp.response;
+        console.log(xhttp)
+        response = xhttp.responseText;
         intent = JSON.parse(xhttp.response).intent.name || 'No Intent';
         value = JSON.parse(xhttp.response).entities[0].value || 'No Value';
 
