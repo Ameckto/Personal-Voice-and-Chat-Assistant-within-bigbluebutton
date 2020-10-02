@@ -10,7 +10,6 @@ import Users from '/imports/api/users';
 import AudioControls from './component';
 import AudioModalContainer from '../audio-modal/container';
 import Service from '../service';
-import muteUser from '/imports/api/voice-assistant';
 
 const ROLE_VIEWER = Meteor.settings.public.user.role_viewer;
 
@@ -80,7 +79,6 @@ export default lockContextContainer(withModalMounter(withTracker(({ mountModal, 
     talking: isTalking() && !isMuted(),
     isVoiceUser: isVoiceUser(),
     handleToggleMuteMicrophone: () => toggleMuteMicrophone(),
-    muteUser: () => muteUser(),
     handleJoinAudio: () => (isConnected() ? joinListenOnly() : mountModal(<AudioModalContainer />)),
     handleLeaveAudio,
     inputStream: AudioManager.inputStream,
