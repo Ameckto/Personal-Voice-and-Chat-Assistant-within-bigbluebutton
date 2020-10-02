@@ -76,7 +76,7 @@ var wake_up = function(client) {
   sentence = 'Hey, what can I do for you ' + client + '?';
   console.log(sentence);
   const utterance = new SpeechSynthesisUtterance(sentence);
-  window.speechSynthesis.speak(utterance);
+  //window.speechSynthesis.speak(utterance);
 }
 
 var execute_intent = function(intent, response) {
