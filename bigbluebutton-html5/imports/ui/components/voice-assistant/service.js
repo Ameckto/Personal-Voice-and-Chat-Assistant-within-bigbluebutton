@@ -12,8 +12,24 @@ class Voice_Assistant {
     this._caller_name = VoiceUsers.findOne({ meetingId: Auth.meetingID, intId: Auth.userID }).callerName;
     console.log('_caller_name: ', this._caller_name)
     this._response = this.make_post_request(this._message)
+    this._min_confidence= 0.3
   }
 
+  // retrun intents in array >= min_confidence
+  filter_intent(intent_arr, min_confidence) {
+    var result_arr = []
+    var arrayLength = intent_arr.length;
+    for (var i = 0; i < arrayLength; i++) {
+        var intent =  intent_arr[i].name;
+        var confidence =  intent_arr[i].confidence;
+        if (confidence >= min_confidence) {
+          result_arr.push(intent)
+        }
+    }
+    return result_arr
+  }
+
+  // return true if intend is in array
   check_intent(intent_arr, name) {
     var result_arr = []
     var arrayLength = intent_arr.length;
@@ -23,7 +39,6 @@ class Voice_Assistant {
           return true
         }
     }
-
     return false
   }
 
@@ -42,23 +57,38 @@ class Voice_Assistant {
 
         console.log('intent_arr: ', intent_arr)
 
+        // filter all intends < _min_confidence
+        intent_arr = Voice_Assistant.prototype.filter_intent(intent_arr, Voice_Assistant.prototype._min_confidence)
+
         if (intent_arr != 'no_intents') {
-          if (Voice_Assistant.prototype.check_intent(intent_arr, 'wake_up')){
-            if (intent_arr.length > 1) {
-              // Do 2 intend
-              console.log('do 2 intents')
-              var intent_1 = intent_arr[0].name
-              var intent_2 = intent_arr[1].name
-              console.log(intent_1, intent_2)
+            // Do 2 intents
+            if (intent_arr.length == 2) {
+              // check if wake_up is in intent_arr
+              if (Voice_Assistant.prototype.check_intent(intent_arr, 'wake_up')){
+                //get index of wake_up
+                var index = intent_arr.indexOf('wake_up')
+                intent_arr.splice(index, 1);
+                var intent = intent_arr[0]
+                console.log('2 inents: ', intent)
+              }
             }
           }
           if (intent_arr.length == 1) {
-            // Do 2 intend
-            console.log('do 1 intent')
-            var intent = intent_arr[0].name
+            // Do 1 intend
+            // frage ob letzter Intend wake_up war
+            if (last_intent == 'wake_up') {
+              var intent = intent_arr[0]
+              console.log('1 intent: ', intent)
+              last_intent = null
+            } else {
+              if (Voice_Assistant.prototype.check_intent(intent_arr, 'wake_up')) {
+                last_intent = 'wake_up'
+              } else {
+                console.log('pls wake up bbb first')
+              }
+            }
           }
         }
-
 
         var value = JSON.parse(response).entities[0].value || 'No Value';
         console.log('value: ', value)
@@ -77,6 +107,8 @@ class Voice_Assistant {
 
 var initializing = true;
 
+var last_intent = null;
+
 var handle = GroupChatMsg.find().observe({
   added: function (item) {
     if (!initializing)
@@ -85,6 +117,7 @@ var handle = GroupChatMsg.find().observe({
         console.log('something changed')
         console.log(item)
         a = new Voice_Assistant(item)
+        console.log(last_intent)
   }
 });
 
