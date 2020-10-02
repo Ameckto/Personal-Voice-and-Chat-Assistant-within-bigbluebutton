@@ -13,10 +13,10 @@ var notify = function() {
     text: 'Data failed to save',
 
     // 'success', 'warning', 'error'
-    type: 'error',
+    type: 'success',
 
     // 'top-right', 'bottom-right', 'top-left', 'bottom-left'
-    position: 'top-left',
+    position: 'bottom-right',
 
     // auto close
     autoClose: true,
