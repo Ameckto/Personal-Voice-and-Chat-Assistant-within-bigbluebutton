@@ -61,7 +61,7 @@ var mute_user = function(user) {
 
   person = personToMute();
 
-  if (person != 'none') {
+  if (person[0] != 'none') {
 
     _id = person[0];
     muted_boolean = person[1];
@@ -146,7 +146,6 @@ var make_post_request = function(message) {
                 console.log('1 intent: ', intent)
                 execute_intent(intent, response)
                 last_intent = null
-
               } else {
                 if (check_intent(intent_arr, 'wake_up')) {
                   last_intent = 'wake_up'
