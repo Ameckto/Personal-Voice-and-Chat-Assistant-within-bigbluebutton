@@ -192,11 +192,32 @@ var handle = GroupChatMsg.find().observe({
 initializing = false;
 
 
-var domNotifications = require('dom-notifications')
-var notifications = domNotifications(options)
+var notifications_script = require("./notifications");
 
-document.body.appendChild(notifications.render())
+notifications_script.notifications();
 
-notifications.add({message: 'You are now logged in'}) // defaults to `info`
-notifications.add({message: 'This is a warning', type: 'warning'})
-notifications.error('Oh noes: File not found')
+
+window.notificationService.notify({
+
+  // title
+  title: 'Error!',
+
+  // notification message
+  text: 'Data failed to save',
+
+  // 'success', 'warning', 'error'
+  type: 'error',
+
+  // 'top-right', 'bottom-right', 'top-left', 'bottom-left'
+  position: 'top-left',
+
+  // auto close
+  autoClose: true,
+
+  // 5 seconds
+  duration: 5000,
+
+  // shows close button
+  showRemoveButton: true
+
+})
