@@ -15,10 +15,10 @@ class Voice_Assistant {
   }
 
   check_intent(intent_arr, name) {
-    result_arr = []
+    var result_arr = []
     var arrayLength = intent_arr.length;
     for (var i = 0; i < arrayLength; i++) {
-        intent =  intent_arr[i].name;
+        var intent =  intent_arr[i].name;
         if (intent == name) {
           return true
         }
@@ -47,15 +47,15 @@ class Voice_Assistant {
             if (intent_arr.length > 1) {
               // Do 2 intend
               console.log('do 2 intents')
-              intent_1 = intent_arr[0].name
-              intent_2 = intent_arr[1].name
+              var intent_1 = intent_arr[0].name
+              var intent_2 = intent_arr[1].name
               console.log(intent_1, intent_2)
             }
           }
           if (intent_arr.length == 1) {
             // Do 2 intend
             console.log('do 1 intent')
-            intent = intent_arr[0].name
+            var intent = intent_arr[0].name
           }
         }
 
