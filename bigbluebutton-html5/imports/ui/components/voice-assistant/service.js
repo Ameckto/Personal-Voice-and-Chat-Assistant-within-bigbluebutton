@@ -88,7 +88,6 @@ class Voice_Assistant {
               }
             }
           }
-        }
 
         var value = JSON.parse(response).entities[0].value || 'No Value';
         console.log('value: ', value)
