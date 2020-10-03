@@ -112,9 +112,11 @@ var execute_intent = function(intent, response) {
         user = person_arr[0]
 
         const personToGivePresentor = () => {
+
           const collection = VoiceUsers.findOne({ callerName: user});
+
           if (typeof(collection) != 'undefined') {
-            return collection._id;
+            return collection.intId;
           } else {
             return undefined;
           }
