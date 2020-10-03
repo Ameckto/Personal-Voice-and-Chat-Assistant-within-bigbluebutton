@@ -67,7 +67,7 @@ var mute_user = function(user) {
       notify(user + ' is already muted', 'Voice Assistent', 'warning')
     }
   } else {
-    notify('There is no person called ' user, 'Voice Assistent', 'warning')
+    notify('There is no person called ' + user, 'Voice Assistent', 'warning')
   }
 }
 
