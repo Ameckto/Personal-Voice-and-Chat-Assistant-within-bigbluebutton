@@ -71,7 +71,7 @@ var mute_user = function(user) {
   }
 }
 
-var get_greeting() {
+var get_greeting = function() {
   var greetings_arr = ['Greetings', 'Hello', 'Hi my friend'];
   var random = Math.floor(Math.random() * greetings_arr .length);
   return greetings_arr[random]
