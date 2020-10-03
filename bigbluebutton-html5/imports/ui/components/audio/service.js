@@ -6,9 +6,6 @@ import Meetings from '/imports/api/meetings';
 import { makeCall } from '/imports/ui/services/api';
 import VoiceUsers from '/imports/api/voice-users';
 import logger from '/imports/startup/client/logger';
-import { Meteor } from 'meteor/meteor';
-import { GroupChatMsg, UsersTyping } from '/imports/api/group-chat-msg';
-
 
 const ROLE_MODERATOR = Meteor.settings.public.user.role_moderator;
 
@@ -43,8 +40,10 @@ const isVoiceUser = () => {
     { fields: { joined: 1 } });
   return voiceUser ? voiceUser.joined : false;
 };
-
 const toggleMuteMicrophone = () => {
+  const user = VoiceUsers.findOne({
+    meetingId: Auth.meetingID, intId: Auth.userID,
+  }, { fields: { muted: 1 } });
 
   if (user.muted) {
     logger.info({
@@ -60,6 +59,7 @@ const toggleMuteMicrophone = () => {
     makeCall('toggleVoice');
   }
 };
+
 
 export default {
   init,
