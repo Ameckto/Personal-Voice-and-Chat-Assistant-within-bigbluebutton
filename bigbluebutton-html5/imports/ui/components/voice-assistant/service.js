@@ -72,13 +72,13 @@ var mute_user = function(user) {
 }
 
 var get_greeting = function() {
-  var greetings_arr = ['Greetings', 'Hello', 'Hi my friend'];
+  var greetings_arr = ['Greetings', 'More work', 'You are the king', 'Help help', 'Orders', "Don't ask", 'What do you need', 'No time for play'];
   var random = Math.floor(Math.random() * greetings_arr .length);
   return greetings_arr[random]
 }
 
 var wake_up = function(client) {
-  var text = get_greeting() + 'what can I do for you ' + client + '?';
+  var text = get_greeting() + ' ' + client + '?';
   notify(text, 'Voice Assistent', 'success')
 }
 
