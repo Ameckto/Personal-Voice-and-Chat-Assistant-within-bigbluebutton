@@ -174,6 +174,8 @@ var make_post_request = function(message) {
           } else {
             if (intent == 'wake_up') {
               last_intent = 'wake_up'
+              client = VoiceUsers.findOne({ meetingId: Auth.meetingID, intId: Auth.userID }).callerName;
+              wake_up(client)
             } else if (intent != 'wake_up' && last_intent != 'wake_up') {
                 notify('please wake me up first ', 'Voice Assistent', 'warning')
               }
