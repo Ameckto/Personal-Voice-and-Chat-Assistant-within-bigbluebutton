@@ -125,7 +125,7 @@ var execute_intent = function(intent, response) {
           const assignPresenter = (userId) => { makeCall('assignPresenter', userId); };
           assignPresenter()
         } else {
-          notify('There is no person called ' user, 'Voice Assistent', 'warning')
+          notify('There is no person called ' + user, 'Voice Assistent', 'warning')
         }
       }
       break;
