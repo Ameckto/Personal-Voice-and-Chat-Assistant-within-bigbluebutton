@@ -2,34 +2,26 @@ import { GroupChatMsg } from '/imports/api/group-chat-msg';
 import VoiceUsers from '/imports/api/voice-users';
 import Auth from '/imports/ui/services/auth';
 import { Meteor } from 'meteor/meteor';
+import { makeCall } from '/imports/ui/services/api';
 
 var notify = function(text, title, type) {
   window.notificationService.notify({
-
     // title
     title: title,
-
     // notification message
     text: text,
-
     // 'success', 'warning', 'error'
     type: type,
-
     // 'top-right', 'bottom-right', 'top-left', 'bottom-left'
     position: 'bottom-right',
-
     // auto close
     autoClose: true,
-
     // 5 seconds
-    duration: 5000,
-
+    duration: 10000,
     // shows close button
     showRemoveButton: true
   })
 }
-
-//console.log('in new voice assistaent')
 
 //gets PERSONS of intent and returns them in an array, can be multiple
 var get_person_of_intent = function(response, intent){
@@ -44,34 +36,8 @@ var get_person_of_intent = function(response, intent){
         result_arr.push(person)
       }
   }
-  return result_arr
-}
-
-// retrun intents in array >= min_confidence
-var filter_intent = function(intent_arr, min_confidence) {
-  var result_arr = []
-  var arrayLength = intent_arr.length;
-  for (var i = 0; i < arrayLength; i++) {
-      var intent =  intent_arr[i].name;
-      var confidence =  intent_arr[i].confidence;
-      if (confidence >= min_confidence) {
-        result_arr.push(intent)
-      }
-  }
-  return result_arr
-}
-
-// return true if intend is in array
-var check_intent = function(intent_arr, name) {
-  var result_arr = []
-  var arrayLength = intent_arr.length;
-  for (var i = 0; i < arrayLength; i++) {
-      var intent =  intent_arr[i];
-      if (intent == name) {
-        return true
-      }
-  }
-  return false
+  result_arr = [...new Set(result_arr)];
+  return result_arr;
 }
 
 var mute_user = function(user) {
@@ -93,24 +59,27 @@ var mute_user = function(user) {
     muted_boolean = person[1];
     person_to_mute = person[2]
 
-    console.log('person_to_mute: ' + person_to_mute);
-
     if (muted_boolean == false) {
       //var user = VoiceUsers.findOne({callerName: person_to_mute});
       VoiceUsers.update({_id: _id}, { $set: { 'muted': true }});
+      notify(user + ' muted', 'Voice Assistent', 'success')
     } else {
-      console.log(user + ' is already muted')
+      notify(user + ' is already muted', 'Voice Assistent', 'warning')
     }
   } else {
-    console.log('There is no Person called: ' + user)
+    notify('There is no person called ' user, 'Voice Assistent', 'warning')
   }
 }
 
+var get_greeting() {
+  var greetings_arr = ['Greetings', 'Hello', 'Hi my friend'];
+  var random = Math.floor(Math.random() * greetings_arr .length);
+  return greetings_arr[random]
+}
+
 var wake_up = function(client) {
-  sentence = 'Hey, what can I do for you ' + client + '?';
-  console.log(sentence);
-  const utterance = new SpeechSynthesisUtterance(sentence);
-  //window.speechSynthesis.speak(utterance);
+  var text = get_greeting() + 'what can I do for you ' + client + '?';
+  notify(text, 'Voice Assistent', 'success')
 }
 
 var execute_intent = function(intent, response) {
@@ -118,91 +87,106 @@ var execute_intent = function(intent, response) {
   //get the name of the client person
   client = VoiceUsers.findOne({ meetingId: Auth.meetingID, intId: Auth.userID }).callerName;
 
-  if (intent == 'mute') {
-      // the persons the client wants to mute
-      person_arr = get_person_of_intent(response, intent)
-      if (person_arr.length == 0) {
-        console.log('Could not identify a person')
-      }
-      person_arr.forEach(person => mute_user(person))
-  }
+  switch (intent) {
 
-  if (intent == 'wake_up') {
-    wake_up(client)
+    case 'mute':
+      var person_arr = get_person_of_intent(response, intent)
+      if (person_arr.length == 0) {
+        notify('Could not identify a person to mute', 'Voice Assistent', 'warning')
+      } else {
+        person_arr.forEach(person => mute_user(person))
+      }
+      break;
+
+    case 'wake_up':
+      wake_up(client)
+      break;
+
+    case 'give_presentor':
+
+      var person_arr = get_person_of_intent(response, intent)
+      if (person_arr.length == 0) {
+        notify('Could not identify a person to give presentor to', 'Voice Assistent', 'warning')
+        return;
+      } else {
+        user = person_arr[0]
+
+        const personToGivePresentor = () => {
+          const collection = VoiceUsers.findOne({ callerName: user});
+          if (typeof(collection) != 'undefined') {
+            return collection._id;
+          } else {
+            return undefined;
+          }
+        };
+        userId = personToGivePresentor();
+
+        if (typeof(userId) != undefined) {
+          const assignPresenter = (userId) => { makeCall('assignPresenter', userId); };
+          assignPresenter()
+        } else {
+          notify('There is no person called ' user, 'Voice Assistent', 'warning')
+        }
+      }
+      break;
+
+    case 'share_first_screen':
+      //
+      break;
+
+    case 'raise_hand':
+      //
+      break;
+
   }
 };
 
 var make_post_request = function(message) {
-  console.log('message',message);
+
   var xhttp = new XMLHttpRequest();
 
   xhttp.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
-      console.log(xhttp)
-      var response = this.response || 'No Response'
-      console.log('response: ', response)
 
-      var intent_arr = JSON.parse(response).intent_ranking || ['no_intents'];
-
-      console.log('intent_arr: ', intent_arr)
-
-      // filter all intends < _min_confidence
-      intent_arr = filter_intent(intent_arr, min_confidence)
-
-      console.log('intent_arr_filter: ', intent_arr)
-
-      if (intent_arr[0] != 'no_intents') {
-          var response  = JSON.parse(response)
-          // Do 2 intents
-          if (intent_arr.length == 2) {
-            // check if wake_up is in intent_arr
-            if (check_intent(intent_arr, 'wake_up')){
-              //get index of wake_up
-              var index = intent_arr.indexOf('wake_up')
-              intent_arr.splice(index, 1);
-              var intent = intent_arr[0]
-              console.log('2 intent: ', intent)
-              execute_intent(intent, response)
-            }
+      var response = JSON.parse(this.response) || undefined;
+      var intent = response.intent.name || undefined;
+      var confidence = response.intent.confidence || undefined;
+      if (confidence < min_confidence) {
+        console.log('Voice Assistent -- confidence (' + confidence + ') of intent is less than ' + min_confidence )
+        return;
+      }
+      if (typeof(intent) != undefined) {
+        if (intent == 'out_of_scope') {
+          console.log('Voice Assistent -- Intent out of scope')
+          return;
+        }
+      }
+      if (typeof(intent) != undefined) {
+        if (intent.includes("+")) {
+          // the first one is wake_up
+          intent = intent.split('+')[1]
+          execute_intent(intent, response)
+        } else {
+          // 1 intent
+          if (last_intent == 'wake_up' && intent != 'wake_up') {
+            execute_intent(intent, response)
+            last_intent = null
           } else {
-
-            if (intent_arr.length == 1) {
-              var intent = intent_arr[0]
-              // Do 1 intend
-              // frage ob letzter Intend wake_up war
-              if (last_intent == 'wake_up') {
-
-                console.log('1 intent: ', intent)
-                execute_intent(intent, response)
-                last_intent = null
-              } else {
-                if (check_intent(intent_arr, 'wake_up')) {
-                  last_intent = 'wake_up'
-                  if (intent == 'wake_up') {
-                    execute_intent(intent, response)
-                  }
-                } else {
-                  console.log('pls wake up bbb first')
-                  text='pls wake up bbb first'
-                  title='Personal Voice Assistant'
-                  type='warning'
-                  notify(text, title, type)
-                }
+            if (intent == 'wake_up') {
+              last_intent = 'wake_up'
+            } else if (intent != 'wake_up' && last_intent != 'wake_up') {
+                notify('please wake me up first ', 'Voice Assistent', 'warning')
               }
-            }
           }
         }
-      return null;
+      }
     }
-  };
-
+  }
   var url = "https://www.niklasproject.de/model/parse";
-
   xhttp.open("POST", url);
   xhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
   xhttp.send(JSON.stringify({text:message}));
 }
-
 
 var initializing = true;
 var last_intent = null;
@@ -210,17 +194,12 @@ var min_confidence = 0.3
 var handle = GroupChatMsg.find().observe({
   added: function (item) {
     if (!initializing)
-        // do stuff with newly added items, this check skips the first run
-        //console.log('something changed')
-        //console.log(item)
         make_post_request(item.message)
-        //a = new Voice_Assistant(item, min_confidence)
         console.log('last_intent', last_intent)
   }
 });
 
 initializing = false;
-
 
 var notifications_script = require("./notifications");
 

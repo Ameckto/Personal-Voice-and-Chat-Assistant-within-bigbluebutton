@@ -45,96 +45,19 @@ const isVoiceUser = () => {
 };
 
 const toggleMuteMicrophone = () => {
-  console.log('----------------Example--------------------')
-  var run_command = function(intent) {
-
-    if (intent == 'mute') {
-        //value == person im meeting
-        //person.meetingID
-        //callerName
-        //return collection.intId;
-        const personToMute = () => {
-          const collection = VoiceUsers.findOne({ callerName: value});
-            console.log(collection);
-          return [collection._id, collection.muted, collection.callerName];
-        };
-
-        result = personToMute();
-
-        _id = result[0];
-        muted = result[1];
-        callerName = result[2]
-        console.log('person_to_mute: ' + callerName);
-
-        var user = VoiceUsers.findOne({callerName: callerName});
-
-        if (muted == false) {
-          //VoiceUsers.update(selector, modifier_1, cb);
-          VoiceUsers.update({_id: user._id}, { $set: { 'muted': true }});
-          //collection.insert({muted: true, joined:true});
-        }else{
-          VoiceUsers.update({_id: user._id}, { $set: { 'muted': false }});
-        }
-    }
-    if (intent == 'wake_up') {
-
-      const user = VoiceUsers.findOne({ meetingId: Auth.meetingID, intId: Auth.userID });
-      console.log(user)
-      sentence = 'Hey, what can I do for you ' + user.callerName + '?';
-      console.log(sentence);
-      const utterance = new SpeechSynthesisUtterance(sentence);
-      window.speechSynthesis.speak(utterance);
-    }
-  };
-
-  console.log('---------------voice-assistent--------------------')
-
-  var xhttp = new XMLHttpRequest();
-  xhttp.onreadystatechange = function() {
-    response = xhttp.response;
-    console.log(response);
-
-    if (this.readyState == 4 && this.status == 200) {
-
-      intent = JSON.parse(xhttp.response).intent.name;
-      console.log('intent: ' + intent);
-
-      if (intent == 'mute') {
-        value = JSON.parse(xhttp.response).entities[0].value;
-        console.log('value: ' + value);
-      }
-      run_command(intent);
-    }
-  };
-
-  var url = "https://www.niklasproject.de/model/parse";
-
-  xhttp.open("POST", url);
-  xhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-
-  const options = { sort: { timestamp: -1 } };
-  const results_msg = GroupChatMsg.find({}, options).fetch()[0].message;
-
-  console.log('post_request_rasa: '+ results_msg);
-  xhttp.send(JSON.stringify({text:results_msg}));
-
-  //-------------------------------------------------------------------------
-  const user = VoiceUsers.findOne({
-    meetingId: Auth.meetingID, intId: Auth.userID,
-  }, { fields: { muted: 1 } });
 
   if (user.muted) {
-    //logger.info({
-    //  logCode: 'audiomanager_unmute_audio',
-    //  extraInfo: { logType: 'user_action' },
-    //}, 'microphone unmuted by user');
-    //makeCall('toggleVoice');
+    logger.info({
+      logCode: 'audiomanager_unmute_audio',
+      extraInfo: { logType: 'user_action' },
+    }, 'microphone unmuted by user');
+    makeCall('toggleVoice');
   } else {
-    //logger.info({
-    //  logCode: 'audiomanager_mute_audio',
-    //  extraInfo: { logType: 'user_action' },
-    //}, 'microphone muted by user');
-    //makeCall('toggleVoice');
+    logger.info({
+      logCode: 'audiomanager_mute_audio',
+      extraInfo: { logType: 'user_action' },
+    }, 'microphone muted by user');
+    makeCall('toggleVoice');
   }
 };
 
