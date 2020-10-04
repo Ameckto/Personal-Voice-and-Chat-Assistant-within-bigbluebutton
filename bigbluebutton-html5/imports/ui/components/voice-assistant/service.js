@@ -144,8 +144,8 @@ var execute_intent = function(intent, response) {
         } else {
           var userId = get_userId(user);
         }
-        //makeCall('changeRole', userId, 'MODERATOR');
-        //makeCall('assignPresenter', userId);
+        makeCall('changeRole', userId, 'MODERATOR');
+        makeCall('assignPresenter', userId);
         //assignPresenter(userId)
 
         //Service.takePresenterRole
