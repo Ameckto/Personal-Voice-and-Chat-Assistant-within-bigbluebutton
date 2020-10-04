@@ -156,7 +156,7 @@ var execute_intent = function(intent, response) {
       }
       break;
 
-    case 'share_first_screen':
+    case 'share_screen':
       var selector = {connectionStatus:'online', name: client, meetingId: Auth.meetingID}
       var users_is_presenter = Users.findOne(selector).presenter;
       if (users_is_presenter) {
@@ -170,7 +170,7 @@ var execute_intent = function(intent, response) {
             KurentoBridge.kurentoShareScreen(onFail, stream);
           }).catch(onFail);
         };
-        //shareScreen()
+        shareScreen()
         notify('You can now share your screen', 'Voice Assistent', 'success')
       } else {
         notify('You can only share your screen if you are presenter', 'Voice Assistent', 'warning')
