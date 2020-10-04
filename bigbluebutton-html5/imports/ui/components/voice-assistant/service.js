@@ -119,12 +119,17 @@ var execute_intent = function(intent, response) {
       if (person_arr.length == 0) {
         notify('Could not identify a person to give presentor to', 'Voice Assistent', 'warning')
       } else {
-        console.log(person_arr)
         var user = person_arr[0]
-        console.log(user)
         var userId = get_userId(user);
-        makeCall('assignPresenter', userId);
-        notify('Assigned ' + user + ' presenter', 'Voice Assistent', 'success')
+        var selector = {connectionStatus:'online', name: client, meetingId: Auth.meetingID}
+        var users_role = Users.findOne(selector).role;
+        console.log(users_role)
+        if (users_role == 'MODERATOR'){
+          makeCall('assignPresenter', userId);
+          notify('Assigned ' + user + ' presenter', 'Voice Assistent', 'success')
+        } else {
+          notify('Only the moderator can assign presenter', 'Voice Assistent', 'warning')
+        }
       }
       break;
 
