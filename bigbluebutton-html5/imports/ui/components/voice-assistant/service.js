@@ -98,10 +98,11 @@ var user_exists = function(user) {
   var user_document = Users.findOne(selector);
   var exists;
   console.log(typeof(user_document))
-  if (typeof(user_document) != undefined) {
-    exists = true;
-  } else {
+  if (typeof(user_document) == undefined) {
+    console.log('in undefined block')
     exists = false;
+  } else {
+    exists = true;
   }
   console.log(exists);
   return exists;
