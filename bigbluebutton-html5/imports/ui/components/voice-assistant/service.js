@@ -114,6 +114,7 @@ var execute_intent = function(intent, response) {
 
         Service.takePresenterRole()
         console.log('Should have give yourself presentor')
+      }
       break;
 
     case 'share_first_screen':
