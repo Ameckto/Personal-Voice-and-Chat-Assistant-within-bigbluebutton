@@ -97,7 +97,7 @@ var user_exists = function(user) {
   var selector = {connectionStatus:'online', name: user, meetingId: Auth.meetingID}
   var user_document = Users.findOne(selector);
   var exists;
-
+  console.log(typeof(user_document))
   if (typeof(user_document) != undefined) {
     exists = true;
   } else {
