@@ -52,7 +52,7 @@ var get_userId = function(user) {
 
 //mutes a user
 var mute_user = function(user, client) {
-  if (check_user(user) == false) {
+  if (user_exists(user) == false) {
     notify('Could not identify a person to give presentor to', 'Voice Assistent', 'warning');
     return;
   }
@@ -93,15 +93,18 @@ var get_greeting = function() {
 }
 
 //checks if the user exists in the current meeting and is online
-var check_user = function(user) {
+var user_exists = function(user) {
   var selector = {connectionStatus:'online', name: user, meetingId: Auth.meetingID}
   var user_document = Users.findOne(selector);
-  console.log(user_document);
-  if (typeof(user_document) == undefined) {
-    return false;
+  var exists;
+
+  if (typeof(user_document) != undefined) {
+    exists = true;
   } else {
-    return true;
+    exists = false;
   }
+  console.log(exists);
+  return exists;
 }
 
 // executs the intent(s)
@@ -131,7 +134,7 @@ var execute_intent = function(intent, response) {
         notify('Could not identify a person to give presentor to', 'Voice Assistent', 'warning');
       } else {
         var user = person_arr[0];
-        if (check_user(user) == false) {
+        if (user_exists(user) == false) {
           notify('Could not identify a person to give presentor to', 'Voice Assistent', 'warning');
           return;
         }
