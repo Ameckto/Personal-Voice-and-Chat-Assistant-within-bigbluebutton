@@ -50,7 +50,8 @@ var get_person_of_intent = function(response, intent, client){
 }
 
 var get_userId = function(user) {
-  return Users.findOne({ sortName: user.toLowerCase()}).userId;
+  console.log(user)
+  return Users.findOne({ name: user}).userId;
 }
 
 var mute_user = function(user) {
@@ -94,7 +95,7 @@ var execute_intent = function(intent, response) {
       break;
 
     case 'wake_up':
-      notify( get_greeting() + ' ' + client + '?', 'Voice Assistent', 'success')
+      notify( get_greeting() + ' ,' + client + '?', 'Voice Assistent', 'success')
       break;
 
     case 'give_presentor':
