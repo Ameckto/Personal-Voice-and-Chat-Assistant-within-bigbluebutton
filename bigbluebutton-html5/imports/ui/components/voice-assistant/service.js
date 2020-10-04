@@ -139,18 +139,26 @@ var execute_intent = function(intent, response) {
       break;
 
     case 'share_first_screen':
-      const shareScreen = (onFail) => {
-        // stop external video share if running
-        const meeting = Meetings.findOne({ meetingId: Auth.meetingID });
-        if (meeting && meeting.externalVideoUrl) {
-          stopWatching();
-        }
+      var selector = {connectionStatus:'online', name: client, meetingId: Auth.meetingID}
+      var users_is_presenter = Users.findOne(selector).presenter;
+      console.log(user_role)
+      if (users_is_presenter) {
+        const shareScreen = (onFail) => {
+          // stop external video share if running
+          const meeting = Meetings.findOne({ meetingId: Auth.meetingID });
+          if (meeting && meeting.externalVideoUrl) {
+            stopWatching();
+          }
 
-        BridgeService.getScreenStream().then((stream) => {
-          KurentoBridge.kurentoShareScreen(onFail, stream);
-        }).catch(onFail);
-      };
-      shareScreen()
+          BridgeService.getScreenStream().then((stream) => {
+            KurentoBridge.kurentoShareScreen(onFail, stream);
+          }).catch(onFail);
+        };
+        shareScreen()
+        notify('You shared your screen', 'Voice Assistent', 'success')
+      } else {
+        notify('You can only share your screen if you are presenter', 'Voice Assistent', 'warning')
+      }
       break;
 
     case 'raise_hand':
