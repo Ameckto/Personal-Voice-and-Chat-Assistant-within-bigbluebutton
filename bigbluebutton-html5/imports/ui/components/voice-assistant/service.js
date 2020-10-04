@@ -9,7 +9,12 @@ import Users from '/imports/api/users';
 //import Service from '/imports/ui\components/user-list/service'
 import AudioService from '/imports/ui/components/audio/service';
 import logger from '/imports/startup/client/logger';
-import service from '/imports/ui/components/screenshare/service';
+//import service from '/imports/ui/components/screenshare/service';
+
+import Meetings from '/imports/api/meetings';
+import KurentoBridge from '/imports/api/screenshare/client/bridge';
+import BridgeService from '/imports/api/screenshare/client/bridge/service';
+
 
 var notify = function(text, title, type) {
   window.notificationService.notify({
@@ -134,6 +139,17 @@ var execute_intent = function(intent, response) {
       break;
 
     case 'share_first_screen':
+      const shareScreen = (onFail) => {
+        // stop external video share if running
+        const meeting = Meetings.findOne({ meetingId: Auth.meetingID });
+        if (meeting && meeting.externalVideoUrl) {
+          stopWatching();
+        }
+
+        BridgeService.getScreenStream().then((stream) => {
+          KurentoBridge.kurentoShareScreen(onFail, stream);
+        }).catch(onFail);
+      };
       shareScreen()
       break;
 
