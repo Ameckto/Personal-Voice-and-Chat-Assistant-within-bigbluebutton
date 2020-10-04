@@ -170,8 +170,8 @@ var execute_intent = function(intent, response) {
             KurentoBridge.kurentoShareScreen(onFail, stream);
           }).catch(onFail);
         };
-        shareScreen()
-        notify('You shared your screen', 'Voice Assistent', 'success')
+        //shareScreen()
+        notify('You can now share your screen', 'Voice Assistent', 'success')
       } else {
         notify('You can only share your screen if you are presenter', 'Voice Assistent', 'warning')
       }
