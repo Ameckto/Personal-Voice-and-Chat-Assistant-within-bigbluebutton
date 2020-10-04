@@ -77,6 +77,12 @@ var mute_user = function(user) {
     muted_boolean = person[1];
     person_to_mute = person[2]
 
+    if (person == 'me' || person == 'myself') {
+      makeCall('toggleVoice')
+      return;
+    }
+    
+
     if (muted_boolean == false) {
       //var user = VoiceUsers.findOne({callerName: person_to_mute});
       VoiceUsers.update({_id: _id}, { $set: { 'muted': true }});
@@ -134,7 +140,7 @@ var execute_intent = function(intent, response) {
         } else {
           var userId = get_userId(user)
         }
-        makeCall('assignPresenter', userId);
+        //makeCall('assignPresenter', userId);
         //assignPresenter(userId)
 
         //Service.takePresenterRole
