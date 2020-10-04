@@ -58,15 +58,12 @@ var get_userId = function(user) {
 var mute_user = function(user) {
 
   var userId = get_userId(user)
-
+  var is_user_muted = VoiceUsers.findOne({ callerName: user}).muted
+  console.log(is_user_muted)
   //--------------
   const toggleVoice = (userId) => {
     if (userId === Auth.userID) {
-      if (VoiceUsers.findOne({ callerName: user}).muted == false) {
         AudioService.toggleMuteMicrophone();
-      } else {
-        notify('You are already muted', 'Voice Assistent', 'warning')
-      }
     } else {
       makeCall('toggleVoice', userId);
       logger.info({
@@ -75,8 +72,11 @@ var mute_user = function(user) {
       }, 'moderator muted user microphone');
     }
   };
-  toggleVoice()
-
+  if (is_user_muted == false) {
+    toggleVoice(userId)
+  } else {
+    notify('Person ' + user + ' is already muted', 'Voice Assistent', 'warning')
+  }
 }
 
 var get_greeting = function() {
