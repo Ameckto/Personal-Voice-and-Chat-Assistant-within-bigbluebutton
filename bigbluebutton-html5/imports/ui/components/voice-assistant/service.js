@@ -67,9 +67,11 @@ var mute_user = function(user, client) {
     if (userId === Auth.userID) {
         //mute myself
         AudioService.toggleMuteMicrophone();
+        notify('You are now muted!', 'Voice Assistent', 'success')
     } else if (users_role == 'MODERATOR'){
       // mute another person
       makeCall('toggleVoice', userId);
+      notify('I have muted ' + user + ' for you!', 'Voice Assistent', 'success')
       logger.info({
         logCode: 'usermenu_option_mute_toggle_audio',
         extraInfo: { logType: 'moderator_action', userId },
@@ -77,8 +79,7 @@ var mute_user = function(user, client) {
     } else {
       notify('Only moderators can mute other users', 'Voice Assistent', 'warning')
     }
-  };
-
+  }
   if (is_user_muted == false) {
     toggleVoice(userId)
   } else {
@@ -117,9 +118,10 @@ var execute_intent = function(intent, response) {
       var person_arr = get_person_of_intent(response, intent, client)
       if (person_arr.length == 0) {
         notify('Could not identify a person to give presentor to', 'Voice Assistent', 'warning')
-        return;
       } else {
+        console.log(person_arr)
         var user = person_arr[0]
+        console.log(user)
         var userId = get_userId(user);
         makeCall('assignPresenter', userId);
         notify('Assigned ' + user + ' presenter', 'Voice Assistent', 'success')
