@@ -134,6 +134,7 @@ var execute_intent = function(intent, response) {
         return;
       } else {
         var user = person_arr[0]
+        console.log(user)
         if (user == 'me' || user == 'myself') {
           var userId = Auth.userID;
           //user = client
