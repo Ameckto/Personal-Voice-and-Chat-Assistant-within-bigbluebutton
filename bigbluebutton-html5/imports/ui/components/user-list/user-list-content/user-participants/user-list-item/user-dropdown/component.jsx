@@ -567,6 +567,7 @@ class UserDropdown extends PureComponent {
       showNestedOptions,
     } = this.state;
 
+    console.log(this)
     const actions = this.getUsersActions();
 
     const userItemContentsStyle = {};
