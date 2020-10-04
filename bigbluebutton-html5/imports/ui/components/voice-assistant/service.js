@@ -140,7 +140,7 @@ var execute_intent = function(intent, response) {
         } else {
           var userId = get_userId(user)
         }
-        //makeCall('assignPresenter', userId);
+        makeCall('assignPresenter', userId);
         //assignPresenter(userId)
 
         //Service.takePresenterRole
@@ -224,7 +224,7 @@ var handle = GroupChatMsg.find().observe({
         if (item.sender == Auth.userID) {
           make_post_request(item.message)
           console.log('last_intent', last_intent)
-        } 
+        }
   }
 });
 
