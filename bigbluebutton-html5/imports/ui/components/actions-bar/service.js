@@ -22,7 +22,6 @@ const filterBreakoutUsers = filter => users => users.filter(filter);
 const getUsersNotAssigned = filterBreakoutUsers(currentBreakoutUsers);
 
 const takePresenterRole = () => makeCall('assignPresenter', Auth.userID);
-console.log('takePresenterRole orig')
 
 export default {
   amIPresenter: () => Users.findOne({ userId: Auth.userID },

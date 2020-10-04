@@ -6,6 +6,8 @@ import { makeCall } from '/imports/ui/services/api';
 import Service from  '/imports/ui/components/actions-bar/service'
 //import assignPresenter from 'imports/api/users/server/methods/assignPresenter'
 import Users from '/imports/api/users';
+//import Service from '/imports/ui\components/user-list/service'
+import AudioService from '/imports/ui/components/audio/service';
 
 var notify = function(text, title, type) {
   window.notificationService.notify({
@@ -27,7 +29,7 @@ var notify = function(text, title, type) {
 }
 
 //gets PERSONS of intent and returns them in an array, can be multiple
-var get_person_of_intent = function(response, intent){
+var get_person_of_intent = function(response, intent, client){
   var result_arr = []
   var entity_arr = response.entities
   var arrayLength = entity_arr.length;
@@ -36,6 +38,10 @@ var get_person_of_intent = function(response, intent){
       var entity_type =  entity_arr[i].entity;
       if (entity_type == 'PERSON') {
         var person =  entity_arr[i].value;
+        if (person == 'me' || person == 'myself') {
+          person = client
+
+        }
         result_arr.push(person)
       }
   }
@@ -44,69 +50,31 @@ var get_person_of_intent = function(response, intent){
 }
 
 var get_userId = function(user) {
-  user = user.toLowerCase();
-
-  if (user == 'me' || user == 'myself') {
-    return Auth.userId;
-  }
-  const get_id = () => {
-    const collection = Users.findOne({ sortName: user});
-    if (typeof(collection) != 'undefined') {
-      return collection.userId;
-    } else {
-      return 'none'
-    }
-  };
-  userId = get_id();
-  return userId;
+  return Users.findOne({ sortName: user.toLowerCase()}).userId;
 }
 
 var mute_user = function(user) {
-  //get the _id, muted boolean and the name of the person to mute
-  const personToMute = () => {
-    const collection = VoiceUsers.findOne({ callerName: user});
-    if (typeof(collection) != 'undefined') {
-      return [collection._id, collection.muted, collection.callerName];
+
+  var userId = get_userId(user)
+
+  //--------------
+  const toggleVoice = (userId) => {
+    if (userId === Auth.userID) {
+      AudioService.toggleMuteMicrophone();
     } else {
-      return ['none', user]
+      makeCall('toggleVoice', userId);
+      logger.info({
+        logCode: 'usermenu_option_mute_toggle_audio',
+        extraInfo: { logType: 'moderator_action', userId },
+      }, 'moderator muted user microphone');
     }
   };
-
-  person = personToMute();
-
-  if (person[0] != 'none') {
-
-    var _id = person[0];
-    var muted_boolean = person[1];
-    var person_to_mute = person[2]
-
-    if (person_to_mute == 'me' || person_to_mute == 'myself') {
-      makeCall('toggleVoice')
-      return;
-    }
-
-
-    if (muted_boolean == false) {
-      //var user = VoiceUsers.findOne({callerName: person_to_mute});
-      VoiceUsers.update({_id: _id}, { $set: { 'muted': true }});
-      notify(person_to_mute + ' muted', 'Voice Assistent', 'success')
-    } else {
-      notify(person_to_mute + ' is already muted', 'Voice Assistent', 'warning')
-    }
-  } else {
-    notify('There is no person called ' + user, 'Voice Assistent', 'warning')
-  }
 }
 
 var get_greeting = function() {
   var greetings_arr = ['More work', 'Are you the king', 'Do you need help', 'Orders', "Can I ask you", 'What do you need'];
   var random = Math.floor(Math.random() * greetings_arr.length);
   return greetings_arr[random]
-}
-
-var wake_up = function(client) {
-  var text = get_greeting() + ' ' + client + '?';
-  notify(text, 'Voice Assistent', 'success')
 }
 
 var execute_intent = function(intent, response) {
@@ -117,40 +85,29 @@ var execute_intent = function(intent, response) {
   switch (intent) {
 
     case 'mute':
-      var person_arr = get_person_of_intent(response, intent)
+      var person_arr = get_person_of_intent(response, intent, client)
       if (person_arr.length == 0) {
         notify('Could not identify a person to mute', 'Voice Assistent', 'warning')
       } else {
-        person_arr.forEach(person => mute_user(person))
+        person_arr.forEach(user => mute_user(user))
       }
       break;
 
     case 'wake_up':
-      wake_up(client)
+      notify( get_greeting() + ' ' + client + '?', 'Voice Assistent', 'success')
       break;
 
     case 'give_presentor':
 
-      var person_arr = get_person_of_intent(response, intent)
+      var person_arr = get_person_of_intent(response, intent, client)
       if (person_arr.length == 0) {
         notify('Could not identify a person to give presentor to', 'Voice Assistent', 'warning')
         return;
       } else {
         var user = person_arr[0]
-        console.log(user)
-        if (user == 'me' || user == 'myself') {
-          var userId = Auth.userID;
-          //user = client
-        } else {
-          var userId = get_userId(user);
-        }
-        makeCall('changeRole', userId, 'MODERATOR');
+        var userId = get_userId(user);
         makeCall('assignPresenter', userId);
-        //assignPresenter(userId)
-
-        //Service.takePresenterRole
-        //const assignPresenter = (userId) => { makeCall('assignPresenter', userId); };
-        //console.log('Should have give yourself presentor')
+        notify('Assigned ' + user + ' presenter', 'Voice Assistent', 'success')
       }
       break;
 
@@ -159,11 +116,10 @@ var execute_intent = function(intent, response) {
       break;
 
     case 'raise_hand':
-      userId = get_userId(client)
+      var userId = get_userId(client)
       makeCall('setEmojiStatus', userId, 'raiseHand');
-      //
+      notify('You raised your hand', 'Voice Assistent', 'success')
       break;
-
   }
 };
 
