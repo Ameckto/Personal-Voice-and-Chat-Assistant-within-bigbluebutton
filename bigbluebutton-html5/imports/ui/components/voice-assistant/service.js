@@ -8,6 +8,7 @@ import Service from  '/imports/ui/components/actions-bar/service'
 import Users from '/imports/api/users';
 //import Service from '/imports/ui\components/user-list/service'
 import AudioService from '/imports/ui/components/audio/service';
+import logger from '/imports/startup/client/logger';
 
 var notify = function(text, title, type) {
   window.notificationService.notify({
@@ -61,7 +62,11 @@ var mute_user = function(user) {
   //--------------
   const toggleVoice = (userId) => {
     if (userId === Auth.userID) {
-      AudioService.toggleMuteMicrophone();
+      if (VoiceUsers.findOne({ callerName: user}).muted == false) {
+        AudioService.toggleMuteMicrophone();
+      } else {
+        notify('You are already muted', 'Voice Assistent', 'warning')
+      }
     } else {
       makeCall('toggleVoice', userId);
       logger.info({
