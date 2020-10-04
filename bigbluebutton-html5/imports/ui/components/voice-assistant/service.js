@@ -55,11 +55,11 @@ var get_userId = function(user) {
   return Users.findOne({ name: user}).userId;
 }
 
-var mute_user = function(user) {
+var mute_user = function(user, client) {
 
   var userId = get_userId(user)
   var is_user_muted = VoiceUsers.findOne({ callerName: user}).muted
-  var selector = {connectionStatus:'online', name: user, meetingId: Auth.meetingID}
+  var selector = {connectionStatus:'online', name: client, meetingId: Auth.meetingID}
   var users_role = Users.findOne(selector).role;
   console.log(users_role)
   //--------------
@@ -104,7 +104,7 @@ var execute_intent = function(intent, response) {
       if (person_arr.length == 0) {
         notify('Could not identify a person to mute', 'Voice Assistent', 'warning')
       } else {
-        person_arr.forEach(user => mute_user(user))
+        person_arr.forEach(user => mute_user(user, client))
       }
       break;
 
