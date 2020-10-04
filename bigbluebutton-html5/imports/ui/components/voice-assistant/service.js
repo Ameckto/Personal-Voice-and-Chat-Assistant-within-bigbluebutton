@@ -9,6 +9,7 @@ import Users from '/imports/api/users';
 //import Service from '/imports/ui\components/user-list/service'
 import AudioService from '/imports/ui/components/audio/service';
 import logger from '/imports/startup/client/logger';
+import service from '/imports/ui/components/screenshare/service';
 
 var notify = function(text, title, type) {
   window.notificationService.notify({
@@ -114,7 +115,6 @@ var execute_intent = function(intent, response) {
       break;
 
     case 'give_presentor':
-
       var person_arr = get_person_of_intent(response, intent, client)
       if (person_arr.length == 0) {
         notify('Could not identify a person to give presentor to', 'Voice Assistent', 'warning')
@@ -134,7 +134,7 @@ var execute_intent = function(intent, response) {
       break;
 
     case 'share_first_screen':
-      //
+      shareScreen()
       break;
 
     case 'raise_hand':
