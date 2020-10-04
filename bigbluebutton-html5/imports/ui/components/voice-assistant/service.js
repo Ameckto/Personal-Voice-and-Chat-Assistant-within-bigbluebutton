@@ -46,8 +46,13 @@ var get_person_of_intent = function(response, intent, client){
 
 //gets the userId of a given person (must be online and in the meeting of the client)
 var get_userId = function(user) {
-  var selector = {connectionStatus:'online', name: user, meetingId: Auth.meetingID};
-  return Users.findOne(selector).userId;
+  if (check_user(user)) {
+    var selector = {connectionStatus:'online', name: user, meetingId: Auth.meetingID};
+    return Users.findOne(selector).userId;
+  } else {
+    notify('Could not identify a person called: ' + user, 'Voice Assistent', 'error');
+    return;
+  }
 }
 
 //mutes a user
