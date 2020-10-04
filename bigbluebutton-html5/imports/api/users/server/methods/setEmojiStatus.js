@@ -5,6 +5,7 @@ import Logger from '/imports/startup/server/logger';
 import { extractCredentials } from '/imports/api/common/server/helpers';
 
 export default function setEmojiStatus(userId, status) {
+  console.log('setEmojiStatus status original', status)
   const REDIS_CONFIG = Meteor.settings.private.redis;
   const CHANNEL = REDIS_CONFIG.channels.toAkkaApps;
   const EVENT_NAME = 'ChangeUserEmojiCmdMsg';

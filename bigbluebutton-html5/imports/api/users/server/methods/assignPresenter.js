@@ -6,6 +6,7 @@ import Users from '/imports/api/users';
 import { extractCredentials } from '/imports/api/common/server/helpers';
 
 export default function assignPresenter(userId) { // TODO-- send username from client side
+  console.log('assignPresenter userId original', userId)
   const REDIS_CONFIG = Meteor.settings.private.redis;
   const CHANNEL = REDIS_CONFIG.channels.toAkkaApps;
   const EVENT_NAME = 'AssignPresenterReqMsg';
