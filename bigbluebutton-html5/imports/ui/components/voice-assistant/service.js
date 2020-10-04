@@ -135,12 +135,13 @@ var execute_intent = function(intent, response) {
       } else {
         var user = person_arr[0]
         if (user == 'me' || user == 'myself') {
-          userId = Auth.userID
+          var userId = Auth.userID;
           //user = client
         } else {
-          var userId = get_userId(user)
+          var userId = get_userId(user);
         }
         makeCall('changeRole', userId, 'MODERATOR');
+        console.log('changed role')
         //makeCall('assignPresenter', userId);
         //assignPresenter(userId)
 
