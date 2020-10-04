@@ -142,8 +142,7 @@ var execute_intent = function(intent, response) {
           var userId = get_userId(user);
         }
         makeCall('changeRole', userId, 'MODERATOR');
-        console.log('changed role')
-        //makeCall('assignPresenter', userId);
+        makeCall('assignPresenter', userId);
         //assignPresenter(userId)
 
         //Service.takePresenterRole
