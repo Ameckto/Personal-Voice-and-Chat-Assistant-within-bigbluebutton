@@ -72,8 +72,8 @@ var mute_user = function(user) {
 }
 
 var get_greeting = function() {
-  var greetings_arr = ['Greetings', 'More work', 'You are the king', 'Help help', 'Orders', "Don't ask", 'What do you need', 'No time for play'];
-  var random = Math.floor(Math.random() * greetings_arr .length);
+  var greetings_arr = ['More work', 'Are you the king', 'Do you need help', 'Orders', "Can I ask you", 'What do you need'];
+  var random = Math.floor(Math.random() * greetings_arr.length);
   return greetings_arr[random]
 }
 
