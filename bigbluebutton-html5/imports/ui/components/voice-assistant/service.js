@@ -44,9 +44,9 @@ var get_person_of_intent = function(response, intent){
 }
 
 var get_userId = function(user) {
-
+  user = user.toLowerCase();
   const get_id = () => {
-    const collection = Users.findOne({ callerName: user});
+    const collection = Users.findOne({ sortName: user});
     if (typeof(collection) != 'undefined') {
       return collection.userId;
     } else {
@@ -54,6 +54,7 @@ var get_userId = function(user) {
     }
   };
   userId = get_id();
+  console.log(userId)
   return userId;
 }
 
