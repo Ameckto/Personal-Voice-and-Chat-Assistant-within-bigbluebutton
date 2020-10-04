@@ -73,9 +73,9 @@ var mute_user = function(user) {
 
   if (person[0] != 'none') {
 
-    _id = person[0];
-    muted_boolean = person[1];
-    person_to_mute = person[2]
+    var _id = person[0];
+    var muted_boolean = person[1];
+    var person_to_mute = person[2]
 
     if (person_to_mute == 'me' || person_to_mute == 'myself') {
       makeCall('toggleVoice')
@@ -91,7 +91,7 @@ var mute_user = function(user) {
       notify(person_to_mute + ' is already muted', 'Voice Assistent', 'warning')
     }
   } else {
-    notify('There is no person called ' + person_to_mute, 'Voice Assistent', 'warning')
+    notify('There is no person called ' + user, 'Voice Assistent', 'warning')
   }
 }
 
@@ -217,6 +217,8 @@ var min_confidence = 0.3
 var handle = GroupChatMsg.find().observe({
   added: function (item) {
     if (!initializing)
+        //did I make the post request?
+        console.log(item)
         make_post_request(item.message)
         console.log('last_intent', last_intent)
   }
