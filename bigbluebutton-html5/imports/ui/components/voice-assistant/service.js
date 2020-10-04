@@ -64,6 +64,10 @@ var get_userId = function(user) {
 var mute_user = function(user, client) {
 
   var userId = get_userId(user)
+  if (check_user(user) == false) {
+    notify('Could not identify a person to give presentor to', 'Voice Assistent', 'warning')
+    return;
+  }
   var is_user_muted = VoiceUsers.findOne({ callerName: user}).muted
   var selector = {connectionStatus:'online', name: client, meetingId: Auth.meetingID}
   var users_role = Users.findOne(selector).role;
@@ -99,6 +103,16 @@ var get_greeting = function() {
   return greetings_arr[random]
 }
 
+//checks if the user exists in the current meeting and is online
+var check_user = function(user) {
+  var selector = {connectionStatus:'online', name: user, meetingId: Auth.meetingID}
+  var user_document = Users.findOne(selector);
+  if (typeof(user_document) == undefined) {
+    return false;
+  } else {
+    return true;
+  }
+}
 var execute_intent = function(intent, response) {
 
   //get the name of the client person
@@ -125,6 +139,10 @@ var execute_intent = function(intent, response) {
         notify('Could not identify a person to give presentor to', 'Voice Assistent', 'warning')
       } else {
         var user = person_arr[0]
+        if (check_user(user) == false) {
+          notify('Could not identify a person to give presentor to', 'Voice Assistent', 'warning')
+          return;
+        }
         var userId = get_userId(user);
         var selector = {connectionStatus:'online', name: client, meetingId: Auth.meetingID}
         var users_role = Users.findOne(selector).role;
@@ -141,7 +159,6 @@ var execute_intent = function(intent, response) {
     case 'share_first_screen':
       var selector = {connectionStatus:'online', name: client, meetingId: Auth.meetingID}
       var users_is_presenter = Users.findOne(selector).presenter;
-      console.log(user_role)
       if (users_is_presenter) {
         const shareScreen = (onFail) => {
           // stop external video share if running
@@ -149,7 +166,6 @@ var execute_intent = function(intent, response) {
           if (meeting && meeting.externalVideoUrl) {
             stopWatching();
           }
-
           BridgeService.getScreenStream().then((stream) => {
             KurentoBridge.kurentoShareScreen(onFail, stream);
           }).catch(onFail);
