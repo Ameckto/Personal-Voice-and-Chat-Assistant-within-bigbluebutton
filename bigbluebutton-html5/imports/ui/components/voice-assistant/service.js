@@ -4,6 +4,8 @@ import Auth from '/imports/ui/services/auth';
 import { Meteor } from 'meteor/meteor';
 import { makeCall } from '/imports/ui/services/api';
 import Service from  '/imports/ui/components/actions-bar/service'
+import assignPresenter from 'imports/api/users/server/methods/assignPresenter'
+import Users from '/imports/api/users';
 
 var notify = function(text, title, type) {
   window.notificationService.notify({
@@ -39,6 +41,20 @@ var get_person_of_intent = function(response, intent){
   }
   result_arr = [...new Set(result_arr)];
   return result_arr;
+}
+
+var get_userId = function(user) {
+
+  const userId = () => {
+    const collection = Users.findOne({ callerName: user});
+    if (typeof(collection) != 'undefined') {
+      return collection.userId;
+    } else {
+      return 'none'
+    }
+  };
+  userId = userId();
+  return userId;
 }
 
 var mute_user = function(user) {
@@ -110,7 +126,9 @@ var execute_intent = function(intent, response) {
         notify('Could not identify a person to give presentor to', 'Voice Assistent', 'warning')
         return;
       } else {
-        user = person_arr[0]
+        var user = person_arr[0]
+        var userId = get_userId(person)
+        assignPresenter(userId)
 
         //Service.takePresenterRole
         //const assignPresenter = (userId) => { makeCall('assignPresenter', userId); };
