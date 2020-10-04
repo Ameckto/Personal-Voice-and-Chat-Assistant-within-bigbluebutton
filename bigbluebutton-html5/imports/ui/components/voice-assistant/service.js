@@ -70,6 +70,8 @@ var mute_user = function(user) {
       }, 'moderator muted user microphone');
     }
   };
+  toggleVoice()
+
 }
 
 var get_greeting = function() {
