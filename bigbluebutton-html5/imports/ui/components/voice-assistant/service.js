@@ -101,6 +101,7 @@ var get_greeting = function() {
 var check_user = function(user) {
   var selector = {connectionStatus:'online', name: user, meetingId: Auth.meetingID}
   var user_document = Users.findOne(selector);
+  console.log(user_document);
   if (typeof(user_document) == undefined) {
     return false;
   } else {
