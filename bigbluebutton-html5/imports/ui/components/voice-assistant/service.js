@@ -77,21 +77,21 @@ var mute_user = function(user) {
     muted_boolean = person[1];
     person_to_mute = person[2]
 
-    if (person == 'me' || person == 'myself') {
+    if (person_to_mute == 'me' || person_to_mute == 'myself') {
       makeCall('toggleVoice')
       return;
     }
-    
+
 
     if (muted_boolean == false) {
       //var user = VoiceUsers.findOne({callerName: person_to_mute});
       VoiceUsers.update({_id: _id}, { $set: { 'muted': true }});
-      notify(user + ' muted', 'Voice Assistent', 'success')
+      notify(person_to_mute + ' muted', 'Voice Assistent', 'success')
     } else {
-      notify(user + ' is already muted', 'Voice Assistent', 'warning')
+      notify(person_to_mute + ' is already muted', 'Voice Assistent', 'warning')
     }
   } else {
-    notify('There is no person called ' + user, 'Voice Assistent', 'warning')
+    notify('There is no person called ' + person_to_mute, 'Voice Assistent', 'warning')
   }
 }
 
@@ -154,7 +154,8 @@ var execute_intent = function(intent, response) {
       break;
 
     case 'raise_hand':
-      makeCall('setEmojiStatus', Auth.userID, 'raiseHand');
+      userId = get_userId(client)
+      makeCall('setEmojiStatus', userId, 'raiseHand');
       //
       break;
 
