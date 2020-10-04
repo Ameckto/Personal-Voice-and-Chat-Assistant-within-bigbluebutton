@@ -127,7 +127,10 @@ var execute_intent = function(intent, response) {
         return;
       } else {
         var user = person_arr[0]
-        var userId = get_userId(person)
+        if (user == 'me' || user == 'myself') {
+          user = client
+        }
+        var userId = get_userId(user)
         Meteor.call('assignPresenter', userId)
         //assignPresenter(userId)
 
