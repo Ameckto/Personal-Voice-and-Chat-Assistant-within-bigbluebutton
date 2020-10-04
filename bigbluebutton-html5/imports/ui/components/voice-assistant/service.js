@@ -46,22 +46,17 @@ var get_person_of_intent = function(response, intent, client){
 
 //gets the userId of a given person (must be online and in the meeting of the client)
 var get_userId = function(user) {
-  if (check_user(user)) {
-    var selector = {connectionStatus:'online', name: user, meetingId: Auth.meetingID};
-    return Users.findOne(selector).userId;
-  } else {
-    notify('Could not identify a person called: ' + user, 'Voice Assistent', 'error');
-    return;
-  }
+  var selector = {connectionStatus:'online', name: user, meetingId: Auth.meetingID};
+  return Users.findOne(selector).userId;
 }
 
 //mutes a user
 var mute_user = function(user, client) {
-  var userId = get_userId(user);
   if (check_user(user) == false) {
     notify('Could not identify a person to give presentor to', 'Voice Assistent', 'warning');
     return;
   }
+  var userId = get_userId(user);
   var is_user_muted = VoiceUsers.findOne({ callerName: user}).muted;
   var selector = {connectionStatus:'online', name: client, meetingId: Auth.meetingID};
   var users_role = Users.findOne(selector).role;
