@@ -129,10 +129,12 @@ var execute_intent = function(intent, response) {
       } else {
         var user = person_arr[0]
         if (user == 'me' || user == 'myself') {
-          user = client
+          userId = Auth.userID
+          //user = client
+        } else {
+          var userId = get_userId(user)
         }
-        var userId = get_userId(user)
-        Meteor.call('assignPresenter', userId)
+        makeCall('assignPresenter', userId);
         //assignPresenter(userId)
 
         //Service.takePresenterRole
@@ -146,6 +148,7 @@ var execute_intent = function(intent, response) {
       break;
 
     case 'raise_hand':
+      makeCall('setEmojiStatus', Auth.userID, 'raiseHand');
       //
       break;
 
