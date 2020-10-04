@@ -20,7 +20,7 @@ function setPresenterInPodReqMsg(credentials) { // TODO-- switch to meetingId, e
 
 export default function handlePresenterAssigned({ body }, meetingId) {
   const { presenterId, assignedBy } = body;
-
+  console.log('changePresenter')
   changePresenter(true, presenterId, meetingId, assignedBy);
 
   const selector = {
