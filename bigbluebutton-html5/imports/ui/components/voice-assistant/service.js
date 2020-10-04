@@ -4,7 +4,7 @@ import Auth from '/imports/ui/services/auth';
 import { Meteor } from 'meteor/meteor';
 import { makeCall } from '/imports/ui/services/api';
 import Service from  '/imports/ui/components/actions-bar/service'
-import assignPresenter from 'imports/api/users/server/methods/assignPresenter'
+//import assignPresenter from 'imports/api/users/server/methods/assignPresenter'
 import Users from '/imports/api/users';
 
 var notify = function(text, title, type) {
@@ -128,7 +128,8 @@ var execute_intent = function(intent, response) {
       } else {
         var user = person_arr[0]
         var userId = get_userId(person)
-        assignPresenter(userId)
+        Meteor.call('assignPresenter', userId)
+        //assignPresenter(userId)
 
         //Service.takePresenterRole
         //const assignPresenter = (userId) => { makeCall('assignPresenter', userId); };
