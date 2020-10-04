@@ -53,7 +53,7 @@ var get_userId = function(user) {
 //mutes a user
 var mute_user = function(user, client) {
   if (user_exists(user) == false) {
-    notify('Could not identify a person to give presentor to', 'Voice Assistent', 'warning');
+    notify('Could not identify ' + user ' in the meeting to mute', 'Voice Assistent', 'warning');
     return;
   }
   var userId = get_userId(user);
@@ -136,7 +136,7 @@ var execute_intent = function(intent, response) {
       } else {
         var user = person_arr[0];
         if (user_exists(user) == false) {
-          notify('Could not identify a person to give presentor to', 'Voice Assistent', 'warning');
+          notify('Could not identify ' + user ' in the meeting to give presenter to', 'Voice Assistent', 'warning');
           return;
         }
         var userId = get_userId(user);
