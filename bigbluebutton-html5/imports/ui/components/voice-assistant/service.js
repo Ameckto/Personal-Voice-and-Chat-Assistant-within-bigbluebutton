@@ -72,6 +72,7 @@ var mute_user = function(user) {
       }, 'moderator muted user microphone');
     }
   };
+  
   if (is_user_muted == false) {
     toggleVoice(userId)
   } else {
