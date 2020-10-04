@@ -218,7 +218,14 @@ var handle = GroupChatMsg.find().observe({
   added: function (item) {
     if (!initializing)
         //did I make the post request?
-        console.log(item)
+        sender = item.sender
+        console.log(sender)
+        console.log(Auth.userID)
+        if (item.sender == Auth.userID) {
+          console.log('execute command')
+        } else {
+          'dont execute command'
+        }
         make_post_request(item.message)
         console.log('last_intent', last_intent)
   }
