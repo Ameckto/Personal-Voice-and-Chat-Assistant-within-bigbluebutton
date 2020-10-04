@@ -3,6 +3,7 @@ import VoiceUsers from '/imports/api/voice-users';
 import Auth from '/imports/ui/services/auth';
 import { Meteor } from 'meteor/meteor';
 import { makeCall } from '/imports/ui/services/api';
+import Service from  '/imports/ui/components/actions-bar/service'
 
 var notify = function(text, title, type) {
   window.notificationService.notify({
@@ -110,6 +111,9 @@ var execute_intent = function(intent, response) {
         return;
       } else {
         user = person_arr[0]
+
+        Service.takePresenterRole()
+        console.log('Should have give yourself presentor')
 
         const personToGivePresentor = () => {
 
