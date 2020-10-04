@@ -59,20 +59,25 @@ var mute_user = function(user) {
 
   var userId = get_userId(user)
   var is_user_muted = VoiceUsers.findOne({ callerName: user}).muted
+  var users_role = Users.findOne({ name: user}).role;
   console.log(is_user_muted)
   //--------------
   const toggleVoice = (userId) => {
     if (userId === Auth.userID) {
+        //mute myself
         AudioService.toggleMuteMicrophone();
-    } else {
+    } else if (users_role == 'MODERATOR'){
+      // mute another person
       makeCall('toggleVoice', userId);
       logger.info({
         logCode: 'usermenu_option_mute_toggle_audio',
         extraInfo: { logType: 'moderator_action', userId },
       }, 'moderator muted user microphone');
+    } else {
+      notify('Only moderators can mute other users', 'Voice Assistent', 'warning')
     }
   };
-  
+
   if (is_user_muted == false) {
     toggleVoice(userId)
   } else {
