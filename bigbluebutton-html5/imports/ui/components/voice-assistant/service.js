@@ -45,6 +45,10 @@ var get_person_of_intent = function(response, intent){
 
 var get_userId = function(user) {
   user = user.toLowerCase();
+
+  if (user == 'me' || user == 'myself') {
+    return Auth.userId;
+  }
   const get_id = () => {
     const collection = Users.findOne({ sortName: user});
     if (typeof(collection) != 'undefined') {
@@ -54,7 +58,6 @@ var get_userId = function(user) {
     }
   };
   userId = get_id();
-  console.log(userId)
   return userId;
 }
 
@@ -224,8 +227,9 @@ var handle = GroupChatMsg.find().observe({
         //(console.log(sender)
         //console.log(Auth.userID)
         if (item.sender == Auth.userID) {
+          console.log('execute command')
           make_post_request(item.message)
-          console.log('last_intent', last_intent)
+
         }
   }
 });
