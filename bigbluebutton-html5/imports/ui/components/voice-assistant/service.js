@@ -112,8 +112,9 @@ var execute_intent = function(intent, response) {
       } else {
         user = person_arr[0]
 
-        Service.takePresenterRole
-        console.log('Should have give yourself presentor')
+        //Service.takePresenterRole
+        //const assignPresenter = (userId) => { makeCall('assignPresenter', userId); };
+        //console.log('Should have give yourself presentor')
       }
       break;
 
