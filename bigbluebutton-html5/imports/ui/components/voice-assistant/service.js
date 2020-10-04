@@ -114,26 +114,6 @@ var execute_intent = function(intent, response) {
 
         Service.takePresenterRole()
         console.log('Should have give yourself presentor')
-
-        const personToGivePresentor = () => {
-
-          const collection = VoiceUsers.findOne({ callerName: user});
-
-          if (typeof(collection) != 'undefined') {
-            return collection.intId;
-          } else {
-            return undefined;
-          }
-        };
-        userId = personToGivePresentor();
-
-        if (typeof(userId) != undefined) {
-          const assignPresenter = (userId) => { makeCall('assignPresenter', userId); };
-          assignPresenter()
-        } else {
-          notify('There is no person called ' + user, 'Voice Assistent', 'warning')
-        }
-      }
       break;
 
     case 'share_first_screen':
