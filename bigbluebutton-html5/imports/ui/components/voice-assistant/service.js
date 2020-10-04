@@ -59,7 +59,7 @@ var mute_user = function(user) {
 
   var userId = get_userId(user)
   var is_user_muted = VoiceUsers.findOne({ callerName: user}).muted
-  var users_role = Users.findOne({ name: user}).role;
+  var users_role = Users.findOne({ name: user, connectionStatus: 'online'}).role;
   console.log(is_user_muted)
   //--------------
   const toggleVoice = (userId) => {
