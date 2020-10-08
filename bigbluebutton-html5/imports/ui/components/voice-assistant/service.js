@@ -162,7 +162,7 @@ var mute_user = function(user, client) {
   if (user_exists(user) == false) {
     var guessed_name = guess_name(user, min_match_raiting)
     if (guessed_name == false) {
-      make_notify('mute_no_person', '');
+      make_notify('mute_no_person', user);
       return;
     } else {
       user = guessed_name
@@ -175,13 +175,11 @@ var mute_user = function(user, client) {
   var selector = {connectionStatus:'online', name: client, meetingId: Auth.meetingID};
   var users_role = Users.findOne(selector).role;
 
-  const toggleVoice = (userId) => {
+  if (is_user_muted == false) {
     if (userId === Auth.userID) {
-        //mute myself
-        AudioService.toggleMuteMicrophone();
-        make_notify('mute_me', '');
+      AudioService.toggleMuteMicrophone();
+      make_notify('mute_me', '');
     } else if (users_role == 'MODERATOR'){
-      // mute another person
       makeCall('toggleVoice', userId);
       if (guessed) {
         make_notify('mute_guessed', user);
@@ -191,18 +189,13 @@ var mute_user = function(user, client) {
     } else {
       make_notify('mute_not_moderator', '');
     }
-  }
-
-  if (is_user_muted == false) {
-    toggleVoice(userId);
   } else {
-    if (guessed_name != false) {
+    if (guessed) {
       make_notify('mute_guessed_already_muted', user);
     } else {
       make_notify('mute_already_muted', user)
     }
   }
-}
 
 // gets a random greet and returns it
 var get_greeting = function() {
