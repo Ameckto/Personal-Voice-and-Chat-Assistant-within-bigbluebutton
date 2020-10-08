@@ -307,7 +307,7 @@ var handle = GroupChatMsg.find().observe({
 
 initializing = false;
 
-var test_similarity_script = require("./tests/string_similarity_test");
+var test_similarity_script = require("./string_similarity_test");
 test_similarity_script.string_similarity_test()
 var notifications_script = require("./notifications"); //import notifications.js
 notifications_script.notifications(); //executing notifications.js to set regarding functions onto the window object
