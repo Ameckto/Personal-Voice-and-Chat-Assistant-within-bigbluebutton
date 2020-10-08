@@ -145,6 +145,7 @@ var execute_intent = function(intent, response) {
 
     case 'mute': //mutes a user
       var person_arr = get_person_of_intent(response, intent, client);
+      console.log(person_arr)
       if (person_arr.length == 0) {
         notify('Could not identify a person to mute', 'Voice Assistent', 'warning');
       } else {
@@ -263,7 +264,7 @@ var make_post_request = function(message) {
 
 var initializing = true; //util variable for subscribing to the group-chat in the meteor DB
 var last_intent = null; //set last intent to null as default
-var min_confidence = 0.3 //set the min_confidence to 0.3
+var min_confidence = 0.4 //set the min_confidence to 0.3
 var min_match_raiting = 0.7
 
 //subscribe to the GroupChatMsg
