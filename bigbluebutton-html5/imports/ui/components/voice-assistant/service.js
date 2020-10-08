@@ -196,6 +196,7 @@ var mute_user = function(user, client) {
       make_notify('mute_already_muted', user)
     }
   }
+}
 
 // gets a random greet and returns it
 var get_greeting = function() {
