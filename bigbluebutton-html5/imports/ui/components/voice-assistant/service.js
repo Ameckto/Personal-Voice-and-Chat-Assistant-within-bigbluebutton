@@ -24,7 +24,78 @@ var notify = function(text, title, type) {
     showRemoveButton: true // shows close button
   })
 }
+//manage notifications
+var call_notify = function(kind, person) {
+  switch (kind) {
 
+    // manage mute
+    case 'mute':
+      notify('I have muted ' + user + ' for you!', 'Voice Assistent', 'success');
+      break;
+    case 'mute_guessed':
+      notify('I guessed that you meant ' + user + '. ' + user + ' is now muted', 'Voice Assistent', 'success');
+      break;
+    case 'mute_me':
+      notify('You are now muted!', 'Voice Assistent', 'success');
+      break;
+    case 'mute_not_moderator':
+      notify('Only moderators can mute other users', 'Voice Assistent', 'warning');
+      break;
+    case 'mute_already_muted':
+      notify('Person ' + user + ' is already muted', 'Voice Assistent', 'warning')
+      break;
+    case 'mute_me_already_muted':
+        notify('You are already muted', 'Voice Assistent', 'warning')
+        break;
+    case 'mute_no_person':
+      notify('Could not identify ' + user + ' in the meeting to mute', 'Voice Assistent', 'warning');
+      break;
+    case 'mute_no_person_given':
+      notify('Could not identify a person to mute', 'Voice Assistent', 'warning')
+      break;
+    case 'mute_guessed_already_muted':
+      notify('I guessed that you meant ' + user + '. But ' + user + ' is already muted', 'Voice Assistent', 'success');
+      break;
+
+    // manage give presenter
+    case 'presenter_give':
+      notify('Assigned ' + user + ' presenter', 'Voice Assistent', 'success');
+      break;
+    case 'presenter_already_presenter':
+      break;
+    case 'presenter_no_person_given':
+      notify('Could not identify a person to give presenter to', 'Voice Assistent', 'warning');
+      break;
+    case 'presenter_no_user_identified':
+      notify('Could not identify ' + user + ' in the meeting to give presenter to', 'Voice Assistent', 'warning');
+    case 'presenter_person_guessed':
+      notify('I guessed that you meant ' + user + '. Assigned ' + user + ' presenter', 'Voice Assistent', 'success');
+      break;
+    case 'presenter_only_moderator':
+      notify('Only the moderator can assign presenter', 'Voice Assistent', 'warning');
+      break;
+
+    // manage wake up
+    case 'wake_up':
+      notify( get_greeting() + ' ,' + user + '?', 'Voice Assistent', 'success');
+      break;
+    case 'wake_up_first':
+      notify('please wake me up first ', 'Voice Assistent', 'warning')
+      break;
+  	
+    // manage share Screenshare
+    case 'screen_share':
+      notify('You can now share your screen', 'Voice Assistent', 'success');
+      break;
+    case 'share_screen_only_presenter':
+      notify('You can only share your screen if you are presenter', 'Voice Assistent', 'warning');
+      break;
+
+    // manage raise hand
+    case 'raise_hand':
+      notify('You raised your hand', 'Voice Assistent', 'success');
+      break;
+}
 
 /**
  * finds the best match for a user with a given ranking
@@ -86,15 +157,18 @@ var get_userId = function(user) {
 
 //mutes a user
 var mute_user = function(user, client) {
+  var guessed = false
   if (user_exists(user) == false) {
     var guessed_name = guess_name(user, min_match_raiting)
     if (guessed_name == false) {
-      notify('Could not identify ' + user + ' in the meeting to mute', 'Voice Assistent', 'warning');
+      make_notify('mute_no_person', '');
       return;
     } else {
       user = guessed_name
+      var guessed = true
     }
   }
+
   var userId = get_userId(user);
   var is_user_muted = VoiceUsers.findOne({ callerName: user}).muted;
   var selector = {connectionStatus:'online', name: client, meetingId: Auth.meetingID};
@@ -104,26 +178,27 @@ var mute_user = function(user, client) {
     if (userId === Auth.userID) {
         //mute myself
         AudioService.toggleMuteMicrophone();
-        notify('You are now muted!', 'Voice Assistent', 'success');
+        make_notify('mute_me', '');
     } else if (users_role == 'MODERATOR'){
       // mute another person
       makeCall('toggleVoice', userId);
-      if (guessed_name != false) {
-        notify('I guessed that you meant ' + user + '. ' + user + ' is now muted', 'Voice Assistent', 'success');
+      if (guessed) {
+        make_notify('mute_guessed', user);
       } else {
-        notify('I have muted ' + user + ' for you!', 'Voice Assistent', 'success');
+        make_notify('mute', user);
       }
     } else {
-      notify('Only moderators can mute other users', 'Voice Assistent', 'warning');
+      make_notify('mute_not_moderator', '');
     }
   }
+
   if (is_user_muted == false) {
     toggleVoice(userId);
   } else {
     if (guessed_name != false) {
-      notify('I guessed that you meant ' + user + '. ' + user + ' is already muted', 'Voice Assistent', 'success');
+      make_notify('mute_guessed_already_muted', user);
     } else {
-      notify('Person ' + user + ' is already muted', 'Voice Assistent', 'warning')
+      make_notify('mute_already_muted', user)
     }
   }
 }
@@ -158,9 +233,8 @@ var execute_intent = function(intent, response) {
 
     case 'mute': //mutes a user
       var person_arr = get_person_of_intent(response, intent, client);
-      console.log(person_arr)
       if (person_arr.length == 0) {
-        notify('Could not identify a person to mute', 'Voice Assistent', 'warning');
+        call_notify('mute_no_person_given', '');
       } else {
         //u can mute multiple user in one intent
         person_arr.forEach(user => mute_user(user, client));
@@ -168,22 +242,24 @@ var execute_intent = function(intent, response) {
       break;
 
     case 'wake_up': //wakes up the voice assistent
-      notify( get_greeting() + ' ,' + client + '?', 'Voice Assistent', 'success');
+      make_notify('wake_up', client);
       break;
 
     case 'give_presenter': // gives a person presenter
+      var guessed = false
       var person_arr = get_person_of_intent(response, intent, client);
       if (person_arr.length == 0) {
-        notify('Could not identify a person to give presenter to', 'Voice Assistent', 'warning');
+        make_notify('presenter_no_person_given');
       } else {
         var user = person_arr[0];
         if (user_exists(user) == false) {
           var guessed_name = guess_name(user, min_match_raiting)
           if (guessed_name == false) {
-            notify('Could not identify ' + user + ' in the meeting to give presenter to', 'Voice Assistent', 'warning');
+            make_notify('presenter_no_user_identified', user);
             return;
           } else {
             user = guessed_name
+            var guessed = true
           }
       }
         var userId = get_userId(user);
@@ -191,14 +267,13 @@ var execute_intent = function(intent, response) {
         var users_role = Users.findOne(selector).role;
         if (users_role == 'MODERATOR'){
           makeCall('assignPresenter', userId);
-          if (guessed_name != false) {
-            notify('I guessed that you meant ' + user + '. Assigned ' + user + ' presenter', 'Voice Assistent', 'success');
+          if (guessed) {
+            make_notify('presenter_person_guessed', user);
           } else {
-            notify('Assigned ' + user + ' presenter', 'Voice Assistent', 'success');
+            make_notify('presenter_give', user);
           }
-
         } else {
-          notify('Only the moderator can assign presenter', 'Voice Assistent', 'warning');
+          make_notify('presenter_only_moderator', '');
         }
       }
       break;
@@ -218,16 +293,16 @@ var execute_intent = function(intent, response) {
           }).catch(onFail);
         };
         shareScreen();
-        notify('You can now share your screen', 'Voice Assistent', 'success');
+        make_notify('share_screen', '')
       } else {
-        notify('You can only share your screen if you are presenter', 'Voice Assistent', 'warning');
+        make_notify('share_screen_only_presenter', '')
       }
       break;
 
     case 'raise_hand': // raises the clients hand
       var userId = get_userId(client);
       makeCall('setEmojiStatus', userId, 'raiseHand');
-      notify('You raised your hand', 'Voice Assistent', 'success');
+      make_notify('raise_hand', '');
       break;
 
     case 'summarize':
@@ -274,7 +349,7 @@ var make_post_request = function(message) {
               client = VoiceUsers.findOne({ meetingId: Auth.meetingID, intId: Auth.userID }).callerName;
               execute_intent('wake_up', response)
             } else if (intent != 'wake_up' && last_intent != 'wake_up') {
-                notify('please wake me up first ', 'Voice Assistent', 'warning')
+                make_notify('wake_up_first', '')
               }
           }
         }
