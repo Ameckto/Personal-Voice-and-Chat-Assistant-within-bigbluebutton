@@ -156,6 +156,9 @@ const DesktopShare = ({
     }
   };
 
+  var my_function = function(){
+    console.log('in_my_function')
+  }
   const screenshareLocked = screenshareDataSavingSetting
     ? intlMessages.desktopShareLabel : intlMessages.lockedDesktopShareLabel;
 
@@ -201,6 +204,15 @@ const DesktopShare = ({
         }
         }
         id={isVideoBroadcasting ? 'unshare-screen-button' : 'share-screen-button'}
+      />
+      <Button
+      className={'myclass'}
+      icon={isVideoBroadcasting ? 'desktop' : 'desktop_off'}
+      label={intl.formatMessage(vLabel)}
+      color={isVideoBroadcasting ? 'primary' : 'default'}
+      circle
+      size="lg"
+      onClick={my_function()}
       />
     ) : null;
 };
