@@ -82,7 +82,7 @@ var call_notify = function(kind, person) {
     case 'wake_up_first':
       notify('please wake me up first ', 'Voice Assistent', 'warning')
       break;
-  	
+
     // manage share Screenshare
     case 'screen_share':
       notify('You can now share your screen', 'Voice Assistent', 'success');
@@ -95,6 +95,7 @@ var call_notify = function(kind, person) {
     case 'raise_hand':
       notify('You raised your hand', 'Voice Assistent', 'success');
       break;
+    }
 }
 
 /**
