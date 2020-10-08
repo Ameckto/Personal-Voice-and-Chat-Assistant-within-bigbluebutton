@@ -222,7 +222,7 @@ class ActionsDropdown extends PureComponent {
 
 
 
-  var my_function = function() {
+  function my_function() {
     console.log('in_my_function')
   }
 
