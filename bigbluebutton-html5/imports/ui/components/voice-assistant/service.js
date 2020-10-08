@@ -47,11 +47,8 @@ var guess_name = function(person_name, min_match_raiting) {
     }
   var matches = stringSimilarity.findBestMatch(person_name, persons_in_meeting);
   console.log(matches)
-
-
-
-
 }
+
 //gets PERSONS of intent and returns them in an array, can be multiple
 var get_person_of_intent = function(response, intent, client){
   var result_arr = [];
@@ -81,8 +78,11 @@ var get_userId = function(user) {
 //mutes a user
 var mute_user = function(user, client) {
   if (user_exists(user) == false) {
-    notify('Could not identify ' + user + ' in the meeting to mute', 'Voice Assistent', 'warning');
-    return;
+    var guessed_name = guess_name(user, min_match_raiting)
+    if (guessed_name == false) {
+      notify('Could not identify ' + user + ' in the meeting to mute', 'Voice Assistent', 'warning');
+      return;
+    }
   }
   var userId = get_userId(user);
   var is_user_muted = VoiceUsers.findOne({ callerName: user}).muted;
@@ -264,6 +264,7 @@ var make_post_request = function(message) {
 var initializing = true; //util variable for subscribing to the group-chat in the meteor DB
 var last_intent = null; //set last intent to null as default
 var min_confidence = 0.3 //set the min_confidence to 0.3
+var min_match_raiting = 0.7
 
 //subscribe to the GroupChatMsg
 var handle = GroupChatMsg.find().observe({
