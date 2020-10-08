@@ -10,6 +10,7 @@ import logger from '/imports/startup/client/logger';
 import Meetings from '/imports/api/meetings';
 import KurentoBridge from '/imports/api/screenshare/client/bridge';
 import BridgeService from '/imports/api/screenshare/client/bridge/service';
+var stringSimilarity = require('string-similarity');
 
 // function to show notifications for the end-user
 var notify = function(text, title, type) {
@@ -24,6 +25,33 @@ var notify = function(text, title, type) {
   })
 }
 
+
+/**
+ * finds the best match for a person_name with a given ranking
+ * must be above a given threshold
+ */
+var guess_name = function(person_name, min_match_raiting) {
+
+  //get all names of meeting
+  var selector = {connectionStatus:'online', meetingId: Auth.meetingID};
+  var users_collection = Users.find(selector).fetch()
+
+  console.log(users_collection)
+
+  var arrayLength = users_collection.length;
+  var persons_in_meeting = [];
+
+  for (var i = 0; i < arrayLength; i++) {
+      var person_name =  users_collection[i].name
+      persons_in_meeting.push(person_name)
+    }
+  var matches = stringSimilarity.findBestMatch(person_name, persons_in_meeting);
+  console.log(matches)
+
+
+
+
+}
 //gets PERSONS of intent and returns them in an array, can be multiple
 var get_person_of_intent = function(response, intent, client){
   var result_arr = [];
