@@ -27,10 +27,10 @@ var notify = function(text, title, type) {
 
 
 /**
- * finds the best match for a person_name with a given ranking
+ * finds the best match for a user with a given ranking
  * must be above a given threshold
  */
-var guess_name = function(person_name, min_match_raiting) {
+var guess_name = function(user, min_match_raiting) {
 
   //get all names of meeting
   var selector = {connectionStatus:'online', meetingId: Auth.meetingID};
@@ -45,7 +45,9 @@ var guess_name = function(person_name, min_match_raiting) {
       var person_name =  users_collection[i].name
       persons_in_meeting.push(person_name)
     }
-  var matches = stringSimilarity.findBestMatch(person_name, persons_in_meeting);
+  console.log(persons_in_meeting)
+  console.log(person_name)
+  var matches = stringSimilarity.findBestMatch(user, persons_in_meeting);
   console.log(matches)
 }
 
@@ -127,12 +129,10 @@ var user_exists = function(user) {
   var exists;
   console.log(typeof(user_document))
   if (user_document == undefined) {
-    console.log('in undefined block')
     exists = false;
   } else {
     exists = true;
   }
-  console.log(exists);
   return exists;
 }
 
@@ -205,6 +205,10 @@ var execute_intent = function(intent, response) {
       var userId = get_userId(client);
       makeCall('setEmojiStatus', userId, 'raiseHand');
       notify('You raised your hand', 'Voice Assistent', 'success');
+      break;
+
+    case 'summarize'
+      // inject code summarization
       break;
   }
 };
