@@ -25,7 +25,7 @@ var notify = function(text, title, type) {
   })
 }
 //manage notifications
-var call_notify = function(kind, person) {
+var make_notify = function(kind, person) {
   switch (kind) {
 
     // manage mute
