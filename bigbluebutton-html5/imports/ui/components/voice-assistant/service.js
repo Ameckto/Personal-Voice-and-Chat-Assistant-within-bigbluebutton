@@ -157,10 +157,10 @@ var execute_intent = function(intent, response) {
       notify( get_greeting() + ' ,' + client + '?', 'Voice Assistent', 'success');
       break;
 
-    case 'give_presentor': // gives a person presentor
+    case 'give_presenter': // gives a person presenter
       var person_arr = get_person_of_intent(response, intent, client);
       if (person_arr.length == 0) {
-        notify('Could not identify a person to give presentor to', 'Voice Assistent', 'warning');
+        notify('Could not identify a person to give presenter to', 'Voice Assistent', 'warning');
       } else {
         var user = person_arr[0];
         if (user_exists(user) == false) {
@@ -254,7 +254,7 @@ var make_post_request = function(message) {
     }
   }
   //RASA-Server domnain
-  var url = "https://www.niklasproject.de/model/parse";
+  var url = "https://niklasproject.de/model/parse";
   xhttp.open("POST", url);
   xhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
   //send the post-request
