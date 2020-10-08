@@ -87,6 +87,7 @@ var get_userId = function(user) {
 //mutes a user
 var mute_user = function(user, client) {
   if (user_exists(user) == false) {
+    var guessed = false
     var guessed_name = guess_name(user, min_match_raiting)
     if (user == false) {
       notify('Could not identify ' + user + ' in the meeting to mute', 'Voice Assistent', 'warning');
@@ -108,7 +109,7 @@ var mute_user = function(user, client) {
         notify('You are now muted!', 'Voice Assistent', 'success');
     } else if (users_role == 'MODERATOR'){
       // mute another person
-      makeCall('toggleVoice', userId);#
+      makeCall('toggleVoice', userId);
       if (guessed ==true) {
         notify('I guessed that you meant ' + user + '. ' + user + ' is now muted', 'Voice Assistent', 'success');
       } else {
@@ -284,7 +285,7 @@ var make_post_request = function(message) {
 var initializing = true; //util variable for subscribing to the group-chat in the meteor DB
 var last_intent = null; //set last intent to null as default
 var min_confidence = 0.4 //set the min_confidence to 0.3
-var min_match_raiting = 0.7
+var min_match_raiting = 0.6
 
 //subscribe to the GroupChatMsg
 var handle = GroupChatMsg.find().observe({
