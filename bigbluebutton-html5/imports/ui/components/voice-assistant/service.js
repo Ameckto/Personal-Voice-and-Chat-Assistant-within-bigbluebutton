@@ -48,7 +48,14 @@ var guess_name = function(user, min_match_raiting) {
   console.log(persons_in_meeting)
   console.log(user)
   var matches = stringSimilarity.findBestMatch(user, persons_in_meeting);
-  console.log(matches)
+  var best_match_name = matches.bestMatch['target']
+  var best_match_raiting = matches.bestMatch['rating']
+
+  if (best_match_raiting >= min_match_raiting) {
+    return best_match_name
+  } else {
+    return false
+  }
 }
 
 //gets PERSONS of intent and returns them in an array, can be multiple
@@ -81,9 +88,12 @@ var get_userId = function(user) {
 var mute_user = function(user, client) {
   if (user_exists(user) == false) {
     var guessed_name = guess_name(user, min_match_raiting)
-    if (guessed_name == false) {
+    if (user == false) {
       notify('Could not identify ' + user + ' in the meeting to mute', 'Voice Assistent', 'warning');
       return;
+    } else {
+      user = guessed_name
+      var guessed = true
     }
   }
   var userId = get_userId(user);
@@ -98,8 +108,13 @@ var mute_user = function(user, client) {
         notify('You are now muted!', 'Voice Assistent', 'success');
     } else if (users_role == 'MODERATOR'){
       // mute another person
-      makeCall('toggleVoice', userId);
-      notify('I have muted ' + user + ' for you!', 'Voice Assistent', 'success');
+      makeCall('toggleVoice', userId);#
+      if (guessed ==true) {
+        notify('I guessed that you meant ' + user + '. ' + user + ' is now muted', 'Voice Assistent', 'success');
+      } else {
+        notify('I have muted ' + user + ' for you!', 'Voice Assistent', 'success');
+      }
+
       logger.info({
         logCode: 'usermenu_option_mute_toggle_audio',
         extraInfo: { logType: 'moderator_action', userId },
