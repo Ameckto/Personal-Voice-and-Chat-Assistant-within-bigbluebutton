@@ -1,4 +1,4 @@
-var string_similarity_test = function notifications(){
+var string_similarity_test = function(){
 
   console.log('in test file')
 
