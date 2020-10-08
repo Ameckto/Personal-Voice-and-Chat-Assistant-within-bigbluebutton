@@ -33,46 +33,46 @@ var make_notify = function(kind, user) {
       notify('I have muted ' + user + ' for you!', 'Voice Assistent', 'success');
       break;
     case 'mute_guessed':
-      notify('I guessed that you meant ' + user + '. ' + user + ' is now muted', 'Voice Assistent', 'success');
+      notify('I guessed that you meant ' + user + '. ' + user + ' is now muted.', 'Voice Assistent', 'success');
       break;
     case 'mute_me':
       notify('You are now muted!', 'Voice Assistent', 'success');
       break;
     case 'mute_not_moderator':
-      notify('Only moderators can mute other users', 'Voice Assistent', 'warning');
+      notify('Only moderators can mute other users.', 'Voice Assistent', 'warning');
       break;
     case 'mute_already_muted':
-      notify('Person ' + user + ' is already muted', 'Voice Assistent', 'warning')
+      notify('Person ' + user + ' is already muted.', 'Voice Assistent', 'warning')
       break;
     case 'mute_me_already_muted':
-        notify('You are already muted', 'Voice Assistent', 'warning')
+        notify('You are already muted.', 'Voice Assistent', 'warning')
         break;
     case 'mute_no_person':
-      notify('Could not identify ' + user + ' in the meeting to mute', 'Voice Assistent', 'warning');
+      notify('Could not identify ' + user + ' in the meeting to mute.', 'Voice Assistent', 'warning');
       break;
     case 'mute_no_person_given':
-      notify('Could not identify a person to mute', 'Voice Assistent', 'warning')
+      notify('Could not identify a person to mute.', 'Voice Assistent', 'warning')
       break;
     case 'mute_guessed_already_muted':
-      notify('I guessed that you meant ' + user + '. But ' + user + ' is already muted', 'Voice Assistent', 'success');
+      notify('I guessed that you meant ' + user + '. But ' + user + ' is already muted.', 'Voice Assistent', 'success');
       break;
 
     // manage give presenter
     case 'presenter_give':
-      notify('Assigned ' + user + ' presenter', 'Voice Assistent', 'success');
+      notify('Assigned ' + user + ' presenter.', 'Voice Assistent', 'success');
       break;
     case 'presenter_already_presenter':
       break;
     case 'presenter_no_person_given':
-      notify('Could not identify a person to give presenter to', 'Voice Assistent', 'warning');
+      notify('Could not identify a person to give presenter to.', 'Voice Assistent', 'warning');
       break;
     case 'presenter_no_user_identified':
-      notify('Could not identify ' + user + ' in the meeting to give presenter to', 'Voice Assistent', 'warning');
+      notify('Could not identify ' + user + ' in the meeting to give presenter to.', 'Voice Assistent', 'warning');
     case 'presenter_person_guessed':
-      notify('I guessed that you meant ' + user + '. Assigned ' + user + ' presenter', 'Voice Assistent', 'success');
+      notify('I guessed that you meant ' + user + '. Assigned ' + user + ' presenter.', 'Voice Assistent', 'success');
       break;
     case 'presenter_only_moderator':
-      notify('Only the moderator can assign presenter', 'Voice Assistent', 'warning');
+      notify('Only the moderator can assign presenter.', 'Voice Assistent', 'warning');
       break;
 
     // manage wake up
@@ -80,20 +80,20 @@ var make_notify = function(kind, user) {
       notify( get_greeting() + ' ,' + user + '?', 'Voice Assistent', 'success');
       break;
     case 'wake_up_first':
-      notify('please wake me up first ', 'Voice Assistent', 'warning')
+      notify('please wake me up first.', 'Voice Assistent', 'warning')
       break;
 
     // manage share Screenshare
     case 'screen_share':
-      notify('You can now share your screen', 'Voice Assistent', 'success');
+      notify('You can now share your screen.', 'Voice Assistent', 'success');
       break;
     case 'share_screen_only_presenter':
-      notify('You can only share your screen if you are presenter', 'Voice Assistent', 'warning');
+      notify('You can only share your screen if you are presenter.', 'Voice Assistent', 'warning');
       break;
 
     // manage raise hand
     case 'raise_hand':
-      notify('You raised your hand', 'Voice Assistent', 'success');
+      notify('You raised your hand.', 'Voice Assistent', 'success');
       break;
     }
 }
@@ -117,8 +117,7 @@ var guess_name = function(user, min_match_raiting) {
       var person_name =  users_collection[i].name
       persons_in_meeting.push(person_name)
     }
-  console.log(persons_in_meeting)
-  console.log(user)
+
   var matches = stringSimilarity.findBestMatch(user, persons_in_meeting);
   var best_match_name = matches.bestMatch['target']
   var best_match_raiting = matches.bestMatch['rating']
@@ -176,7 +175,7 @@ var mute_user = function(user, client) {
   var users_role = Users.findOne(selector).role;
 
   if (is_user_muted == false) {
-    if (userId === Auth.userID) {
+    if (userId == Auth.userID) {
       AudioService.toggleMuteMicrophone();
       make_notify('mute_me', '');
     } else if (users_role == 'MODERATOR'){
@@ -200,7 +199,7 @@ var mute_user = function(user, client) {
 
 // gets a random greet and returns it
 var get_greeting = function() {
-  var greetings_arr = ['More work', 'Are you the king', 'Do you need help', 'Orders', "Can I ask you", 'What do you need'];
+  var greetings_arr = ['More work', 'Are you the king', 'Do you need help', 'Orders', "What is your desire", 'What do you need', 'Any dreams', 'What'];
   var random = Math.floor(Math.random() * greetings_arr.length);
   return greetings_arr[random]
 }
