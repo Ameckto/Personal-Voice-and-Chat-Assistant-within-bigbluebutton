@@ -207,7 +207,7 @@ var execute_intent = function(intent, response) {
       notify('You raised your hand', 'Voice Assistent', 'success');
       break;
 
-    case 'summarize'
+    case 'summarize':
       // inject code summarization
       break;
   }
