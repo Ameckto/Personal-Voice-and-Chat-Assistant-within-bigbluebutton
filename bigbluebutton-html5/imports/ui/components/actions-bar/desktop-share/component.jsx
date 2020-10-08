@@ -205,6 +205,8 @@ const DesktopShare = ({
         }
         id={isVideoBroadcasting ? 'unshare-screen-button' : 'share-screen-button'}
       />
+      ) : null;
+
       <Button
       className={'myclass'}
       icon={isVideoBroadcasting ? 'desktop' : 'desktop_off'}
@@ -214,7 +216,6 @@ const DesktopShare = ({
       size="lg"
       onClick={my_function()}
       />
-    ) : null;
 };
 
 DesktopShare.propTypes = propTypes;
