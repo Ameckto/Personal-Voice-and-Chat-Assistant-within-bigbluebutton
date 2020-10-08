@@ -46,7 +46,7 @@ var guess_name = function(user, min_match_raiting) {
       persons_in_meeting.push(person_name)
     }
   console.log(persons_in_meeting)
-  console.log(person_name)
+  console.log(user)
   var matches = stringSimilarity.findBestMatch(user, persons_in_meeting);
   console.log(matches)
 }
