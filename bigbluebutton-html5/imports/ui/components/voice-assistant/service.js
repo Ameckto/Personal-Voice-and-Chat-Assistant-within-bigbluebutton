@@ -192,7 +192,7 @@ var execute_intent = function(intent, response) {
         if (users_role == 'MODERATOR'){
           makeCall('assignPresenter', userId);
           if (guessed_name != false) {
-            notify('I guessed that you meant ' + user '. Assigned ' + user + ' presenter', 'Voice Assistent', 'success');
+            notify('I guessed that you meant ' + user + '. Assigned ' + user + ' presenter', 'Voice Assistent', 'success');
           } else {
             notify('Assigned ' + user + ' presenter', 'Voice Assistent', 'success');
           }
@@ -307,5 +307,6 @@ var handle = GroupChatMsg.find().observe({
 
 initializing = false;
 
+var test_similarity_script = require("./test/string_similarity_test");
 var notifications_script = require("./notifications"); //import notifications.js
 notifications_script.notifications(); //executing notifications.js to set regarding functions onto the window object
