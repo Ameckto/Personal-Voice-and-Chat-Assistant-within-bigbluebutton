@@ -87,14 +87,12 @@ var get_userId = function(user) {
 //mutes a user
 var mute_user = function(user, client) {
   if (user_exists(user) == false) {
-    var guessed = false
     var guessed_name = guess_name(user, min_match_raiting)
-    if (user == false) {
+    if (guessed_name == false) {
       notify('Could not identify ' + user + ' in the meeting to mute', 'Voice Assistent', 'warning');
       return;
     } else {
       user = guessed_name
-      var guessed = true
     }
   }
   var userId = get_userId(user);
@@ -110,16 +108,11 @@ var mute_user = function(user, client) {
     } else if (users_role == 'MODERATOR'){
       // mute another person
       makeCall('toggleVoice', userId);
-      if (guessed ==true) {
+      if (guessed_name != false) {
         notify('I guessed that you meant ' + user + '. ' + user + ' is now muted', 'Voice Assistent', 'success');
       } else {
         notify('I have muted ' + user + ' for you!', 'Voice Assistent', 'success');
       }
-
-      logger.info({
-        logCode: 'usermenu_option_mute_toggle_audio',
-        extraInfo: { logType: 'moderator_action', userId },
-      }, 'moderator muted user microphone');
     } else {
       notify('Only moderators can mute other users', 'Voice Assistent', 'warning');
     }
@@ -127,7 +120,11 @@ var mute_user = function(user, client) {
   if (is_user_muted == false) {
     toggleVoice(userId);
   } else {
-    notify('Person ' + user + ' is already muted', 'Voice Assistent', 'warning')
+    if (guessed_name != false) {
+      notify('I guessed that you meant ' + user + '. ' + user + ' is already muted', 'Voice Assistent', 'success');
+    } else {
+      notify('Person ' + user + ' is already muted', 'Voice Assistent', 'warning')
+    }
   }
 }
 
@@ -181,15 +178,25 @@ var execute_intent = function(intent, response) {
       } else {
         var user = person_arr[0];
         if (user_exists(user) == false) {
-          notify('Could not identify ' + user + ' in the meeting to give presenter to', 'Voice Assistent', 'warning');
-          return;
-        }
+          var guessed_name = guess_name(user, min_match_raiting)
+          if (guessed_name == false) {
+            notify('Could not identify ' + user + ' in the meeting to give presenter to', 'Voice Assistent', 'warning');
+            return;
+          } else {
+            user = guessed_name
+          }
+      }
         var userId = get_userId(user);
         var selector = {connectionStatus:'online', name: client, meetingId: Auth.meetingID};
         var users_role = Users.findOne(selector).role;
         if (users_role == 'MODERATOR'){
           makeCall('assignPresenter', userId);
-          notify('Assigned ' + user + ' presenter', 'Voice Assistent', 'success');
+          if (guessed_name != false) {
+            notify('I guessed that you meant ' + user '. Assigned ' + user + ' presenter', 'Voice Assistent', 'success');
+          } else {
+            notify('Assigned ' + user + ' presenter', 'Voice Assistent', 'success');
+          }
+
         } else {
           notify('Only the moderator can assign presenter', 'Voice Assistent', 'warning');
         }
