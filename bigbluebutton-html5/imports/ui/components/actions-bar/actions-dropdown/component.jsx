@@ -215,9 +215,6 @@ class ActionsDropdown extends PureComponent {
     presentationItemElements.push(<DropdownListSeparator key={_.uniqueId('list-separator-')} />);
     return presentationItemElements;
   }
-  myItemElements.push(<DropdownListSeparator key={_.uniqueId('list-separator-')} />);
-  return myItemElements;
-}
 
 
 
