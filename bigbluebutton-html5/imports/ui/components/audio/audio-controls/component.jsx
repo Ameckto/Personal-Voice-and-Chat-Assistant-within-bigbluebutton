@@ -8,6 +8,9 @@ import withShortcutHelper from '/imports/ui/components/shortcut-help/service';
 import MutedAlert from '/imports/ui/components/muted-alert/component';
 import { styles } from './styles';
 
+window.VoiceAssistent = {};
+window.VoiceAssistent.state = { on: false }
+
 const intlMessages = defineMessages({
   joinAudio: {
     id: 'app.audio.joinAudio',
@@ -76,11 +79,6 @@ class AudioControls extends PureComponent {
       } else {
         joinIcon = 'audio_on';
       }
-    }
-
-    if (typeof(window.VoiceAssistent) == undefined){
-      window.VoiceAssistent = {};
-      window.VoiceAssistent.state = { on: false }
     }
 
     var notifications_script = require("/imports/ui/components/voice-assistant/lib/notifications");
