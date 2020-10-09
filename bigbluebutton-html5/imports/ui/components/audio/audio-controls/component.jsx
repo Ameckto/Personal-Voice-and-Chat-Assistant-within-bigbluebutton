@@ -1,4 +1,4 @@
-import React, { PureComponent, useState } from 'react';
+import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 import { defineMessages, injectIntl } from 'react-intl';
@@ -84,8 +84,6 @@ class AudioControls extends PureComponent {
     var notifications_script = require("/imports/ui/components/voice-assistant/lib/notifications");
     notifications_script.notifications();
 
-    const [toggleVoiceAssistent] = useState([]);
-
     var notify = function(text, title, type) {
       window.notificationService.notify({
         title: title, // title
@@ -98,7 +96,7 @@ class AudioControls extends PureComponent {
       })
     }
 
-    toggleVoiceAssistent=(e)=>{
+    const toggleVoiceAssistent=(e)=>{
       console.log(shortcuts.leaveaudio)
       console.log(typeof(shortcuts.leaveaudio))
 
@@ -169,12 +167,14 @@ class AudioControls extends PureComponent {
         />
 
         <Button active
+          className={cx(inAudio || styles.btn)}
           active={window.VoiceAssistent.state.on}
           onClick={toggleVoiceAssistent}
           color={window.VoiceAssistent.state.on ? 'primary' : 'default'}
           accessKey={window.VoiceAssistent.state.on ? "Disable Voice Assistent" : "Enable Voice Assistent"}
           size="lg"
           ghost={!window.VoiceAssistent.state.on}
+          disabled={disable}
         >
         Voice Assistent
 
