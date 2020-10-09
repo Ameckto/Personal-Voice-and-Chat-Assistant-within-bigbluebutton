@@ -98,7 +98,7 @@ class AudioControls extends PureComponent {
       })
     }
 
-    const toggleVoiceAssistent=(e)=>{
+    toggleVoiceAssistent=(e)=>{
       console.log(shortcuts.leaveaudio)
       console.log(typeof(shortcuts.leaveaudio))
 
