@@ -108,7 +108,7 @@ class AudioControls extends PureComponent {
         notify('You have turned me off!', 'Voice Assistent', 'success')
 
         this.setState({
-          color: 'primary'
+          color: 'primary',
           ghost: false
         })
 
@@ -117,7 +117,7 @@ class AudioControls extends PureComponent {
         notify('You have turned me on!', 'Voice Assistent', 'success')
 
         this.setState({
-          color: 'blue'
+          color: 'blue',
           ghost: true
         })
 
