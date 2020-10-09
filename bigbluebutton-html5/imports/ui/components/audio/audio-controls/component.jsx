@@ -78,13 +78,14 @@ class AudioControls extends PureComponent {
       }
     }
 
-    var VoiceAssistent = {};
-    VoiceAssistent.state = { on: false }
+    var window.VoiceAssistent = {};
+    window.VoiceAssistent.state = { on: false }
+
     function toggleVoiceAssistent(){
-      if (VoiceAssistent.state.on == true) {
-        VoiceAssistent.state.on = false
+      if (window.VoiceAssistent.state.on == true) {
+        window.VoiceAssistent.state.on = false
       } else {
-        VoiceAssistent.state.on = true
+        window.VoiceAssistent.state.on = true
       }
     }
 
@@ -130,7 +131,10 @@ class AudioControls extends PureComponent {
         />
 
         <button onClick={toggleVoiceAssistent}>
-          Button
+          VA
+          disabled={disable}
+          size="lg"
+          circle
         </button>
 
       </span>
