@@ -153,13 +153,15 @@ class AudioControls extends PureComponent {
 
         <Button active
           disabled={disable}
+          compact
+          content='Voice Assistent'
           onClick={toggleVoiceAssistent}
-          color={window.VoiceAssistent.state.on ? 'primary' : 'secondary'}
+          color={window.VoiceAssistent.state.on ? 'red' : 'null'}
           accessKey={window.VoiceAssistent.state.on ? "Disable Voice Assistent" : "Enable Voice Assistent"}
           ghost={!window.VoiceAssistent.state.on}
           size="lg"
         >
-        Voice Assistent
+
         </Button>
 
       </span>
