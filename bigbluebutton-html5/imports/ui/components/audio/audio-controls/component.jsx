@@ -100,8 +100,7 @@ class AudioControls extends PureComponent {
       console.log(shortcuts.leaveaudio)
       console.log(typeof(shortcuts.leaveaudio))
       e.preventDefault();
-      e.target.style.color = 'black'
-      e.setState({black: !e.state.black})
+      e.target.style.backgroundColor = 'blue'
 
       if (window.VoiceAssistent.state.on == true) {
         window.VoiceAssistent.state.on = false
