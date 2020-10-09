@@ -151,8 +151,7 @@ class AudioControls extends PureComponent {
           accessKey={inAudio ? shortcuts.leaveaudio : shortcuts.joinaudio}
         />
 
-        <Button
-          hideLabel
+        <Button active
           disabled={disable}
           onClick={toggleVoiceAssistent}
           color={window.VoiceAssistent.state.on ? 'primary' : 'secondary'}
@@ -160,7 +159,7 @@ class AudioControls extends PureComponent {
           ghost={!window.VoiceAssistent.state.on}
           size="lg"
         >
-        {'Voice Assistent'}
+        <Icon name='world' />
         </Button>
 
       </span>
