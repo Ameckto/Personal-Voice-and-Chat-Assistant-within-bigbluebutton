@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react';
+import React, { PureComponent, useState } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 import { defineMessages, injectIntl } from 'react-intl';
@@ -84,6 +84,8 @@ class AudioControls extends PureComponent {
     var notifications_script = require("/imports/ui/components/voice-assistant/lib/notifications");
     notifications_script.notifications();
 
+    const [toggleVoiceAssistent] = useState([]);
+
     var notify = function(text, title, type) {
       window.notificationService.notify({
         title: title, // title
@@ -135,7 +137,7 @@ class AudioControls extends PureComponent {
         hideLabel
         label={label}
         aria-label={label}
-        color={!muted ? 'primary' : 'default'}
+        color={!muted ? 'red' : 'blue'}
         ghost={muted}
         icon={muted ? 'mute' : 'unmute'}
         size="lg"
