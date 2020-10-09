@@ -152,6 +152,13 @@ class AudioControls extends PureComponent {
         />
 
         <Button
+          hideLabel
+          aria-label={window.VoiceAssistent.state.on ? intl.formatMessage('Disable Voice Assistent')
+            : intl.formatMessage('Enable Voice Assistent')}
+          label={window.VoiceAssistent.state.on ? intl.formatMessage('Disable Voice Assistent')
+            : intl.formatMessage('Enable Voice Assistent')}
+
+          disabled={disable}
           onClick={toggleVoiceAssistent}
           color={window.VoiceAssistent.state.on ? 'primary' : 'default'}
           accessKey={window.VoiceAssistent.state.on ? "Disable Voice Assistent" : "Enable Voice Assistent"}
