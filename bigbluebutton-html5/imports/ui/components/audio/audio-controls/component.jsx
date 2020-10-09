@@ -78,8 +78,14 @@ class AudioControls extends PureComponent {
       }
     }
 
-    function clickMe(){
-      alert('you clicked me!');
+    var VoiceAssistent = {};
+    VoiceAssistent.state = { on: false }
+    function toggleVoiceAssistent(){
+      if (VoiceAssistent.state.on == true) {
+        VoiceAssistent.state.on = false
+      } else {
+        VoiceAssistent.state.on = true
+      }
     }
 
     const label = muted ? intl.formatMessage(intlMessages.unmuteAudio)
@@ -123,7 +129,7 @@ class AudioControls extends PureComponent {
           accessKey={inAudio ? shortcuts.leaveaudio : shortcuts.joinaudio}
         />
 
-        <button onClick={clickMe}>
+        <button onClick={toggleVoiceAssistent}>
           Button
         </button>
 
