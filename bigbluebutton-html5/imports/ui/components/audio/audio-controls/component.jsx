@@ -118,7 +118,7 @@ class AudioControls extends PureComponent {
         hideLabel
         label={label}
         aria-label={label}
-        color={!muted ? 'red' : 'blue'}
+        color={!muted ? 'primary' : 'default'}
         ghost={muted}
         icon={muted ? 'mute' : 'unmute'}
         size="lg"
@@ -149,7 +149,7 @@ class AudioControls extends PureComponent {
           accessKey={inAudio ? shortcuts.leaveaudio : shortcuts.joinaudio}
         />
 
-        <Button active
+        <Button
           className={VoiceAssistent}
           active={window.VoiceAssistent.state.on}
           onClick={toggleVoiceAssistent}
