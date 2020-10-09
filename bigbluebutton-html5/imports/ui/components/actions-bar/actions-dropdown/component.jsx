@@ -215,36 +215,6 @@ class ActionsDropdown extends PureComponent {
     presentationItemElements.push(<DropdownListSeparator key={_.uniqueId('list-separator-')} />);
     return presentationItemElements;
   }
-
-
-
-
-
-
-
-  function my_function() {
-    console.log('in_my_function')
-  }
-
-
-
-  const myItemElements = presentations.map((p) => {
-    const itemStyles = {};
-    itemStyles[styles.presentationItem] = true;
-    itemStyles[styles.isCurrent] = p.current;
-
-    return (<DropdownListItem
-      className={cx(itemStyles)}
-      icon="file"
-      iconRight={p.current ? 'check' : null}
-      label={p.name}
-      description="uploaded presentation file"
-      key={`uploaded-presentation-${p.id}`}
-      onClick={my_function()}
-    />
-    );
-  });
-
   myItemElements.push(<DropdownListSeparator key={_.uniqueId('list-separator-')} />);
   return myItemElements;
 }
