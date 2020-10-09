@@ -96,18 +96,18 @@ class AudioControls extends PureComponent {
       })
     }
 
-    const toggleVoiceAssistent=()=>{
+    const toggleVoiceAssistent=(e)=>{
       console.log(shortcuts.leaveaudio)
       console.log(typeof(shortcuts.leaveaudio))
 
-      console.log(this)
+      console.log(e)
 
 
       if (window.VoiceAssistent.state.on == true) {
         window.VoiceAssistent.state.on = false
         notify('You have turned me off!', 'Voice Assistent', 'success')
 
-        this.setState({
+        e.setState({
           color: 'primary',
           ghost: false
         })
@@ -116,7 +116,7 @@ class AudioControls extends PureComponent {
         window.VoiceAssistent.state.on = true
         notify('You have turned me on!', 'Voice Assistent', 'success')
 
-        this.setState({
+        e.setState({
           color: 'blue',
           ghost: true
         })
