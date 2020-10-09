@@ -152,6 +152,7 @@ class AudioControls extends PureComponent {
         />
 
         <Button active
+          className={VoiceAssistentClass}
           active={window.VoiceAssistent.state.on}
           compact
           onClick={toggleVoiceAssistent}
@@ -168,6 +169,11 @@ class AudioControls extends PureComponent {
 
     );
   }
+}
+
+changeStyles = () => {
+    let element = document.getElementsByClassName('VoiceAssistentClass')
+    ReactDOM.findDOMNode(element).style.backgroundColor = this.state.isClicked?'black' : 'white'
 }
 
 AudioControls.propTypes = propTypes;
