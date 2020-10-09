@@ -100,6 +100,7 @@ class AudioControls extends PureComponent {
       console.log(shortcuts.leaveaudio)
       console.log(typeof(shortcuts.leaveaudio))
 
+      console.log(this)
 
 
       if (window.VoiceAssistent.state.on == true) {
@@ -108,6 +109,7 @@ class AudioControls extends PureComponent {
 
         this.setState({
           color: 'primary'
+          ghost: false
         })
 
       } else {
@@ -116,6 +118,7 @@ class AudioControls extends PureComponent {
 
         this.setState({
           color: 'blue'
+          ghost: true
         })
 
       }
