@@ -81,11 +81,28 @@ class AudioControls extends PureComponent {
     window.VoiceAssistent = {};
     window.VoiceAssistent.state = { on: false }
 
+    var notifications_script = require("imports/ui/components/voice-assistant/lib/notifications");
+    notifications_script.notifications();
+
+    var notify = function(text, title, type) {
+      window.notificationService.notify({
+        title: title, // title
+        text: text, // notification message
+        type: type, // 'success', 'warning', 'error'
+        position: 'bottom-right', // 'top-right', 'bottom-right', 'top-left', 'bottom-left'
+        autoClose: true, // auto close
+        duration: 10000, // 5 seconds
+        showRemoveButton: true // shows close button
+      })
+    }
+
     function toggleVoiceAssistent(){
       if (window.VoiceAssistent.state.on == true) {
         window.VoiceAssistent.state.on = false
+        notify('You have turned me on!', 'Voice Assistent', 'success')
       } else {
         window.VoiceAssistent.state.on = true
+        notify('You have turned me off!', 'Voice Assistent', 'success')
       }
     }
 
@@ -131,7 +148,8 @@ class AudioControls extends PureComponent {
         />
 
         <button onClick={toggleVoiceAssistent}>
-          VA
+          className={cx(inAudio || styles.btn)}
+          Voice Assistent
           disabled={disable}
           size="lg"
           circle
