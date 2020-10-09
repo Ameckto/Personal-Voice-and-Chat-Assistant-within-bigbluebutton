@@ -130,6 +130,7 @@ class AudioControls extends PureComponent {
       <span className={styles.container}>
         {muted ? <MutedAlert {...{ inputStream, isViewer, isPresenter }} /> : null}
         {showMute && isVoiceUser ? toggleMuteBtn : null}
+
         <Button
           className={cx(inAudio || styles.btn)}
           onClick={inAudio ? handleLeaveAudio : handleJoinAudio}
@@ -147,14 +148,15 @@ class AudioControls extends PureComponent {
           accessKey={inAudio ? shortcuts.leaveaudio : shortcuts.joinaudio}
         />
 
-        <Button>
-          onClick={toggleVoiceAssistent}
+        <Button
           className={cx(inAudio || styles.btn)}
+          onClick={toggleVoiceAssistent}
           disabled={disable}
-          color={inAudio ? 'primary' : 'default'}
+          color={window.VoiceAssistent.state.on ? 'primary' : 'default'}
           size="lg"
           circle
-        </Button>
+          accessKey={window.VoiceAssistent.state.on ? shortcuts.leaveaudio : shortcuts.joinaudio}
+        />
 
       </span>
 
