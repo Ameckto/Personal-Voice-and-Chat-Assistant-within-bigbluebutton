@@ -101,7 +101,7 @@ class AudioControls extends PureComponent {
       console.log(typeof(shortcuts.leaveaudio))
       e.preventDefault();
       e.target.style.backgroundColor = 'primary'
-      e.target.style.ghost = false
+      e.target.style.ghost = true
 
       if (window.VoiceAssistent.state.on == true) {
         window.VoiceAssistent.state.on = false
@@ -171,11 +171,6 @@ class AudioControls extends PureComponent {
 
     );
   }
-}
-
-changeStyles = () => {
-    let element = document.getElementsByClassName('VoiceAssistentClass')
-    ReactDOM.findDOMNode(element).style.backgroundColor = this.state.isClicked?'black' : 'white'
 }
 
 AudioControls.propTypes = propTypes;
