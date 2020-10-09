@@ -96,9 +96,11 @@ class AudioControls extends PureComponent {
       })
     }
 
-    function toggleVoiceAssistent(){
+    toggleVoiceAssistent=(e)=>{
       console.log(shortcuts.leaveaudio)
       console.log(typeof(shortcuts.leaveaudio))
+      e.preventDefault();
+      e.target.style.color = 'black'
 
       if (window.VoiceAssistent.state.on == true) {
         window.VoiceAssistent.state.on = false
@@ -152,13 +154,12 @@ class AudioControls extends PureComponent {
         />
 
         <Button active
-          className={VoiceAssistentClass}
           active={window.VoiceAssistent.state.on}
-          compact
           onClick={toggleVoiceAssistent}
-          color={window.VoiceAssistent.state.on ? 'red' : 'null'}
+          color={window.VoiceAssistent.state.on ? 'primary' : 'default'}
           accessKey={window.VoiceAssistent.state.on ? "Disable Voice Assistent" : "Enable Voice Assistent"}
           size="lg"
+          ghost={!window.VoiceAssistent.state.on}
         >
         Voice Assistent
 
