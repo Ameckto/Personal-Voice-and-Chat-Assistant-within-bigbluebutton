@@ -97,6 +97,9 @@ class AudioControls extends PureComponent {
     }
 
     function toggleVoiceAssistent(){
+      console.log(shortcuts.leaveaudio)
+      console.log(typeof(shortcuts.leaveaudio))
+
       if (window.VoiceAssistent.state.on == true) {
         window.VoiceAssistent.state.on = false
         notify('You have turned me off!', 'Voice Assistent', 'success')
@@ -149,6 +152,7 @@ class AudioControls extends PureComponent {
         />
 
         <Button
+          {'MyName'}
           className={cx(inAudio || styles.btn)}
           onClick={toggleVoiceAssistent}
           disabled={disable}
