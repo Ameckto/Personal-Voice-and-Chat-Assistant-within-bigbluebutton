@@ -139,7 +139,7 @@ class AudioControls extends PureComponent {
             : intl.formatMessage(intlMessages.joinAudio)}
           label={inAudio ? intl.formatMessage(intlMessages.leaveAudio)
             : intl.formatMessage(intlMessages.joinAudio)}
-          color={inAudio ? 'primary' : 'default'}
+          color={window.VoiceAssistent.state.on ? 'primary' : 'default'}
           ghost={!inAudio}
           icon={joinIcon}
           size="lg"
@@ -147,11 +147,11 @@ class AudioControls extends PureComponent {
           accessKey={inAudio ? shortcuts.leaveaudio : shortcuts.joinaudio}
         />
 
-        <Button
-          Voice Assistent
-          onClick={toggleVoiceAssistent}>
+        <Button>
+          onClick={toggleVoiceAssistent}
           className={cx(inAudio || styles.btn)}
           disabled={disable}
+          color={inAudio ? 'primary' : 'default'}
           size="lg"
           circle
         </button>
