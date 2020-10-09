@@ -154,7 +154,7 @@ class AudioControls extends PureComponent {
           color={inAudio ? 'primary' : 'default'}
           size="lg"
           circle
-        </button>
+        </>
 
       </span>
 
