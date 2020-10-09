@@ -152,15 +152,13 @@ class AudioControls extends PureComponent {
         />
 
         <Button
-          className={cx(inAudio || styles.btn)}
+          variant="primary"
           onClick={toggleVoiceAssistent}
-          disabled={disable}
+          disabled
           color={window.VoiceAssistent.state.on ? 'primary' : 'default'}
-          size="lg"
-          circle
           accessKey={window.VoiceAssistent.state.on ? "Disable Voice Assistent" : "Enable Voice Assistent"}
         >
-        {'MyName'}
+        {'Voice Assistent'}
         </Button>
 
       </span>
