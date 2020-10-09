@@ -78,9 +78,11 @@ class AudioControls extends PureComponent {
       }
     }
 
-    window.VoiceAssistent = {};
-    window.VoiceAssistent.state = { on: false }
-
+    if (type(window.VoiceAssistent) == undefined){
+      window.VoiceAssistent = {};
+      window.VoiceAssistent.state = { on: false }
+    }
+  
     var notifications_script = require("/imports/ui/components/voice-assistant/lib/notifications");
     notifications_script.notifications();
 
