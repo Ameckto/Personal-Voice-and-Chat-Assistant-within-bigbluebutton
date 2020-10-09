@@ -147,7 +147,7 @@ class AudioControls extends PureComponent {
           accessKey={inAudio ? shortcuts.leaveaudio : shortcuts.joinaudio}
         />
 
-        <Button>
+        <Button
           onClick={toggleVoiceAssistent}
           className={cx(inAudio || styles.btn)}
           disabled={disable}
