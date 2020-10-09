@@ -159,7 +159,7 @@ class AudioControls extends PureComponent {
           ghost={!window.VoiceAssistent.state.on}
           size="lg"
         >
-        <Icon name='world' />
+        Voice Assistent
         </Button>
 
       </span>
