@@ -368,8 +368,10 @@ var handle = GroupChatMsg.find().observe({
   added: function (item) {
     if (!initializing)
         //check if the sender of the message is the client
-        if (item.sender == Auth.userID) {
-          make_post_request(item.message)
+        if (VoiceAssistent.state.on){
+          if (item.sender == Auth.userID) {
+            make_post_request(item.message)
+          }
         }
   }
 });
