@@ -122,13 +122,14 @@ class AudioControls extends PureComponent {
           circle
           accessKey={inAudio ? shortcuts.leaveaudio : shortcuts.joinaudio}
         />
+
+        <button onClick={clickMe}>
+          Button
+        </button>
+
       </span>
 
-      <div>
-        <button onClick={clickMe}>
-        Button
-        </button>
-      </div>
+
     );
   }
 }
