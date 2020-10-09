@@ -152,7 +152,7 @@ class AudioControls extends PureComponent {
         />
 
         <Button
-          {'MyName'}
+          value="MyName" 
           className={cx(inAudio || styles.btn)}
           onClick={toggleVoiceAssistent}
           disabled={disable}
