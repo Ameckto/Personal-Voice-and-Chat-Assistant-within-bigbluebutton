@@ -49,7 +49,7 @@ class AudioControls extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {isToggleOn: window.VoiceAssistent.state.on};
-    this.toggleVoiceAssistent = props.toggleVoiceAssistent.bind(this);
+    this.toggleVoiceAssistent = this.toggleVoiceAssistent.bind(this);
   }
 
   componentDidMount() {
