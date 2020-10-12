@@ -131,9 +131,9 @@ class AudioControls extends PureComponent {
           accessKey={inAudio ? shortcuts.leaveaudio : shortcuts.joinaudio}
         />
         if (window.VoiceAssistent.state.on) {
-          var  myColor = 'primary'
+          myColor = 'primary'
         } else {
-          var  myColor = 'default'
+          myColor = 'default'
         }
         const toggleVoiceAssistent = callback => () => {
           this.setState({ color: myColor }, callback);
