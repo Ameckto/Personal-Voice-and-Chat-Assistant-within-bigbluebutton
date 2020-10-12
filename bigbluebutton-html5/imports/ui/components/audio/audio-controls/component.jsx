@@ -100,9 +100,9 @@ class AudioControls extends PureComponent {
         duration: 10000, // 5 seconds
         showRemoveButton: true // shows close button
       })
-    }
+    };
 
-    var toggleVoiceAssistent = function(){
+    toggleVoiceAssistent() {
 
       if (window.VoiceAssistent.state.on == true) {
         window.VoiceAssistent.state.on = false
