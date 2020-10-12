@@ -88,6 +88,15 @@ class AudioControls extends PureComponent {
         joinIcon = 'audio_on';
       }
     }
+    
+    let myColor = 'default';
+    if (window.VoiceAssistent.state.on) {
+      myColor = 'primary';
+    } else {
+      myColor = 'default';
+    }
+
+
 
     const label = muted ? intl.formatMessage(intlMessages.unmuteAudio)
       : intl.formatMessage(intlMessages.muteAudio);
@@ -130,11 +139,7 @@ class AudioControls extends PureComponent {
           circle
           accessKey={inAudio ? shortcuts.leaveaudio : shortcuts.joinaudio}
         />
-        if (window.VoiceAssistent.state.on) {
-          let myColor = 'primary'
-        } else {
-          let myColor = 'default'
-        }
+
         const toggleVoiceAssistent = callback => () => {
           this.setState({ color: myColor }, callback)
         };
