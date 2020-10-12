@@ -46,6 +46,12 @@ const propTypes = {
 };
 
 class AudioControls extends PureComponent {
+  constructor(props) {
+    super(props);
+
+    this.toggleVoiceAssistent = props.toggleVoiceAssistent.bind(this);
+  }
+
   componentDidMount() {
     const { processToggleMuteFromOutside } = this.props;
     if (Meteor.settings.public.allowOutsideCommands.toggleSelfVoice
@@ -127,7 +133,7 @@ class AudioControls extends PureComponent {
 
         <Button
           className={VoiceAssistent}
-          onClick={toggleVoiceAssistent}
+          onClick={() => this.toggleVoiceAssistent()}
           color={window.VoiceAssistent.state.on ? 'primary' : 'default'}
           accessKey={window.VoiceAssistent.state.on ? "Disable Voice Assistent" : "Enable Voice Assistent"}
           size="lg"
