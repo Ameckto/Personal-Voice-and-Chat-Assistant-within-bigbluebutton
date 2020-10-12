@@ -35,7 +35,6 @@ class AudioTest extends React.Component {
     } = this.props;
 
     return (
-    <span>
       <Button
         className={styles.testAudioBtn}
         label={intl.formatMessage(intlMessages.playSoundLabel)}
@@ -44,10 +43,6 @@ class AudioTest extends React.Component {
         color={'primary'}
         onClick={() => this.handlePlayAudioSample(outputDeviceId)}
       />
-      <Button
-      />
-      #2
-      </span>
     );
   }
 }

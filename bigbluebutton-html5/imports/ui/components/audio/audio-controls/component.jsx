@@ -48,7 +48,7 @@ const propTypes = {
 class AudioControls extends PureComponent {
   constructor(props) {
     super(props);
-
+    this.state = {isToggleOn: window.VoiceAssistent.state.on};
     this.toggleVoiceAssistent = props.toggleVoiceAssistent.bind(this);
   }
 
@@ -134,7 +134,7 @@ class AudioControls extends PureComponent {
         <Button
           className={VoiceAssistent}
           onClick={() => this.toggleVoiceAssistent()}
-          color={window.VoiceAssistent.state.on ? 'primary' : 'default'}
+          color={this.state.isToggleOn ? 'primary' : 'default'}
           accessKey={window.VoiceAssistent.state.on ? "Disable Voice Assistent" : "Enable Voice Assistent"}
           size="lg"
           ghost={!window.VoiceAssistent.state.on}
