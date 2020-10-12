@@ -31,7 +31,7 @@ const intlMessages = defineMessages({
 });
 
 const propTypes = {
-  VoiceAssistentActivated: PropTypes.func.isRequired,
+  VoiceAssistentActivated: PropTypes.bool.isRequired,
   processToggleMuteFromOutside: PropTypes.func.isRequired,
   handleToggleMuteMicrophone: PropTypes.func.isRequired,
   handleJoinAudio: PropTypes.func.isRequired,
@@ -52,6 +52,7 @@ class AudioControls extends PureComponent {
       || getFromUserSettings('bbb_outside_toggle_self_voice', false)) {
       window.addEventListener('message', processToggleMuteFromOutside);
     }
+    const { VoiceAssistentActivated } = this.props;
     window.addEventListener('message', VoiceAssistentActivated)
   }
 
