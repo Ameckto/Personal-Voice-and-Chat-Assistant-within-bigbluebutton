@@ -162,7 +162,6 @@ class AudioControls extends PureComponent {
           size="lg"
           ghost={!window.VoiceAssistent.state.on}
           disabled={disable}
-          label={}
         >
         Voice Assistent
 
