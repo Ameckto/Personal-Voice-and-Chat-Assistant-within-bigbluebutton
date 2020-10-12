@@ -31,6 +31,7 @@ const intlMessages = defineMessages({
 });
 
 const propTypes = {
+  toggleVoiceAssistentFromOutside: PropTypes.func.isRequired,
   processToggleMuteFromOutside: PropTypes.func.isRequired,
   handleToggleMuteMicrophone: PropTypes.func.isRequired,
   handleJoinAudio: PropTypes.func.isRequired,
@@ -51,12 +52,8 @@ class AudioControls extends PureComponent {
       || getFromUserSettings('bbb_outside_toggle_self_voice', false)) {
       window.addEventListener('message', processToggleMuteFromOutside);
     }
-  }
-  constructor(props) {
-    super(props);
-
-    this.state = {isToggleOn: window.VoiceAssistent.state.on};
-    this.toggleVoiceAssistent = this.toggleVoiceAssistent.bind(this);
+    const { toggleVoiceAssistentFromOutside } = this.props;
+    window.addEventListener('message', toggleVoiceAssistentFromOutside);
   }
 
   render() {
@@ -85,36 +82,6 @@ class AudioControls extends PureComponent {
       } else {
         joinIcon = 'audio_on';
       }
-    }
-
-    var notifications_script = require("/imports/ui/components/voice-assistant/lib/notifications");
-    notifications_script.notifications();
-
-    var notify = function(text, title, type) {
-      window.notificationService.notify({
-        title: title, // title
-        text: text, // notification message
-        type: type, // 'success', 'warning', 'error'
-        position: 'bottom-right', // 'top-right', 'bottom-right', 'top-left', 'bottom-left'
-        autoClose: true, // auto close
-        duration: 10000, // 5 seconds
-        showRemoveButton: true // shows close button
-      })
-    };
-
-    toggleVoiceAssistent() {
-
-      if (window.VoiceAssistent.state.on == true) {
-        window.VoiceAssistent.state.on = false
-        notify('You have turned me off!', 'Voice Assistent', 'success')
-      } else {
-        window.VoiceAssistent.state.on = true
-        notify('You have turned me on!', 'Voice Assistent', 'success')
-      }
-      this.setState(state => ({
-        isToggleOn: window.VoiceAssistent.state.on
-      }));
-
     }
 
     const label = muted ? intl.formatMessage(intlMessages.unmuteAudio)
@@ -162,7 +129,7 @@ class AudioControls extends PureComponent {
         <Button
           className={VoiceAssistent}
           onClick={this.toggleVoiceAssistent}
-          color={this.state.isToggleOn ? 'primary' : 'default'}
+          color={window.VoiceAssistent.state.on ? 'primary' : 'default'}
           accessKey={window.VoiceAssistent.state.on ? "Disable Voice Assistent" : "Enable Voice Assistent"}
           size="lg"
           ghost={!window.VoiceAssistent.state.on}
