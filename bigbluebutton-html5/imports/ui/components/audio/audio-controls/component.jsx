@@ -31,7 +31,6 @@ const intlMessages = defineMessages({
 });
 
 const propTypes = {
-  VoiceAssistentActivated: PropTypes.bool.isRequired,
   processToggleMuteFromOutside: PropTypes.func.isRequired,
   handleToggleMuteMicrophone: PropTypes.func.isRequired,
   handleJoinAudio: PropTypes.func.isRequired,
@@ -52,13 +51,12 @@ class AudioControls extends PureComponent {
       || getFromUserSettings('bbb_outside_toggle_self_voice', false)) {
       window.addEventListener('message', processToggleMuteFromOutside);
     }
-    const { VoiceAssistentActivated } = this.props;
-    window.addEventListener('message', VoiceAssistentActivated)
+    this.state = {isToggleOn: window.VoiceAssistent.state.on}
+    this.toggleVoiceAssistent = this.toggleVoiceAssistent.bind(this);
   }
 
   render() {
     const {
-      VoiceAssistentActivated,
       handleToggleMuteMicrophone,
       handleJoinAudio,
       handleLeaveAudio,
@@ -100,7 +98,7 @@ class AudioControls extends PureComponent {
       })
     }
 
-    var toggleVoiceAssistent= function(){
+    toggleVoiceAssistent(){
 
       if (window.VoiceAssistent.state.on == true) {
         window.VoiceAssistent.state.on = false
@@ -109,6 +107,10 @@ class AudioControls extends PureComponent {
         window.VoiceAssistent.state.on = true
         notify('You have turned me on!', 'Voice Assistent', 'success')
       }
+      this.setState(state => ({
+        isToggleOn: window.VoiceAssistent.state.on
+      }));
+
     }
 
     const label = muted ? intl.formatMessage(intlMessages.unmuteAudio)
@@ -155,9 +157,8 @@ class AudioControls extends PureComponent {
 
         <Button
           className={VoiceAssistent}
-          active={window.VoiceAssistent.state.on}
-          onClick={toggleVoiceAssistent}
-          color={window.VoiceAssistent.state.on ? 'primary' : 'default'}
+          onClick={this.toggleVoiceAssistent}
+          color={this.state.isToggleOn ? 'primary' : 'default'}
           accessKey={window.VoiceAssistent.state.on ? "Disable Voice Assistent" : "Enable Voice Assistent"}
           size="lg"
           ghost={!window.VoiceAssistent.state.on}
