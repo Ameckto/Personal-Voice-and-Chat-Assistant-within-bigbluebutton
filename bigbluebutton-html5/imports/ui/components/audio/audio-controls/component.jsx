@@ -98,7 +98,7 @@ class AudioControls extends PureComponent {
       })
     }
 
-    toggleVoiceAssistent(){
+    var toggleVoiceAssistent = function(){
 
       if (window.VoiceAssistent.state.on == true) {
         window.VoiceAssistent.state.on = false
