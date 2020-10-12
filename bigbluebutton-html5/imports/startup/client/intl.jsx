@@ -152,7 +152,7 @@ class IntlStartup extends Component {
   }
 
   fetchLocalizedMessages(locale, init = false) {
-    const url = `/html5client/locale?locale=${locale}&init=${init}`;
+    const url = `/html5client_niklas/locale?locale=${locale}&init=${init}`;
 
     this.setState({ fetching: true }, () => {
       fetch(url)

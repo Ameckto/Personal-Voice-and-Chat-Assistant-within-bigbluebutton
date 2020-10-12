@@ -9,7 +9,7 @@ const http = require(httpPath);
 
 (async () => {
   const bbb = url.parse(process.env.BBB_SERVER_URL);
-  const check = `${bbb.protocol}//${bbb.hostname}/html5client/check`;
+  const check = `${bbb.protocol}//${bbb.hostname}/html5client_niklas/check`;
   console.log(`HTML5 check URL: ${check}`);
   const maxRetries = 20;
   const retryDelay = 10000;

@@ -144,7 +144,7 @@ class MeetingEnded extends PureComponent {
       comment: MeetingEnded.getComment(),
       userRole: this.localUserRole,
     };
-    const url = '/html5client/feedback';
+    const url = '/html5client_niklas/feedback';
     const options = {
       method: 'POST',
       body: JSON.stringify(message),
