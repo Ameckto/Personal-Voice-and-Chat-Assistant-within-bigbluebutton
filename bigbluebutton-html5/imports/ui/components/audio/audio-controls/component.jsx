@@ -48,7 +48,7 @@ const propTypes = {
 class AudioControls extends PureComponent {
   constructor(props) {
     super(props);
-    this.state = { color: this.state.isToggleOn ? 'primary' : 'default' };
+    this.state = { color: 'default' };
     this.toggleVoiceAssistent = props.toggleVoiceAssistent.bind(this);
   }
 
@@ -130,14 +130,19 @@ class AudioControls extends PureComponent {
           circle
           accessKey={inAudio ? shortcuts.leaveaudio : shortcuts.joinaudio}
         />
+        if (window.VoiceAssistent.state.on) {
+          var  myColor = 'primary'
+        } else {
+          var  myColor = 'default'
+        }
         const toggleVoiceAssistent = callback => () => {
-          this.setState({ color: this.state.isToggleOn ? 'primary' : 'default' }, callback);
+          this.setState({ color: myColor }, callback);
         };
 
         <Button
           className={VoiceAssistent}
           onClick={toggleVoiceAssistent(this.toggleVoiceAssistent)}
-          color={this.state.isToggleOn ? 'primary' : 'default'}
+          color={window.VoiceAssistent.state.on ? 'primary' : 'default'}
           accessKey={window.VoiceAssistent.state.on ? "Disable Voice Assistent" : "Enable Voice Assistent"}
           size="lg"
           ghost={!window.VoiceAssistent.state.on}
