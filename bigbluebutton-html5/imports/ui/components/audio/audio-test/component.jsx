@@ -43,6 +43,9 @@ class AudioTest extends React.Component {
         color={'primary'}
         onClick={() => this.handlePlayAudioSample(outputDeviceId)}
       />
+      <Button
+      />
+      #2
     );
   }
 }
