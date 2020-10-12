@@ -136,7 +136,7 @@ class AudioControls extends PureComponent {
           myColor = 'default'
         }
         const toggleVoiceAssistent = callback => () => {
-          this.setState({ color: myColor }, callback);
+          this.setState({ color: myColor }, callback)
         };
 
         <Button
