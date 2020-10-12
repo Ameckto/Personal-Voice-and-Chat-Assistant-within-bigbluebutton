@@ -1,6 +1,7 @@
 var string_similarity_test = function string_similarity_test(){
 
   window.VoiceAssistent_string_similarity_test = (function () {
+    var stringSimilarity = require('string-similarity');
 
     var input_data_arr = [{'input_name': 'Freddy_93', 'expected_name': 'Freddy', 'names_in_meeting': ['Freddy', 'Klaus', 'Niklas']}];
     var output_data_arr = []
