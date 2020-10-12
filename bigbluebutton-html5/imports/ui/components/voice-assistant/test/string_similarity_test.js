@@ -3,9 +3,6 @@ var string_similarity_test = function string_similarity_test(){
   window.VoiceAssistent.string_similarity_test = (function () {
 
     var input_data_arr = [{'input_name': 'Freddy_93', 'expected_name': 'Freddy', 'names_in_meeting': ['Freddy', 'Klaus', 'Niklas']}];
-
-    input_data_arr.forEach(test => evaluateTest(test));
-
     var output_data_arr = []
 
     var evaluateTest = function(test) {
@@ -51,6 +48,7 @@ var string_similarity_test = function string_similarity_test(){
 
 
     };
-  })();
+  input_data_arr.forEach(test => evaluateTest(test));
+  });
 };
 module.exports.string_similarity_test = string_similarity_test;
