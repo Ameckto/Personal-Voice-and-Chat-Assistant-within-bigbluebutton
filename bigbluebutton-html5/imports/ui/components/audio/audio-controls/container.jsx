@@ -72,6 +72,10 @@ const toggleVoiceAssistent = () => {
     //notify('You have turned me on!', 'Voice Assistent', 'success')
     this.window.parent.postMessage({ response: window.VoiceAssistent.state.on }, '*');
   }
+  logger.info({
+    logCode: 'audiocontrols_leave_audio',
+    extraInfo: { logType: 'user_action' },
+  }, 'audio connection closed by user');
 
 }
 
