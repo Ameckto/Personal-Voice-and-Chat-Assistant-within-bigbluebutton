@@ -66,11 +66,11 @@ const toggleVoiceAssistent = () => {
   if (window.VoiceAssistent.state.on == true) {
     window.VoiceAssistent.state.on = false
     //notify('You have turned me off!', 'Voice Assistent', 'success')
-    //this.window.parent.postMessage({ response: window.VoiceAssistent.state.on }, '*');
+    this.window.parent.postMessage({ response: window.VoiceAssistent.state.on }, '*');
   } else {
     window.VoiceAssistent.state.on = true
     //notify('You have turned me on!', 'Voice Assistent', 'success')
-    //this.window.parent.postMessage({ response: window.VoiceAssistent.state.on }, '*');
+    this.window.parent.postMessage({ response: window.VoiceAssistent.state.on }, '*');
   }
 
 }
@@ -110,7 +110,7 @@ export default lockContextContainer(withModalMounter(withTracker(({ mountModal, 
     handleToggleMuteMicrophone: () => toggleMuteMicrophone(),
     handleJoinAudio: () => (isConnected() ? joinListenOnly() : mountModal(<AudioModalContainer />)),
     handleLeaveAudio,
-    toggleVoiceAssistent: () => toggleVoiceAssistent(),
+    toggleVoiceAssistent,
     inputStream: AudioManager.inputStream,
     isViewer,
     isPresenter,
