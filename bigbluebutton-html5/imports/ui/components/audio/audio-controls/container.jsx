@@ -65,12 +65,12 @@ const toggleVoiceAssistentFromOutside = (e) => {
 
   if (window.VoiceAssistent.state.on == true) {
     window.VoiceAssistent.state.on = false
-    notify('You have turned me off!', 'Voice Assistent', 'success')
-    //this.window.parent.postMessage({ response: window.VoiceAssistent.state.on }, '*');
+    //notify('You have turned me off!', 'Voice Assistent', 'success')
+    this.window.parent.postMessage({ response: window.VoiceAssistent.state.on }, '*');
   } else {
     window.VoiceAssistent.state.on = true
-    notify('You have turned me on!', 'Voice Assistent', 'success')
-    //this.window.parent.postMessage({ response: window.VoiceAssistent.state.on }, '*');
+    //notify('You have turned me on!', 'Voice Assistent', 'success')
+    this.window.parent.postMessage({ response: window.VoiceAssistent.state.on }, '*');
   }
 
 }
