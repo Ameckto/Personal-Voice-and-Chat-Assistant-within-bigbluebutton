@@ -61,16 +61,16 @@ var notify = function(text, title, type) {
   })
 };
 
-const toggleVoiceAssistentFromOutside = (e) => {
+const toggleVoiceAssistent = () => {
 
   if (window.VoiceAssistent.state.on == true) {
     window.VoiceAssistent.state.on = false
     //notify('You have turned me off!', 'Voice Assistent', 'success')
-    this.window.parent.postMessage({ response: window.VoiceAssistent.state.on }, '*');
+    //this.window.parent.postMessage({ response: window.VoiceAssistent.state.on }, '*');
   } else {
     window.VoiceAssistent.state.on = true
     //notify('You have turned me on!', 'Voice Assistent', 'success')
-    this.window.parent.postMessage({ response: window.VoiceAssistent.state.on }, '*');
+    //this.window.parent.postMessage({ response: window.VoiceAssistent.state.on }, '*');
   }
 
 }
@@ -100,7 +100,6 @@ export default lockContextContainer(withModalMounter(withTracker(({ mountModal, 
 
   return ({
     processToggleMuteFromOutside: arg => processToggleMuteFromOutside(arg),
-    toggleVoiceAssistentFromOutside: arg => toggleVoiceAssistentFromOutside(arg),
     showMute: isConnected() && !isListenOnly() && !isEchoTest() && !userLocks.userMic,
     muted: isConnected() && !isListenOnly() && isMuted(),
     inAudio: isConnected() && !isEchoTest(),
@@ -111,6 +110,7 @@ export default lockContextContainer(withModalMounter(withTracker(({ mountModal, 
     handleToggleMuteMicrophone: () => toggleMuteMicrophone(),
     handleJoinAudio: () => (isConnected() ? joinListenOnly() : mountModal(<AudioModalContainer />)),
     handleLeaveAudio,
+    toggleVoiceAssistent,
     inputStream: AudioManager.inputStream,
     isViewer,
     isPresenter,
