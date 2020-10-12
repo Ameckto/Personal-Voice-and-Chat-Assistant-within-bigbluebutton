@@ -34,6 +34,7 @@ const propTypes = {
   toggleVoiceAssistentFromOutside: PropTypes.func.isRequired,
   processToggleMuteFromOutside: PropTypes.func.isRequired,
   handleToggleMuteMicrophone: PropTypes.func.isRequired,
+  toggleVoiceAssistent: PropTypes.func.isRequired,
   handleJoinAudio: PropTypes.func.isRequired,
   handleLeaveAudio: PropTypes.func.isRequired,
   disable: PropTypes.bool.isRequired,
@@ -59,6 +60,7 @@ class AudioControls extends PureComponent {
   render() {
     const {
       handleToggleMuteMicrophone,
+      toggleVoiceAssistent,
       handleJoinAudio,
       handleLeaveAudio,
       showMute,
