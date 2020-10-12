@@ -51,9 +51,10 @@ class AudioControls extends PureComponent {
       || getFromUserSettings('bbb_outside_toggle_self_voice', false)) {
       window.addEventListener('message', processToggleMuteFromOutside);
     }
-    this.state = {isToggleOn: window.VoiceAssistent.state.on}
-    this.toggleVoiceAssistent = this.toggleVoiceAssistent.bind(this);
   }
+  
+  this.state = {isToggleOn: window.VoiceAssistent.state.on}
+  this.toggleVoiceAssistent = this.toggleVoiceAssistent.bind(this);
 
   render() {
     const {
