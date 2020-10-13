@@ -155,9 +155,7 @@ class AudioControls extends PureComponent {
 
 
         <Button
-        hideLabel
-        label={inAudio ? intl.formatMessage(intlMessages.leaveAudio)
-          : intl.formatMessage(intlMessages.joinAudio)}
+        label={Voice Assistent}
         onClick={this.toggleVoiceAssistent}
         color={this.state.color}
         ghost={this.state.ghost}
