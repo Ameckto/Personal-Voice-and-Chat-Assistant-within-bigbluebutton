@@ -89,7 +89,7 @@ class AudioControls extends PureComponent {
 
     const toggleMuteBtn = (
       <Button
-        id={myVoiceAssistentToggle}
+        id={'myVoiceAssistentToggle'}
         className={cx(styles.muteToggle, !talking || styles.glow, !muted || styles.btn)}
         onClick={handleToggleMuteMicrophone}
         disabled={disable}
