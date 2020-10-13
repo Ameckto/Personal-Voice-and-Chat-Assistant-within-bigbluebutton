@@ -102,6 +102,7 @@ class AudioControls extends PureComponent {
 
     return (
       <span className={styles.container}>
+
         {muted ? <MutedAlert {...{ inputStream, isViewer, isPresenter }} /> : null}
         {showMute && isVoiceUser ? toggleMuteBtn : null}
 
@@ -114,13 +115,14 @@ class AudioControls extends PureComponent {
             : intl.formatMessage(intlMessages.joinAudio)}
           label={inAudio ? intl.formatMessage(intlMessages.leaveAudio)
             : intl.formatMessage(intlMessages.joinAudio)}
-          color={!muted ? 'primary' : 'default'}
+          color={inAudio? 'primary' : 'default'}
           ghost={!inAudio}
           icon={joinIcon}
           size="lg"
           circle
           accessKey={inAudio ? shortcuts.leaveaudio : shortcuts.joinaudio}
         />
+        {toggleMuteBtn}
 
       </span>
 
