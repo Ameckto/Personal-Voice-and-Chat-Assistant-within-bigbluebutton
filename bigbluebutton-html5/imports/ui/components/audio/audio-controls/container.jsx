@@ -42,12 +42,20 @@ const handletoggleVoiceAssistent = (e) => {
   console.log(e)
   const button = document.getElementById('myVoiceAssistentToggle')
   console.log(button)
+
+
+
   if (window.VoiceAssistent.state.on == true) {
       window.VoiceAssistent.state.on = false
     } else {
       window.VoiceAssistent.state.on = true
     }
   console.log('VoiceAssistentState ', window.VoiceAssistent.state.on)
+
+  window.parent.postMessage({
+        response: 'joinedAudio'
+      }, '*');
+
 };
 
 const handleLeaveAudio = () => {

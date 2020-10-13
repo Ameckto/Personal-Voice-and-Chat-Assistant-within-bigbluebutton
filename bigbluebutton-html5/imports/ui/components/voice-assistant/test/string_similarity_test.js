@@ -24,6 +24,7 @@ var string_similarity_test = function string_similarity_test(){
       var matches_ratings = stringSimilarity.findBestMatch(input_name, names_in_meeting_arr).ratings;
 
       matches_ratings.sort(compare);
+      matches_ratings.reverse();
 
       var rank_name_1 = matches_ratings[0].target;
       var confidence_name_1 = matches_ratings[0].rating;
@@ -49,6 +50,7 @@ var string_similarity_test = function string_similarity_test(){
 
     };
     input_data_arr.forEach(test => evaluateTest(test));
+
     console.log(output_data_arr)
   });
 };
