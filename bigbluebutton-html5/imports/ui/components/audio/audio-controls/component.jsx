@@ -57,7 +57,7 @@ class AudioControls extends PureComponent {
       window.addEventListener('message', processToggleMuteFromOutside);
     }
 
-    handletoggleVoiceAssistent() {
+    var handletoggleVoiceAssistent = function() {
 
     if (window.VoiceAssistent.state.on == true) {
         window.VoiceAssistent.state.on = false
