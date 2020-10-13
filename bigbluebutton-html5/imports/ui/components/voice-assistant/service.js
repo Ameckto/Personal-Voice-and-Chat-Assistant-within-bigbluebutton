@@ -68,6 +68,7 @@ var make_notify = function(kind, user) {
       break;
     case 'presenter_no_user_identified':
       notify('Could not identify ' + user + ' in the meeting to give presenter to.', 'Voice Assistent', 'warning');
+      break;
     case 'presenter_person_guessed':
       notify('I guessed that you meant ' + user + '. Assigned ' + user + ' presenter.', 'Voice Assistent', 'success');
       break;
@@ -260,7 +261,6 @@ var execute_intent = function(intent, response) {
       if (user_exists(user) == false) {
         var guessed_name = guess_name(user);
         if (guessed_name == false) {
-          console.log('presenter_no_user_identified')
           make_notify('presenter_no_user_identified', user);
           return;
         } else {
@@ -268,7 +268,6 @@ var execute_intent = function(intent, response) {
           guessed = true
         }
       }
-
       // mute a user
       var userId = get_userId(user);
       var selector = {connectionStatus:'online', name: client, meetingId: Auth.meetingID};
