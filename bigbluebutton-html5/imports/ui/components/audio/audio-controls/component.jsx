@@ -46,20 +46,20 @@ const propTypes = {
 
 class AudioControls extends PureComponent {
 
-  const toggleVoiceAssistent = () => {
-
-  if (window.VoiceAssistent.state.on == true) {
-      window.VoiceAssistent.state.on = false
-    } else {
-      window.VoiceAssistent.state.on = true
-    }
-  }
-
   componentDidMount() {
     const { processToggleMuteFromOutside } = this.props;
     if (Meteor.settings.public.allowOutsideCommands.toggleSelfVoice
       || getFromUserSettings('bbb_outside_toggle_self_voice', false)) {
       window.addEventListener('message', processToggleMuteFromOutside);
+    }
+  }
+
+  var toggleVoiceAssistent = function() {
+
+  if (window.VoiceAssistent.state.on == true) {
+      window.VoiceAssistent.state.on = false
+    } else {
+      window.VoiceAssistent.state.on = true
     }
   }
 
