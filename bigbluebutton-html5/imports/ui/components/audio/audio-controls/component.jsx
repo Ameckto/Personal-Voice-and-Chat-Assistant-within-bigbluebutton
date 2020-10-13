@@ -167,13 +167,9 @@ class AudioControls extends PureComponent {
         {toggleVoiceAssistentBtn}
 
         <div style={{background: this.state.color}}>
-            <h1>
-              Change my color
-            </h1>
             <button
             onClick={this.changeColor}
             color={this.state.color}
-
             >
               Voice Assistent
             </button>
