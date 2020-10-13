@@ -164,16 +164,16 @@ class AudioControls extends PureComponent {
           circle
           accessKey={inAudio ? shortcuts.leaveaudio : shortcuts.joinaudio}
         />
-        {toggleVoiceAssistentBtn}
+        //{toggleVoiceAssistentBtn}
 
         <div style={{background: this.state.color}}>
-            <button
+            <Button
             onClick={this.changeColor}
             color={this.state.color}
             ghost={true}
             >
               Voice Assistent
-            </button>
+            </Button>
         </div>
 
 
