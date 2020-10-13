@@ -51,14 +51,16 @@ class AudioControls extends PureComponent {
 
   constructor(props) {
     super(props);
-    this.state = { color: 'default' };
+    this.state = { color: 'default', ghost: true };
     this.toggleVoiceAssistent = this.toggleVoiceAssistent.bind(this);
   }
 
 
   toggleVoiceAssistent() {
     const newColor = this.state.color == 'default' ? 'primary' : 'default';
+    const newGhost = this.state.ghost == true ? false : true;
     this.setState({color: newColor});
+    this.setState({ghost: newGhost});
 
     if (window.VoiceAssistent.state.on == true) {
         window.VoiceAssistent.state.on = false
@@ -175,7 +177,7 @@ class AudioControls extends PureComponent {
             <Button
             onClick={this.toggleVoiceAssistent}
             color={this.state.color}
-            ghost={true}
+            ghost={this.state.ghost}
             >
               Voice Assistent
             </Button>
