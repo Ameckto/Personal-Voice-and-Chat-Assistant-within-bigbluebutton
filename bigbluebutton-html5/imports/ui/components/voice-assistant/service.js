@@ -259,9 +259,10 @@ var execute_intent = function(intent, response) {
       var user = person_arr[0]; //you can only give one presenter at a time
       if (user_exists(user) == false) {
         var guessed_name = guess_name(user);
-        if (!guessed_name) {
+        if (guessed_name == false) {
+          console.log('presenter_no_user_identified')
           make_notify('presenter_no_user_identified', user);
-          break;
+          return;
         } else {
           user = guessed_name
           guessed = true
