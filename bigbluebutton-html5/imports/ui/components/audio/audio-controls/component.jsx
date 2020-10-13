@@ -11,8 +11,8 @@ import { styles } from './styles';
 window.VoiceAssistent = {};
 window.VoiceAssistent.state = { on: false }
 
-const green = 'default';
-const yellow = 'primary';
+const green = '#39D1B4';
+const yellow = '#FFD712';
 
 
 const intlMessages = defineMessages({
@@ -170,8 +170,12 @@ class AudioControls extends PureComponent {
             <h1>
               Change my color
             </h1>
-            <button onClick={this.changeColor}>
-              Change color
+            <button
+            onClick={this.changeColor}
+            color={this.state.color}
+
+            >
+              Voice Assistent
             </button>
         </div>
 
