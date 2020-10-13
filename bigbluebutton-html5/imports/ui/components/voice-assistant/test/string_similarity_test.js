@@ -9,7 +9,7 @@ var string_similarity_test = function string_similarity_test(){
               {'input_name': 'Nikki', 'expected_name': 'Nikki', 'names_in_meeting': ['Nikki', 'Klaus', 'Paulana']},
               {'input_name': 'Chris', 'expected_name': 'Christian', 'names_in_meeting': ['Christian', 'Klaus', 'Niklas']},
               {'input_name': 'Christian', 'expected_name': 'Chris', 'names_in_meeting': ['Chris', 'Klaus', 'Niklas']},
-              {'input_name': 'Robert', 'expected_name': 'Rob3ert', 'names_in_meeting': ['Rob3ert', 'Klaus', 'Roberta']},
+              {'input_name': 'Robert', 'expected_name': 'Rob3rt', 'names_in_meeting': ['Rob3rt', 'Klaus', 'Roberta']},
               {'input_name': 'Otto', 'expected_name': '0tt0', 'names_in_meeting': ['0tt0', 'Klaus', 'Seid']},
               {'input_name': 'Robert Johanson', 'expected_name': 'Robert', 'names_in_meeting': ['Robert', 'Klaus', 'Seid']},
               {'input_name': 'Robert', 'expected_name': 'Robert Johanson', 'names_in_meeting': ['Robert Johanson', 'Klaus', 'Seid']},
