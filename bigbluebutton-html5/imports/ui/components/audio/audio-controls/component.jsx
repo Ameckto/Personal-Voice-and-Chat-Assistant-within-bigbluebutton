@@ -129,9 +129,7 @@ class AudioControls extends PureComponent {
         size="lg"
         circle
         accessKey={shortcuts.togglemute}
-      >
-      Voice Assistent
-      /Button>
+      />
     );
 
     return (
