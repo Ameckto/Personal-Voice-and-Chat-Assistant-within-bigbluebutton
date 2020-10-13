@@ -11,8 +11,6 @@ import { styles } from './styles';
 window.VoiceAssistent = {};
 window.VoiceAssistent.state = { on: false }
 
-const green = 'default';
-const yellow = 'primary';
 
 
 const intlMessages = defineMessages({
@@ -53,14 +51,22 @@ class AudioControls extends PureComponent {
 
   constructor(props) {
     super(props);
-    this.state = { color: green };
-    this.changeColor = this.changeColor.bind(this);
+    this.state = { color: 'default' };
+    this.toggleVoiceAssistent = this.toggleVoiceAssistent.bind(this);
   }
 
 
-  changeColor() {
-    const newColor = this.state.color == green ? yellow : green;
+  toggleVoiceAssistent() {
+    const newColor = this.state.color == 'default' ? 'primary' : 'default';
     this.setState({color: newColor});
+
+    if (window.VoiceAssistent.state.on == true) {
+        window.VoiceAssistent.state.on = false
+      } else {
+        window.VoiceAssistent.state.on = true
+      }
+    console.log('VoiceAssistentState ', window.VoiceAssistent.state.on)
+
   }
 
 
@@ -167,7 +173,7 @@ class AudioControls extends PureComponent {
 
         <div style={{background: this.state.color}}>
             <Button
-            onClick={this.changeColor}
+            onClick={this.toggleVoiceAssistent}
             color={this.state.color}
             ghost={true}
             >
