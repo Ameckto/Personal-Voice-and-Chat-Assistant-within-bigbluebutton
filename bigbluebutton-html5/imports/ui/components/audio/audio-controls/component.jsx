@@ -54,8 +54,9 @@ class AudioControls extends PureComponent {
   constructor(props) {
     super(props);
     this.state = { color: green };
+    this.changeColor = this.changeColor.bind(this);
   }
-  this.changeColor = this.changeColor.bind(this);
+
 
   changeColor() {
     const newColor = this.state.color == green ? yellow : green;
