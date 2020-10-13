@@ -95,6 +95,11 @@ var make_notify = function(kind, user) {
     case 'raise_hand':
       notify('You raised your hand.', 'Voice Assistent', 'success');
       break;
+
+    // manage out of scope
+    case 'out_of_scope':
+      notify('I could not understand you ' + user '.', 'Voice Assistent', 'warning');
+      break;
     }
 }
 
@@ -108,8 +113,6 @@ var guess_name = function(user, min_match_raiting) {
   var selector = {connectionStatus:'online', meetingId: Auth.meetingID};
   var users_collection = Users.find(selector).fetch()
 
-  console.log(users_collection)
-
   var arrayLength = users_collection.length;
   var persons_in_meeting = [];
 
@@ -121,11 +124,12 @@ var guess_name = function(user, min_match_raiting) {
   var matches = stringSimilarity.findBestMatch(user, persons_in_meeting);
   var best_match_name = matches.bestMatch['target']
   var best_match_raiting = matches.bestMatch['rating']
-
+  console.log('best_match_name ', best_match_name)
+  console.log('best_match_raiting ', best_match_raiting)
   if (best_match_raiting >= min_match_raiting) {
-    return best_match_name
+    return best_match_name;
   } else {
-    return false
+    return false;
   }
 }
 
@@ -157,7 +161,7 @@ var get_userId = function(user) {
 
 //mutes a user
 var mute_user = function(user, client) {
-  var guessed = false
+
   if (user_exists(user) == false) {
     var guessed_name = guess_name(user, min_match_raiting)
     if (guessed_name == false) {
@@ -165,7 +169,7 @@ var mute_user = function(user, client) {
       return;
     } else {
       user = guessed_name
-      var guessed = true
+      guessed = true
     }
   }
 
@@ -222,6 +226,7 @@ var user_exists = function(user) {
 var execute_intent = function(intent, response) {
   //get the name of the client person
   client = VoiceUsers.findOne({ meetingId: Auth.meetingID, intId: Auth.userID }).callerName;
+  var guessed = false
 
   switch (intent) {
 
@@ -240,35 +245,40 @@ var execute_intent = function(intent, response) {
       break;
 
     case 'give_presenter': // gives a person presenter
-      var guessed = false
+
       var person_arr = get_person_of_intent(response, intent, client);
+
       if (person_arr.length == 0) {
         make_notify('presenter_no_person_given');
-      } else {
-        var user = person_arr[0];
-        if (user_exists(user) == false) {
-          var guessed_name = guess_name(user, min_match_raiting)
-          if (guessed_name == false) {
-            make_notify('presenter_no_user_identified', user);
-            return;
-          } else {
-            user = guessed_name
-            var guessed = true
-          }
+        return;
       }
-        var userId = get_userId(user);
-        var selector = {connectionStatus:'online', name: client, meetingId: Auth.meetingID};
-        var users_role = Users.findOne(selector).role;
-        if (users_role == 'MODERATOR'){
-          makeCall('assignPresenter', userId);
-          if (guessed) {
-            make_notify('presenter_person_guessed', user);
-          } else {
-            make_notify('presenter_give', user);
-          }
+
+      var user = person_arr[0]; //you can only give one presenter at a time
+      if (user_exists(user) == false) {
+        var guessed_name = guess_name(user, min_match_raiting)
+        console.log('guessed_name', guessed_name)
+        if (guessed_name == false) {
+          make_notify('presenter_no_user_identified', user);
+          return;
         } else {
-          make_notify('presenter_only_moderator', '');
+          user = guessed_name
+          guessed = true
         }
+      }
+
+      // mute a user
+      var userId = get_userId(user);
+      var selector = {connectionStatus:'online', name: client, meetingId: Auth.meetingID};
+      var users_role = Users.findOne(selector).role;
+      if (users_role == 'MODERATOR'){
+        makeCall('assignPresenter', userId);
+        if (guessed) {
+          make_notify('presenter_person_guessed', user);
+        } else {
+          make_notify('presenter_give', user);
+        }
+      } else {
+        make_notify('presenter_only_moderator', '');
       }
       break;
 
@@ -302,6 +312,10 @@ var execute_intent = function(intent, response) {
     case 'summarize':
       // inject code summarization
       break;
+
+    case 'out_of_scope':
+        make_notify('out_of_scope', client);
+        break;
   }
 };
 
@@ -316,18 +330,14 @@ var make_post_request = function(message) {
       var intent = response.intent.name || undefined;
       var confidence = response.intent.confidence || undefined;
 
-      //filters intents where the RASA-NLU responses intents confidence is less then min_confidence
+      consolge.log('intent identified', intent)
+      consolge.log('confidence', confidence)
+
       if (confidence < min_confidence) {
-        console.log('Voice Assistent -- confidence (' + confidence + ') of intent is less than ' + min_confidence );
+        console.log('confidence is less than min_confidence of ' + min_confidence)
         return;
       }
-      //filters all out_of_scope intents
-      if (typeof(intent) != undefined) {
-        if (intent == 'out_of_scope') {
-          console.log('Voice Assistent -- Intent out of scope');
-          return;
-        }
-      }
+
       if (typeof(intent) != undefined) {
         if (intent.includes("+")) { // multy intent
           intent = intent.split('+')[1]; //first one must be the wake_up intent
@@ -340,7 +350,7 @@ var make_post_request = function(message) {
           } else {
             if (intent == 'wake_up') {
               last_intent = 'wake_up' //sets the last intent to wake_up
-              client = VoiceUsers.findOne({ meetingId: Auth.meetingID, intId: Auth.userID }).callerName;
+              //client = VoiceUsers.findOne({ meetingId: Auth.meetingID, intId: Auth.userID }).callerName;
               execute_intent('wake_up', response)
             } else if (intent != 'wake_up' && last_intent != 'wake_up') {
                 make_notify('wake_up_first', '')
@@ -360,8 +370,8 @@ var make_post_request = function(message) {
 
 var initializing = true; //util variable for subscribing to the group-chat in the meteor DB
 var last_intent = null; //set last intent to null as default
-var min_confidence = 0.4 //set the min_confidence to 0.3
-var min_match_raiting = 0.6
+var min_confidence = 0.35 //set the min_confidence to 0.3
+var min_match_raiting = 0.5
 
 //subscribe to the GroupChatMsg
 var handle = GroupChatMsg.find().observe({
