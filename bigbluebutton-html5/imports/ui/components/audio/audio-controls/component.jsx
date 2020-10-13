@@ -8,6 +8,8 @@ import withShortcutHelper from '/imports/ui/components/shortcut-help/service';
 import MutedAlert from '/imports/ui/components/muted-alert/component';
 import { styles } from './styles';
 
+window.VoiceAssistent = {};
+window.VoiceAssistent.state = { on: false }
 
 const intlMessages = defineMessages({
   joinAudio: {
@@ -43,6 +45,15 @@ const propTypes = {
 };
 
 class AudioControls extends PureComponent {
+
+  const toggleVoiceAssistent = () => {
+
+  if (window.VoiceAssistent.state.on == true) {
+      window.VoiceAssistent.state.on = false
+    } else {
+      window.VoiceAssistent.state.on = true
+    }
+  }
 
   componentDidMount() {
     const { processToggleMuteFromOutside } = this.props;
@@ -91,6 +102,23 @@ class AudioControls extends PureComponent {
         hideLabel
         label={label}
         aria-label={label}
+        color={window.VoiceAssistent.state.on ? 'primary' : 'default'}
+        ghost={muted}
+        icon={muted ? 'mute' : 'unmute'}
+        size="lg"
+        circle
+        accessKey={shortcuts.togglemute}
+      />
+    );
+
+    const toggleVoiceAssistentBtn = (
+      <Button
+        className={cx(styles.muteToggle, !talking || styles.glow, !muted || styles.btn)}
+        onClick={handleToggleMuteMicrophone}
+        disabled={disable}
+        hideLabel
+        label={label}
+        aria-label={label}
         color={!muted ? 'primary' : 'default'}
         ghost={muted}
         icon={muted ? 'mute' : 'unmute'}
@@ -122,7 +150,7 @@ class AudioControls extends PureComponent {
           circle
           accessKey={inAudio ? shortcuts.leaveaudio : shortcuts.joinaudio}
         />
-        {toggleMuteBtn}
+        {toggleVoiceAssistentBtn}
 
       </span>
 
