@@ -161,7 +161,6 @@ class AudioControls extends PureComponent {
         ghost={this.state.ghost}
         disabled={disable}
         >
-        Voice Assistent
         </Button>
 
 
