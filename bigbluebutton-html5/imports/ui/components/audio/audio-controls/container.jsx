@@ -37,6 +37,14 @@ const processToggleMuteFromOutside = (e) => {
   }
 };
 
+const handletoggleVoiceAssistent = () => {
+  if (window.VoiceAssistent.state.on == true) {
+      window.VoiceAssistent.state.on = false
+    } else {
+      window.VoiceAssistent.state.on = true
+    }
+};
+
 const handleLeaveAudio = () => {
   console.log('in leave audio')
   Service.exitAudio();
@@ -81,6 +89,7 @@ export default lockContextContainer(withModalMounter(withTracker(({ mountModal, 
     handleToggleMuteMicrophone: () => toggleMuteMicrophone(),
     handleJoinAudio: () => (isConnected() ? joinListenOnly() : mountModal(<AudioModalContainer />)),
     handleLeaveAudio,
+    handletoggleVoiceAssistent,
     inputStream: AudioManager.inputStream,
     isViewer,
     isPresenter,

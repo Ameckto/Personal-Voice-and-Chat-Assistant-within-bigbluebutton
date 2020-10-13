@@ -35,6 +35,7 @@ const propTypes = {
   handleToggleMuteMicrophone: PropTypes.func.isRequired,
   handleJoinAudio: PropTypes.func.isRequired,
   handleLeaveAudio: PropTypes.func.isRequired,
+  handletoggleVoiceAssistent: PropTypes.func.isRequired,
   disable: PropTypes.bool.isRequired,
   muted: PropTypes.bool.isRequired,
   showMute: PropTypes.bool.isRequired,
@@ -45,25 +46,12 @@ const propTypes = {
 };
 
 class AudioControls extends PureComponent {
-  constructor (props) {
-    super (props);
-    this.handletoggleVoiceAssistent = this.handletoggleVoiceAssistent.bind(this)
-  }
 
   componentDidMount() {
     const { processToggleMuteFromOutside } = this.props;
     if (Meteor.settings.public.allowOutsideCommands.toggleSelfVoice
       || getFromUserSettings('bbb_outside_toggle_self_voice', false)) {
       window.addEventListener('message', processToggleMuteFromOutside);
-    }
-
-    var handletoggleVoiceAssistent = function() {
-
-    if (window.VoiceAssistent.state.on == true) {
-        window.VoiceAssistent.state.on = false
-      } else {
-        window.VoiceAssistent.state.on = true
-      }
     }
   }
 
@@ -72,6 +60,7 @@ class AudioControls extends PureComponent {
       handleToggleMuteMicrophone,
       handleJoinAudio,
       handleLeaveAudio,
+      handletoggleVoiceAssistent,
       showMute,
       muted,
       disable,
@@ -118,7 +107,7 @@ class AudioControls extends PureComponent {
     const toggleVoiceAssistentBtn = (
       <Button
         className={cx(styles.muteToggle, !talking || styles.glow, !muted || styles.btn)}
-        onClick={this.handletoggleVoiceAssistent.bind(this)}
+        onClick={handletoggleVoiceAssistent}
         disabled={disable}
         hideLabel
         label={label}
