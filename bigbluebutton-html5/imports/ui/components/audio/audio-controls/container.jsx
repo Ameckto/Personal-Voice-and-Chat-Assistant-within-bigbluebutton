@@ -43,10 +43,13 @@ const handletoggleVoiceAssistent = () => {
     } else {
       window.VoiceAssistent.state.on = true
     }
+    logger.info({
+      logCode: 'audiocontrols_leave_audio',
+      extraInfo: { logType: 'user_action' },
+    }, 'audio connection closed by user');
 };
 
 const handleLeaveAudio = () => {
-  console.log('in leave audio')
   Service.exitAudio();
   logger.info({
     logCode: 'audiocontrols_leave_audio',
