@@ -153,7 +153,7 @@ var get_person_of_intent = function(response, intent, client){
   }
 
   result_arr = [...new Set(result_arr)];
-  console.log('identified person(s): ', result_arr);
+  console.log('identified person(s): ', JSON.stringify(result_arr));
   return result_arr;
 }
 
@@ -187,7 +187,7 @@ var mute_user = function(user, client) {
       AudioService.toggleMuteMicrophone();
       make_notify('mute_me', '');
     } else if (users_role == 'MODERATOR'){
-      makeCall('toggleVoice', user);
+      makeCall('toggleVoice', userId);
       if (guessed) {
         make_notify('mute_guessed', user);
       } else {
@@ -274,7 +274,7 @@ var execute_intent = function(intent, response) {
       var selector = {connectionStatus:'online', name: client, meetingId: Auth.meetingID};
       var users_role = Users.findOne(selector).role;
       if (users_role == 'MODERATOR'){
-        makeCall('assignPresenter', user);
+        makeCall('assignPresenter', userId);
         if (guessed) {
           make_notify('presenter_person_guessed', user);
         } else {
