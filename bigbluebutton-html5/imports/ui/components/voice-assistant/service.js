@@ -98,7 +98,7 @@ var make_notify = function(kind, user) {
 
     // manage out of scope
     case 'out_of_scope':
-      notify('I could not understand you ' + user '.', 'Voice Assistent', 'warning');
+      notify('I could not understand you ' + user + '.', 'Voice Assistent', 'warning');
       break;
     }
 }
