@@ -45,6 +45,10 @@ const propTypes = {
 };
 
 class AudioControls extends PureComponent {
+  constructor (props) {
+    super (props);
+    this.handletoggleVoiceAssistent = this.handletoggleVoiceAssistent.bind(this)
+  }
 
   componentDidMount() {
     const { processToggleMuteFromOutside } = this.props;
@@ -53,7 +57,7 @@ class AudioControls extends PureComponent {
       window.addEventListener('message', processToggleMuteFromOutside);
     }
 
-    var handletoggleVoiceAssistent = function() {
+    handletoggleVoiceAssistent() {
 
     if (window.VoiceAssistent.state.on == true) {
         window.VoiceAssistent.state.on = false
@@ -126,6 +130,7 @@ class AudioControls extends PureComponent {
         circle
         accessKey={shortcuts.togglemute}
       />
+      Voice Assistent
     );
 
     return (
