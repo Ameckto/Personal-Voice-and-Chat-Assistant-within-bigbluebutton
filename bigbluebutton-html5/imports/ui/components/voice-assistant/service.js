@@ -277,7 +277,7 @@ var execute_intent = function(intent, response) {
         if (guessed) {
           make_notify('presenter_person_guessed', user);
         } else {
-          if (user=='me' || user=='myself'){
+          if (userId == Auth.userID){
             make_notify('presenter_give_me', '');
           } else {
             make_notify('presenter_give', user);
