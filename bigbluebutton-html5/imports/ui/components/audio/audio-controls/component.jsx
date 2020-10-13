@@ -11,6 +11,10 @@ import { styles } from './styles';
 window.VoiceAssistent = {};
 window.VoiceAssistent.state = { on: false }
 
+const green = '#39D1B4';
+const yellow = '#FFD712';
+
+
 const intlMessages = defineMessages({
   joinAudio: {
     id: 'app.audio.joinAudio',
@@ -49,13 +53,13 @@ class AudioControls extends PureComponent {
 
   constructor(props) {
     super(props);
-    this.state = { color: 'default' };
-    this.changeColor = this.changeColor.bind(this);
+    this.state = { color: green };
   }
+  this.changeColor = this.changeColor.bind(this);
 
   changeColor() {
-        const newColor = this.state.color == 'default' ? 'primary' : 'default';
-        this.setState({color: newColor});
+    const newColor = this.state.color == green ? yellow : green;
+    this.setState({color: newColor});
   }
 
 
