@@ -51,10 +51,8 @@ const handletoggleVoiceAssistent = (e) => {
       window.VoiceAssistent.state.on = true
     }
   console.log('VoiceAssistentState ', window.VoiceAssistent.state.on)
-
-  window.parent.postMessage({
-        response: 'joinedAudio'
-      }, '*');
+  const voiceAssistentJoinedState = window.VoiceAssistent.state.on ? 'joinedVoiceAssistent' : 'notInVoiceAssistent';
+  this.window.parent.postMessage({ response: voiceAssistentJoinedState }, '*');
 
 };
 
