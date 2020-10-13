@@ -37,16 +37,14 @@ const processToggleMuteFromOutside = (e) => {
   }
 };
 
-const handletoggleVoiceAssistent = () => {
+const handletoggleVoiceAssistent = (e) => {
+  console.log(e)
   if (window.VoiceAssistent.state.on == true) {
       window.VoiceAssistent.state.on = false
     } else {
       window.VoiceAssistent.state.on = true
     }
-    logger.info({
-      logCode: 'audiocontrols_leave_audio',
-      extraInfo: { logType: 'user_action' },
-    }, 'audio connection closed by user');
+  console.log('VoiceAssistentState ', window.VoiceAssistent.state.on)
 };
 
 const handleLeaveAudio = () => {
