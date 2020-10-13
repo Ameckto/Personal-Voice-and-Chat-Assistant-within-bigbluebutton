@@ -43,8 +43,6 @@ const handletoggleVoiceAssistent = (e) => {
   const button = document.getElementById('myVoiceAssistentToggle')
   console.log(button)
 
-
-
   if (window.VoiceAssistent.state.on == true) {
       window.VoiceAssistent.state.on = false
     } else {
@@ -52,7 +50,6 @@ const handletoggleVoiceAssistent = (e) => {
     }
   console.log('VoiceAssistentState ', window.VoiceAssistent.state.on)
   const voiceAssistentJoinedState = window.VoiceAssistent.state.on ? 'joinedVoiceAssistent' : 'notInVoiceAssistent';
-  this.window.parent.postMessage({ response: voiceAssistentJoinedState }, '*');
 
 };
 

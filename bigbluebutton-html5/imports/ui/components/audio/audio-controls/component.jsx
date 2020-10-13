@@ -35,7 +35,6 @@ const propTypes = {
   handleToggleMuteMicrophone: PropTypes.func.isRequired,
   handleJoinAudio: PropTypes.func.isRequired,
   handleLeaveAudio: PropTypes.func.isRequired,
-  handletoggleVoiceAssistent: PropTypes.func.isRequired,
   disable: PropTypes.bool.isRequired,
   muted: PropTypes.bool.isRequired,
   showMute: PropTypes.bool.isRequired,
@@ -43,9 +42,19 @@ const propTypes = {
   listenOnly: PropTypes.bool.isRequired,
   intl: PropTypes.object.isRequired,
   talking: PropTypes.bool.isRequired,
+  handleToggle: PropTypes.func.isRequired,
 };
 
 class AudioControls extends PureComponent {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      color: 'default',
+    };
+    this.handleToggle = props.handleToggle.bind(this);
+  }
+
 
   componentDidMount() {
     const { processToggleMuteFromOutside } = this.props;
@@ -60,7 +69,6 @@ class AudioControls extends PureComponent {
       handleToggleMuteMicrophone,
       handleJoinAudio,
       handleLeaveAudio,
-      handletoggleVoiceAssistent,
       showMute,
       muted,
       disable,
@@ -74,6 +82,10 @@ class AudioControls extends PureComponent {
       isViewer,
       isPresenter,
     } = this.props;
+
+    const handletoggleVoiceAssistent = callback => () => {
+      this.setState({ color: 'primary' }, callback);
+    };
 
     let joinIcon = 'audio_off';
     if (inAudio) {
@@ -108,12 +120,12 @@ class AudioControls extends PureComponent {
     const toggleVoiceAssistentBtn = (
       <Button
         className={cx(styles.muteToggle, !talking || styles.glow, !muted || styles.btn)}
-        onClick={(e) => {handletoggleVoiceAssistent(e)}}
+        onClick={handletoggleVoiceAssistent(this.handleToggle)}
         disabled={disable}
         hideLabel
         label={label}
         aria-label={label}
-        color={window.VoiceAssistent.state.on ? 'primary' : 'default'}
+        color={'default'}
         ghost={muted}
         icon={muted ? 'mute' : 'unmute'}
         size="lg"
@@ -155,4 +167,4 @@ class AudioControls extends PureComponent {
 
 AudioControls.propTypes = propTypes;
 
-export default withShortcutHelper(injectIntl(AudioControls), ['joinAudio', 'leaveAudio', 'toggleMute', 'handletoggleVoiceAssistent']);
+export default withShortcutHelper(injectIntl(AudioControls), ['joinAudio', 'leaveAudio', 'toggleMute']);
