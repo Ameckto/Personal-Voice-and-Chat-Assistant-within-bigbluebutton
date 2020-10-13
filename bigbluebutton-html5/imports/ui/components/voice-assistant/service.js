@@ -330,8 +330,8 @@ var make_post_request = function(message) {
       var intent = response.intent.name || undefined;
       var confidence = response.intent.confidence || undefined;
 
-      consolge.log('intent identified', intent)
-      consolge.log('confidence', confidence)
+      console.log('intent identified', intent)
+      console.log('confidence', confidence)
 
       if (confidence < min_confidence) {
         console.log('confidence is less than min_confidence of ' + min_confidence)
