@@ -107,7 +107,7 @@ var make_notify = function(kind, user) {
  * finds the best match for a user with a given ranking
  * must be above a given threshold
  */
-var guess_name = function(user, min_match_raiting) {
+var guess_name = function(user) {
 
   //get all names of meeting
   var selector = {connectionStatus:'online', meetingId: Auth.meetingID};
@@ -127,10 +127,12 @@ var guess_name = function(user, min_match_raiting) {
   console.log('best_match_name ', best_match_name)
   console.log('best_match_raiting ', best_match_raiting)
   if (best_match_raiting >= min_match_raiting) {
-    return best_match_name;
+    var result = best_match_name;
   } else {
-    return false;
+    var result = false;
   }
+  console.log('guessed name: ' result)
+  return result;
 }
 
 //gets PERSONS of intent and returns them in an array, can be multiple
@@ -163,7 +165,7 @@ var get_userId = function(user) {
 var mute_user = function(user, client) {
 
   if (user_exists(user) == false) {
-    var guessed_name = guess_name(user, min_match_raiting)
+    var guessed_name = guess_name(user)
     if (guessed_name == false) {
       make_notify('mute_no_person', user);
       return;
@@ -183,7 +185,7 @@ var mute_user = function(user, client) {
       AudioService.toggleMuteMicrophone();
       make_notify('mute_me', '');
     } else if (users_role == 'MODERATOR'){
-      makeCall('toggleVoice', userId);
+      makeCall('toggleVoice', user);
       if (guessed) {
         make_notify('mute_guessed', user);
       } else {
@@ -213,7 +215,6 @@ var user_exists = function(user) {
   var selector = {connectionStatus:'online', name: user, meetingId: Auth.meetingID}
   var user_document = Users.findOne(selector);
   var exists;
-  console.log(typeof(user_document))
   if (user_document == undefined) {
     exists = false;
   } else {
@@ -255,7 +256,7 @@ var execute_intent = function(intent, response) {
 
       var user = person_arr[0]; //you can only give one presenter at a time
       if (user_exists(user) == false) {
-        var guessed_name = guess_name(user, min_match_raiting)
+        var guessed_name = guess_name(user)
         console.log('guessed_name', guessed_name)
         if (guessed_name == false) {
           make_notify('presenter_no_user_identified', user);
@@ -271,7 +272,7 @@ var execute_intent = function(intent, response) {
       var selector = {connectionStatus:'online', name: client, meetingId: Auth.meetingID};
       var users_role = Users.findOne(selector).role;
       if (users_role == 'MODERATOR'){
-        makeCall('assignPresenter', userId);
+        makeCall('assignPresenter', user);
         if (guessed) {
           make_notify('presenter_person_guessed', user);
         } else {
