@@ -46,38 +46,6 @@ const handleLeaveAudio = () => {
   }, 'audio connection closed by user');
 };
 
-var notifications_script = require("/imports/ui/components/voice-assistant/lib/notifications");
-notifications_script.notifications();
-
-var notify = function(text, title, type) {
-  window.notificationService.notify({
-    title: title, // title
-    text: text, // notification message
-    type: type, // 'success', 'warning', 'error'
-    position: 'bottom-right', // 'top-right', 'bottom-right', 'top-left', 'bottom-left'
-    autoClose: true, // auto close
-    duration: 10000, // 5 seconds
-    showRemoveButton: true // shows close button
-  })
-};
-
-const toggleVoiceAssistent = () => {
-
-  if (window.VoiceAssistent.state.on == true) {
-    window.VoiceAssistent.state.on = false
-    //notify('You have turned me off!', 'Voice Assistent', 'success')
-    this.window.parent.postMessage({ response: window.VoiceAssistent.state.on }, '*');
-  } else {
-    window.VoiceAssistent.state.on = true
-    //notify('You have turned me on!', 'Voice Assistent', 'success')
-    this.window.parent.postMessage({ response: window.VoiceAssistent.state.on }, '*');
-  }
-  this.setState(state => ({
-     isToggleOn: window.VoiceAssistent.state.on
-   }));
-
-}
-
 const {
   isVoiceUser,
   isConnected,
@@ -113,7 +81,6 @@ export default lockContextContainer(withModalMounter(withTracker(({ mountModal, 
     handleToggleMuteMicrophone: () => toggleMuteMicrophone(),
     handleJoinAudio: () => (isConnected() ? joinListenOnly() : mountModal(<AudioModalContainer />)),
     handleLeaveAudio,
-    toggleVoiceAssistent,
     inputStream: AudioManager.inputStream,
     isViewer,
     isPresenter,

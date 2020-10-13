@@ -8,8 +8,6 @@ import withShortcutHelper from '/imports/ui/components/shortcut-help/service';
 import MutedAlert from '/imports/ui/components/muted-alert/component';
 import { styles } from './styles';
 
-window.VoiceAssistent = {};
-window.VoiceAssistent.state = { on: false }
 
 const intlMessages = defineMessages({
   joinAudio: {
@@ -33,7 +31,6 @@ const intlMessages = defineMessages({
 const propTypes = {
   processToggleMuteFromOutside: PropTypes.func.isRequired,
   handleToggleMuteMicrophone: PropTypes.func.isRequired,
-  toggleVoiceAssistent: PropTypes.func.isRequired,
   handleJoinAudio: PropTypes.func.isRequired,
   handleLeaveAudio: PropTypes.func.isRequired,
   disable: PropTypes.bool.isRequired,
@@ -46,11 +43,6 @@ const propTypes = {
 };
 
 class AudioControls extends PureComponent {
-  constructor(props) {
-    super(props);
-    this.state = { color: 'default' };
-    this.toggleVoiceAssistent = props.toggleVoiceAssistent.bind(this);
-  }
 
   componentDidMount() {
     const { processToggleMuteFromOutside } = this.props;
@@ -63,7 +55,6 @@ class AudioControls extends PureComponent {
   render() {
     const {
       handleToggleMuteMicrophone,
-      toggleVoiceAssistent,
       handleJoinAudio,
       handleLeaveAudio,
       showMute,
@@ -88,15 +79,6 @@ class AudioControls extends PureComponent {
         joinIcon = 'audio_on';
       }
     }
-    
-    let myColor = 'default';
-    if (window.VoiceAssistent.state.on) {
-      myColor = 'primary';
-    } else {
-      myColor = 'default';
-    }
-
-
 
     const label = muted ? intl.formatMessage(intlMessages.unmuteAudio)
       : intl.formatMessage(intlMessages.muteAudio);
@@ -132,30 +114,13 @@ class AudioControls extends PureComponent {
             : intl.formatMessage(intlMessages.joinAudio)}
           label={inAudio ? intl.formatMessage(intlMessages.leaveAudio)
             : intl.formatMessage(intlMessages.joinAudio)}
-          color={window.VoiceAssistent.state.on ? 'primary' : 'default'}
+          color={!muted ? 'primary' : 'default'}
           ghost={!inAudio}
           icon={joinIcon}
           size="lg"
           circle
           accessKey={inAudio ? shortcuts.leaveaudio : shortcuts.joinaudio}
         />
-
-        const toggleVoiceAssistent = callback => () => {
-          this.setState({ color: myColor }, callback)
-        };
-
-        <Button
-          className={VoiceAssistent}
-          onClick={toggleVoiceAssistent(this.toggleVoiceAssistent)}
-          color={window.VoiceAssistent.state.on ? 'primary' : 'default'}
-          accessKey={window.VoiceAssistent.state.on ? "Disable Voice Assistent" : "Enable Voice Assistent"}
-          size="lg"
-          ghost={!window.VoiceAssistent.state.on}
-          disabled={disable}
-        >
-        Voice Assistent
-
-        </Button>
 
       </span>
 
