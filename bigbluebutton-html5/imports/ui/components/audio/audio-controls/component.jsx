@@ -11,8 +11,8 @@ import { styles } from './styles';
 window.VoiceAssistent = {};
 window.VoiceAssistent.state = { on: false }
 
-const green = '#39D1B4';
-const yellow = '#FFD712';
+const green = 'default';
+const yellow = 'primary';
 
 
 const intlMessages = defineMessages({
