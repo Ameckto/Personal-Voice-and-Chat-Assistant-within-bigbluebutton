@@ -166,6 +166,7 @@ var get_userId = function(user) {
 
 //mutes a user
 var mute_user = function(user, client) {
+  var guessed = false
 
   if (user_exists(user) == false) {
     var guessed_name = guess_name(user)
