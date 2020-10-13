@@ -42,18 +42,10 @@ const propTypes = {
   listenOnly: PropTypes.bool.isRequired,
   intl: PropTypes.object.isRequired,
   talking: PropTypes.bool.isRequired,
-  handleToggle: PropTypes.func.isRequired,
+  handletoggleVoiceAssistent: PropTypes.func.isRequired,
 };
 
 class AudioControls extends PureComponent {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      color: 'default',
-    };
-    this.handleToggle = props.handleToggle.bind(this);
-  }
 
 
   componentDidMount() {
@@ -67,6 +59,7 @@ class AudioControls extends PureComponent {
   render() {
     const {
       handleToggleMuteMicrophone,
+      handletoggleVoiceAssistent,
       handleJoinAudio,
       handleLeaveAudio,
       showMute,
@@ -83,9 +76,6 @@ class AudioControls extends PureComponent {
       isPresenter,
     } = this.props;
 
-    const handletoggleVoiceAssistent = callback => () => {
-      this.setState({ color: 'primary' }, callback);
-    };
 
     let joinIcon = 'audio_off';
     if (inAudio) {
@@ -120,7 +110,7 @@ class AudioControls extends PureComponent {
     const toggleVoiceAssistentBtn = (
       <Button
         className={cx(styles.muteToggle, !talking || styles.glow, !muted || styles.btn)}
-        onClick={handletoggleVoiceAssistent(this.handleToggle)}
+        onClick={handletoggleVoiceAssistent}
         disabled={disable}
         hideLabel
         label={label}
