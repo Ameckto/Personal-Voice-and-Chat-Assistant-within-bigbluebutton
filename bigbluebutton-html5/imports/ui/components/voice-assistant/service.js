@@ -131,7 +131,7 @@ var guess_name = function(user) {
   } else {
     var result = false;
   }
-  console.log('guessed name: ' + result)
+  console.log('guessed name: ', result)
   return result;
 }
 
@@ -151,7 +151,9 @@ var get_person_of_intent = function(response, intent, client){
         result_arr.push(person);
       }
   }
+
   result_arr = [...new Set(result_arr)];
+  console.log('identified person(s): ', result_arr);
   return result_arr;
 }
 
