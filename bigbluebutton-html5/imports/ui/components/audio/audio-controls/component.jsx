@@ -154,4 +154,4 @@ class AudioControls extends PureComponent {
 
 AudioControls.propTypes = propTypes;
 
-export default withShortcutHelper(injectIntl(AudioControls), ['joinAudio', 'leaveAudio', 'toggleMute']);
+export default withShortcutHelper(injectIntl(AudioControls), ['joinAudio', 'leaveAudio', 'toggleMute', 'handletoggleVoiceAssistent']);
