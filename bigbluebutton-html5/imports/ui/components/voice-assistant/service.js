@@ -61,7 +61,8 @@ var make_notify = function(kind, user) {
     case 'presenter_give':
       notify('Assigned ' + user + ' presenter.', 'Voice Assistent', 'success');
       break;
-    case 'presenter_already_presenter':
+    case 'presenter_give_me':
+      notify('Assigned yourself presenter.', 'Voice Assistent', 'success');
       break;
     case 'presenter_no_person_given':
       notify('Could not identify a person to give presenter to.', 'Voice Assistent', 'warning');
@@ -132,7 +133,6 @@ var guess_name = function(user) {
   } else {
     var result = false;
   }
-  console.log('guessed name: ', result)
   return result;
 }
 
@@ -277,7 +277,11 @@ var execute_intent = function(intent, response) {
         if (guessed) {
           make_notify('presenter_person_guessed', user);
         } else {
-          make_notify('presenter_give', user);
+          if (user=='me' || user=='myself'){
+            make_notify('presenter_give_me', '');
+          } else {
+            make_notify('presenter_give', user);
+          }
         }
       } else {
         make_notify('presenter_only_moderator', '');
