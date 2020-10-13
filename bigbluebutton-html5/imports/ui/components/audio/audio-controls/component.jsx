@@ -138,14 +138,6 @@ class AudioControls extends PureComponent {
     );
 
     return (
-      <div style={{background: this.state.color}}>
-          <h1>
-            Change my color
-          </h1>
-          <button onClick={this.changeColor}>
-            Change color
-          </button>
-        </div>
 
       <span className={styles.container}>
 
@@ -169,6 +161,16 @@ class AudioControls extends PureComponent {
           accessKey={inAudio ? shortcuts.leaveaudio : shortcuts.joinaudio}
         />
         {toggleVoiceAssistentBtn}
+
+        <div style={{background: this.state.color}}>
+            <h1>
+              Change my color
+            </h1>
+            <button onClick={this.changeColor}>
+              Change color
+            </button>
+        </div>
+
 
       </span>
 
