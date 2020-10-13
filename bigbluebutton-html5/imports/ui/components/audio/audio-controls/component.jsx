@@ -54,9 +54,8 @@ class AudioControls extends PureComponent {
   }
 
   changeColor() {
-        const newColor = this.state.color == green ? yellow : green;
-        this.setState({color: 'primary'});
-
+        const newColor = this.state.color == 'default' ? 'primary' : 'default';
+        this.setState({color: newColor});
   }
 
 
