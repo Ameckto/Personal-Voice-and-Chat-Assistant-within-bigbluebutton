@@ -170,6 +170,7 @@ class AudioControls extends PureComponent {
             <button
             onClick={this.changeColor}
             color={this.state.color}
+            ghost={true}
             >
               Voice Assistent
             </button>
