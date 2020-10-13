@@ -131,7 +131,7 @@ var guess_name = function(user) {
   } else {
     var result = false;
   }
-  console.log('guessed name: ' result)
+  console.log('guessed name: ' + result)
   return result;
 }
 
