@@ -173,8 +173,10 @@ class AudioControls extends PureComponent {
           accessKey={inAudio ? shortcuts.leaveaudio : shortcuts.joinaudio}
         />
 
-      
+
         <Button
+        label={inAudio ? intl.formatMessage(intlMessages.leaveAudio)
+          : intl.formatMessage(intlMessages.joinAudio)}
         onClick={this.toggleVoiceAssistent}
         color={this.state.color}
         ghost={this.state.ghost}
