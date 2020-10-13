@@ -38,7 +38,7 @@ const processToggleMuteFromOutside = (e) => {
 };
 
 const handletoggleVoiceAssistent = (e) => {
-  console.log(e)
+  console.log(e.target.color)
   if (window.VoiceAssistent.state.on == true) {
       window.VoiceAssistent.state.on = false
     } else {
