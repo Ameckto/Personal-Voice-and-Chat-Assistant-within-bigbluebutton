@@ -47,6 +47,19 @@ const propTypes = {
 
 class AudioControls extends PureComponent {
 
+  constructor(props) {
+    super(props);
+    this.state = { color: 'default' };
+    this.changeColor = this.changeColor.bind(this);
+  }
+
+  changeColor() {
+        const newColor = this.state.color == green ? yellow : green;
+        this.setState({color: 'primary'});
+
+  }
+
+
 
   componentDidMount() {
     const { processToggleMuteFromOutside } = this.props;
@@ -125,6 +138,15 @@ class AudioControls extends PureComponent {
     );
 
     return (
+      <div style={{background: this.state.color}}>
+          <h1>
+            Change my color
+          </h1>
+          <button onClick={this.changeColor}>
+            Change color
+          </button>
+        </div>
+
       <span className={styles.container}>
 
         {muted ? <MutedAlert {...{ inputStream, isViewer, isPresenter }} /> : null}
