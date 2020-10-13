@@ -14,7 +14,7 @@ var string_similarity_test = function string_similarity_test(){
               {'input_name': 'Robert Johanson', 'expected_name': 'Robert', 'names_in_meeting': ['Robert', 'Klaus', 'Seid']},
               {'input_name': 'Robert', 'expected_name': 'Robert Johanson', 'names_in_meeting': ['Robert Johanson', 'Klaus', 'Seid']},
             ];
-            
+
     var output_data_arr = []
     var evaluateTest = function(test) {
       // util function to sort the result
@@ -62,7 +62,7 @@ var string_similarity_test = function string_similarity_test(){
     };
     input_data_arr.forEach(test => evaluateTest(test));
 
-    console.log(output_data_arr)
+    console.log(JSON.stringify(output_data_arr));
   });
 };
 module.exports.string_similarity_test = string_similarity_test;
