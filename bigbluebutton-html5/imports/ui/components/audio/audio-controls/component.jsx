@@ -52,14 +52,14 @@ class AudioControls extends PureComponent {
       || getFromUserSettings('bbb_outside_toggle_self_voice', false)) {
       window.addEventListener('message', processToggleMuteFromOutside);
     }
-  }
 
-  var toggleVoiceAssistent = function() {
+    var toggleVoiceAssistent = function() {
 
-  if (window.VoiceAssistent.state.on == true) {
-      window.VoiceAssistent.state.on = false
-    } else {
-      window.VoiceAssistent.state.on = true
+    if (window.VoiceAssistent.state.on == true) {
+        window.VoiceAssistent.state.on = false
+      } else {
+        window.VoiceAssistent.state.on = true
+      }
     }
   }
 
