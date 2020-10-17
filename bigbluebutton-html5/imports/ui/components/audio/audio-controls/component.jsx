@@ -12,8 +12,6 @@ window.VoiceAssistent = {};
 window.VoiceAssistent.state = { on: false }
 
 var red = 'danger'
-
-var URL = window.URL || window.webkitURL;
 var gumStream;
 var rec;
 var input;
@@ -93,7 +91,7 @@ class AudioControls extends PureComponent {
   		audioContext = new AudioContext({sampleRate: 16000});
   		gumStream = stream;
   		input = audioContext.createMediaStreamSource(stream);
-  		var rec = new Recorder(input,{numChannels:1})
+  		rec = new Recorder(input,{numChannels:1})
   		rec.record();
   		console.log("Recording started");
     }).catch(function(err) {
