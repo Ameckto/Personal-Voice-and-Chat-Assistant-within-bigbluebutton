@@ -13,7 +13,11 @@ window.VoiceAssistent.state = { on: false }
 
 var red = 'danger'
 
-//danger","success",
+var URL = window.URL || window.webkitURL;
+var gumStream;
+var rec;
+var input;
+
 
 const intlMessages = defineMessages({
   joinAudio: {
@@ -76,19 +80,55 @@ class AudioControls extends PureComponent {
 
   }
 
-  handleButtonPress () {
+  handleButtonPress() {
 
     this.setState({color_record: red});
     this.setState({ghost_record: false});
 
     console.log('Start Recording')
+
+    navigator.mediaDevices.getUserMedia(constraints).then(function(stream) {
+  		audioContext = new AudioContext({sampleRate: 16000});
+  		document.getElementById("formats").innerHTML="Format: 1 channel pcm @ "+audioContext.sampleRate/1000+"kHz"
+  		gumStream = stream;
+  		input = audioContext.createMediaStreamSource(stream);
+  		var rec = new Recorder(input,{numChannels:1})
+  		rec.record()
+  		console.log("Recording started");
+    }
   }
-  handleButtonRelease () {
+  handleButtonRelease() {
     this.setState({color_record: 'default'});
     this.setState({ghost_record: true});
-
     console.log('End Recording')
+
+    rec.stop();
+    gumStream.getAudioTracks()[0].stop();
+    rec.exportWAV(createPostRequest);
   }
+
+  createPostRequest(blob) {
+
+  	var xhttp = new XMLHttpRequest();
+  	xhttp.onreadystatechange = function() {
+  		if (this.readyState == 4 && this.status == 200) {
+  		// Typical action to be performed when the document is ready:
+  			console.log(xhttp)
+  			var response = JSON.parse(xhttp.response)
+  			console.log(response.prediction)
+  		}
+  	};
+
+  	var fd = new FormData();
+  	fd.append('audio', blob, filename);
+  	//console.log(fd)
+  	var url = "https://niklasproject.de/asr/model/predict"
+  	xhttp.open("POST", url);
+  	//xhttp.setRequestHeader("Content-Type", "audio/wav");
+  	xhttp.send(fd);
+};
+
+
 
 
 
