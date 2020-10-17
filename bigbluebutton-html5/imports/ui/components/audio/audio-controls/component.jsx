@@ -34,7 +34,7 @@ var createPostRequest = function(blob) {
   }
 
   var fd = new FormData();
-  fd.append('audio', blob, filename);
+  fd.append('audio', blob);
   //console.log(fd)
   var url = "https://niklasproject.de/asr/model/predict"
   xhttp.open("POST", url);
