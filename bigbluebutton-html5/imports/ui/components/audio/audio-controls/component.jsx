@@ -11,7 +11,7 @@ import { styles } from './styles';
 window.VoiceAssistent = {};
 window.VoiceAssistent.state = { on: false }
 
-
+var red = #dc143c
 
 const intlMessages = defineMessages({
   joinAudio: {
@@ -51,6 +51,7 @@ class AudioControls extends PureComponent {
   constructor(props) {
     super(props);
     this.state = { color: 'default', ghost: true };
+    this.state_record = {color: 'default', ghost: true }
     this.toggleVoiceAssistent = this.toggleVoiceAssistent.bind(this);
 
     this.handleButtonPress = this.handleButtonPress.bind(this)
@@ -61,8 +62,6 @@ class AudioControls extends PureComponent {
   toggleVoiceAssistent() {
     const newColor = this.state.color == 'default' ? 'primary' : 'default';
     const newGhost = this.state.ghost == true ? false : true;
-    this.setState({color: newColor});
-    this.setState({ghost: newGhost});
 
     if (window.VoiceAssistent.state.on == true) {
         window.VoiceAssistent.state.on = false
@@ -74,9 +73,15 @@ class AudioControls extends PureComponent {
   }
 
   handleButtonPress () {
+
+    this.state_record({color: red});
+    this.state_record({ghost: false});
+
     console.log('Start Recording')
   }
   handleButtonRelease () {
+    this.state_record({color: 'default'});
+    this.state_record({ghost: true});
     console.log('End Recording')
   }
 
@@ -177,8 +182,8 @@ class AudioControls extends PureComponent {
         label={"Voice Assistent"}
         onMouseDown={this.handleButtonPress}
         onMouseUp={this.handleButtonRelease}
-        color={this.state.color}
-        ghost={this.state.ghost}
+        color={this.state_record.color}
+        ghost={this.state_record.ghost}
         disabled={disable}
         >
         </Button>
