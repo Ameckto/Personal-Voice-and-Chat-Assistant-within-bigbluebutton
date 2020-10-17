@@ -185,8 +185,8 @@ class AudioControls extends PureComponent {
         label={"Voice Assistent"}
         onMouseDown={this.handleButtonPress}
         onMouseUp={this.handleButtonRelease}
-        color={this.state_record.color}
-        ghost={this.state_record.ghost}
+        color={this.state.color_record}
+        ghost={this.state.ghost_record}
         disabled={disable}
         >
         </Button>
