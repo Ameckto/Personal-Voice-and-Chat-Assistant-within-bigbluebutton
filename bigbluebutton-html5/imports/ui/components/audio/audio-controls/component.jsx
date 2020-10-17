@@ -89,13 +89,14 @@ class AudioControls extends PureComponent {
 
     navigator.mediaDevices.getUserMedia(constraints).then(function(stream) {
   		audioContext = new AudioContext({sampleRate: 16000});
-  		document.getElementById("formats").innerHTML="Format: 1 channel pcm @ "+audioContext.sampleRate/1000+"kHz"
   		gumStream = stream;
   		input = audioContext.createMediaStreamSource(stream);
   		var rec = new Recorder(input,{numChannels:1})
-  		rec.record()
+  		rec.record();
   		console.log("Recording started");
-    }
+    }).catch(function(err) {
+	   console.log(err)
+    });
   }
   handleButtonRelease() {
     this.setState({color_record: 'default'});
