@@ -368,7 +368,7 @@ var make_post_request = function(message) {
     }
   }
   //RASA-Server domnain
-  var url = "https://niklasproject.de/model/parse";
+  var url = "https://niklasproject.de/nlu/model/parse";
   xhttp.open("POST", url);
   xhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
   //send the post-request

@@ -52,6 +52,9 @@ class AudioControls extends PureComponent {
     super(props);
     this.state = { color: 'default', ghost: true };
     this.toggleVoiceAssistent = this.toggleVoiceAssistent.bind(this);
+
+    this.handleButtonPress = this.handleButtonPress.bind(this)
+    this.handleButtonRelease = this.handleButtonRelease.bind(this)
   }
 
 
@@ -68,6 +71,13 @@ class AudioControls extends PureComponent {
       }
     console.log('VoiceAssistentState ', window.VoiceAssistent.state.on)
 
+  }
+
+  handleButtonPress () {
+    console.log('Start Recording')
+  }
+  handleButtonRelease () {
+    console.log('End Recording')
   }
 
 
@@ -155,13 +165,24 @@ class AudioControls extends PureComponent {
 
 
         <Button
-        label={"Voice Assistent"}
+        label={"Chat Assistent"}
         onClick={this.toggleVoiceAssistent}
         color={this.state.color}
         ghost={this.state.ghost}
         disabled={disable}
         >
         </Button>
+
+        <Button
+        label={"Voice Assistent"}
+        onMouseDown={this.handleButtonPress}
+        onMouseUp={this.handleButtonRelease}
+        color={this.state.color}
+        ghost={this.state.ghost}
+        disabled={disable}
+        >
+        </Button>
+
 
 
 
