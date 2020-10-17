@@ -87,6 +87,8 @@ class AudioControls extends PureComponent {
 
     console.log('Start Recording')
 
+    var constraints = { audio: true, video:false }
+
     navigator.mediaDevices.getUserMedia(constraints).then(function(stream) {
   		audioContext = new AudioContext({sampleRate: 16000});
   		gumStream = stream;
