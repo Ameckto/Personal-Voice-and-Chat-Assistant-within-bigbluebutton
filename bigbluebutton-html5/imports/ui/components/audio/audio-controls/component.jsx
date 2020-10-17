@@ -15,6 +15,8 @@ var red = 'danger'
 var gumStream;
 var rec;
 var input;
+var audioContext;
+var audioContext;
 
 
 const intlMessages = defineMessages({
