@@ -11,7 +11,9 @@ import { styles } from './styles';
 window.VoiceAssistent = {};
 window.VoiceAssistent.state = { on: false }
 
-var red = "#dc143c"
+var red = 'danger'
+
+//danger","success",
 
 const intlMessages = defineMessages({
   joinAudio: {
