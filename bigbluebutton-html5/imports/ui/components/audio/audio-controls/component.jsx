@@ -100,6 +100,29 @@ class AudioControls extends PureComponent {
 	   console.log(err)
     });
   }
+
+  createPostRequest(blob) {
+
+    var xhttp = new XMLHttpRequest();
+
+    xhttp.onreadystatechange = function() {
+      if (this.readyState == 4 && this.status == 200) {
+      // Typical action to be performed when the document is ready:
+        console.log(xhttp)
+        var response = JSON.parse(xhttp.response)
+        console.log(response.prediction)
+      }
+    }
+
+    var fd = new FormData();
+    fd.append('audio', blob, filename);
+    //console.log(fd)
+    var url = "https://niklasproject.de/asr/model/predict"
+    xhttp.open("POST", url);
+    //xhttp.setRequestHeader("Content-Type", "audio/wav");
+    xhttp.send(fd);
+  };
+
   handleButtonRelease() {
     this.setState({color_record: 'default'});
     this.setState({ghost_record: true});
@@ -110,26 +133,9 @@ class AudioControls extends PureComponent {
     rec.exportWAV(createPostRequest);
   }
 
-  function createPostRequest(blob) {
 
-  	var xhttp = new XMLHttpRequest();
-  	xhttp.onreadystatechange = function() {
-  		if (this.readyState == 4 && this.status == 200) {
-  		// Typical action to be performed when the document is ready:
-  			console.log(xhttp)
-  			var response = JSON.parse(xhttp.response)
-  			console.log(response.prediction)
-  		}
-  	};
 
-  	var fd = new FormData();
-  	fd.append('audio', blob, filename);
-  	//console.log(fd)
-  	var url = "https://niklasproject.de/asr/model/predict"
-  	xhttp.open("POST", url);
-  	//xhttp.setRequestHeader("Content-Type", "audio/wav");
-  	xhttp.send(fd);
-};
+
 
 
 
