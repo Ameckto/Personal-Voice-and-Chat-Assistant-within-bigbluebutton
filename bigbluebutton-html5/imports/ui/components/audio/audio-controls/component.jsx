@@ -50,8 +50,8 @@ class AudioControls extends PureComponent {
 
   constructor(props) {
     super(props);
-    this.state = { color: 'default', ghost: true };
-    this.state_record = {color: 'default', ghost: true }
+    this.state = { color: 'default', ghost: true, color_record: 'default', ghost_record: true };
+
     this.toggleVoiceAssistent = this.toggleVoiceAssistent.bind(this);
 
     this.handleButtonPress = this.handleButtonPress.bind(this)
@@ -62,6 +62,8 @@ class AudioControls extends PureComponent {
   toggleVoiceAssistent() {
     const newColor = this.state.color == 'default' ? 'primary' : 'default';
     const newGhost = this.state.ghost == true ? false : true;
+    this.setState({color: newColor});
+    this.setState({ghost: newGhost});
 
     if (window.VoiceAssistent.state.on == true) {
         window.VoiceAssistent.state.on = false
@@ -74,14 +76,15 @@ class AudioControls extends PureComponent {
 
   handleButtonPress () {
 
-    this.state_record({color: red});
-    this.state_record({ghost: false});
+    this.setState({color_record: red});
+    this.setState({ghost_record: false});
 
     console.log('Start Recording')
   }
   handleButtonRelease () {
-    this.state_record({color: 'default'});
-    this.state_record({ghost: true});
+    this.setState({color_record: 'default'});
+    this.setState({ghost_record: true});
+
     console.log('End Recording')
   }
 
