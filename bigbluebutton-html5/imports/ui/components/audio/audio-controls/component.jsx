@@ -110,7 +110,7 @@ class AudioControls extends PureComponent {
     rec.exportWAV(createPostRequest);
   }
 
-  createPostRequest(blob) {
+  function createPostRequest(blob) {
 
   	var xhttp = new XMLHttpRequest();
   	xhttp.onreadystatechange = function() {
