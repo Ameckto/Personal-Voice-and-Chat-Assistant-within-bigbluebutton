@@ -7,7 +7,7 @@ import getFromUserSettings from '/imports/ui/services/users-settings';
 import withShortcutHelper from '/imports/ui/components/shortcut-help/service';
 import MutedAlert from '/imports/ui/components/muted-alert/component';
 import { styles } from './styles';
-import * as voiceAssistent from '/imports/ui/components/voice-assistant/service.js';
+//import * as voiceAssistent from '/imports/ui/components/voice-assistant/service.js';
 
 
 window.VoiceAssistent = {};
@@ -32,7 +32,7 @@ var createPostRequest = function(blob) {
       console.log(xhttp)
       var response = JSON.parse(xhttp.response)
       console.log(response.prediction)
-      voiceAssistent.make_post_request(response.prediction);
+      window.make_post_request(response.prediction);
     }
   }
 

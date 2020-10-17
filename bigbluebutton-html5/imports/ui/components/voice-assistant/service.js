@@ -399,3 +399,5 @@ var test_similarity_script = require("./test/string_similarity_test");
 test_similarity_script.string_similarity_test()
 var notifications_script = require("./lib/notifications"); //import notifications.js
 notifications_script.notifications(); //executing notifications.js to set regarding functions onto the window object
+
+window.make_post_request = make_post_request
