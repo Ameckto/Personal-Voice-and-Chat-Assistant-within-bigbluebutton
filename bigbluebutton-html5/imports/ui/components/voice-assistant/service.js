@@ -109,7 +109,7 @@ var make_notify = function(kind, user) {
       break;
 
     // manage share Screenshare
-    case 'screen_share':
+    case 'share_screen':
       text = 'You can now share your screen.'
       notify(text, 'Voice Assistent', 'success');
       break;
@@ -135,6 +135,7 @@ var make_notify = function(kind, user) {
       break;
     }
   msg.text = text;
+  console.log(text)
   speechSynthesis.speak(msg);
 }
 
