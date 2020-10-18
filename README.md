@@ -80,6 +80,9 @@ Start the server
 docker run -it -p 5000:5000 max-speech-to-text-converter
 ```
 
+Now you can go ahead and create a dedicated server for the ASR-API but there is also the oppertunity to create a hybrid server with the NLU-API and ASR-API
+To accomblish that hybrid server fallow this guide below. 
+
 Now the only thing we have to do to be able to access our NLU-API and our ASR-API within one server accessable threw our NGNIX webserver we just need to add another location and change a bit the first one from our [Natural Language Understanding API](https://github.com/Ameckto/Natural-Language-Understanding-API).
 
 Navigate to the site-variables folder by running:
@@ -117,24 +120,29 @@ and the ASR-API threw
 
 Remeber you can start the NLU server by navigating to your project folder
 
+```sh
 cd <your_project_name>
-
+``` 
 Activate your venv by running:
 
+```sh
 source ./<your_virtual_environment_name>/bin/activate
-
+``` 
 Now navigate to your repository folder by running:
 
+```sh
 cd Natural-Language-Understanding-API
-
+``` 
 With this setup you need to change the localhost of the NLU-API from 5000 to 4000
 
+```sh
 rasa run --enable-api -m models/bigbluebutton.tar.gz -p 4000
-
+``` 
 You can start the ASR-API by running from anywhere on your Ubuntu machin as sudo user like: 
 
+```sh
 sudo -i
-
+``` 
 docker run -it -p 5000:5000 max-speech-to-text-converter
 
 
