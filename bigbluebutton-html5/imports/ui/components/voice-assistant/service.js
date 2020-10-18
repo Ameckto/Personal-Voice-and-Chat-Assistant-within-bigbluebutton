@@ -73,7 +73,7 @@ var make_notify = function(kind, user) {
       break;
 
     // manage give presenter
-    case 'presenter_give':#
+    case 'presenter_give':
       text = 'Assigned ' + user + ' presenter.'
       notify(text, 'Voice Assistent', 'success');
       break;
