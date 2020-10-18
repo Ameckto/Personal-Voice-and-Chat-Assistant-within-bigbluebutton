@@ -32,7 +32,8 @@ var createPostRequest = function(blob) {
       console.log(xhttp)
       var response = JSON.parse(xhttp.response)
       console.log(response.prediction)
-      window.make_post_request(response.prediction);
+      var record_bool=true;
+      window.make_post_request(response.prediction, record_bool);
     }
   }
 

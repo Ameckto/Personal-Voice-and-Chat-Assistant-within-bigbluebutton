@@ -26,83 +26,116 @@ var notify = function(text, title, type) {
 }
 //manage notifications
 var make_notify = function(kind, user) {
+  var msg = new SpeechSynthesisUtterance();
+  var text
+  msg.lang = 'en-US';
+  msg.volume = 1; // 0 to 1
+  msg.rate = 1; // 0.1 to 10
+  msg.pitch = 2; //0 to 2
+
   switch (kind) {
 
     // manage mute
     case 'mute':
-      notify('I have muted ' + user + ' for you!', 'Voice Assistent', 'success');
+      text = 'I have muted ' + user + ' for you!'
+      notify(text, 'Voice Assistent', 'success');
       break;
     case 'mute_guessed':
-      notify('I guessed that you meant ' + user + '. ' + user + ' is now muted.', 'Voice Assistent', 'success');
+      text = 'I guessed that you meant ' + user + '. ' + user + ' is now muted.'
+      notify(text, 'Voice Assistent', 'success');
       break;
     case 'mute_me':
       notify('You are now muted!', 'Voice Assistent', 'success');
       break;
     case 'mute_not_moderator':
-      notify('Only moderators can mute other users.', 'Voice Assistent', 'warning');
+      text = 'Only moderators can mute other users.'
+      notify(text, 'Voice Assistent', 'warning');
       break;
     case 'mute_already_muted':
-      notify('Person ' + user + ' is already muted.', 'Voice Assistent', 'warning')
+      text = 'Person ' + user + ' is already muted.'
+      notify(text, 'Voice Assistent', 'warning')
       break;
     case 'mute_me_already_muted':
-        notify('You are already muted.', 'Voice Assistent', 'warning')
-        break;
+      text = 'You are already muted.'
+      notify(text, 'Voice Assistent', 'warning')
+      break;
     case 'mute_no_person':
-      notify('Could not identify ' + user + ' in the meeting to mute.', 'Voice Assistent', 'warning');
+      text = 'Could not identify ' + user + ' in the meeting to mute.'
+      notify(text, 'Voice Assistent', 'warning');
       break;
     case 'mute_no_person_given':
-      notify('Could not identify a person to mute.', 'Voice Assistent', 'warning')
+      text = 'Could not identify a person to mute.'
+      notify(text, 'Voice Assistent', 'warning')
       break;
     case 'mute_guessed_already_muted':
-      notify('I guessed that you meant ' + user + '. But ' + user + ' is already muted.', 'Voice Assistent', 'success');
+      textg = 'I guessed that you meant ' + user + '. But ' + user + ' is already muted.'
+      notify(text , 'Voice Assistent', 'success');
       break;
 
     // manage give presenter
-    case 'presenter_give':
-      notify('Assigned ' + user + ' presenter.', 'Voice Assistent', 'success');
+    case 'presenter_give':#
+      text = 'Assigned ' + user + ' presenter.'
+      notify(text, 'Voice Assistent', 'success');
       break;
     case 'presenter_give_me':
-      notify('Assigned yourself presenter.', 'Voice Assistent', 'success');
+      text = 'Assigned yourself presenter.'
+      notify(text, 'Voice Assistent', 'success');
       break;
     case 'presenter_no_person_given':
-      notify('Could not identify a person to give presenter to.', 'Voice Assistent', 'warning');
+      text = 'Could not identify a person to give presenter to.'
+      notify(text, 'Voice Assistent', 'warning');
       break;
     case 'presenter_no_user_identified':
-      notify('Could not identify ' + user + ' in the meeting to give presenter to.', 'Voice Assistent', 'warning');
+      text = 'Could not identify ' + user + ' in the meeting to give presenter to.'
+      notify(text, 'Voice Assistent', 'warning');
       break;
     case 'presenter_person_guessed':
-      notify('I guessed that you meant ' + user + '. Assigned ' + user + ' presenter.', 'Voice Assistent', 'success');
+      text = 'I guessed that you meant ' + user + '. Assigned ' + user + ' presenter.'
+      notify(text, 'Voice Assistent', 'success');
       break;
     case 'presenter_only_moderator':
-      notify('Only the moderator can assign presenter.', 'Voice Assistent', 'warning');
+      text = 'Only the moderator can assign presenter.'
+      notify(text, 'Voice Assistent', 'warning');
       break;
 
     // manage wake up
     case 'wake_up':
-      notify( get_greeting() + ' ,' + user + '?', 'Voice Assistent', 'success');
+      text = get_greeting() + ' ,' + user + '?'
+      notify(text , 'Voice Assistent', 'success');
       break;
     case 'wake_up_first':
-      notify('please wake me up first.', 'Voice Assistent', 'warning')
+      text = 'please wake me up first.'
+      notify(text , 'Voice Assistent', 'warning')
       break;
 
     // manage share Screenshare
     case 'screen_share':
-      notify('You can now share your screen.', 'Voice Assistent', 'success');
+      text = 'You can now share your screen.'
+      notify(text, 'Voice Assistent', 'success');
       break;
     case 'share_screen_only_presenter':
-      notify('You can only share your screen if you are presenter.', 'Voice Assistent', 'warning');
+      text = 'You can only share your screen if you are presenter.'
+      notify(text, 'Voice Assistent', 'warning');
       break;
 
     // manage raise hand
     case 'raise_hand':
-      notify('You raised your hand.', 'Voice Assistent', 'success');
+      text = 'You raised your hand.'
+      notify(text, 'Voice Assistent', 'success');
       break;
 
     // manage out of scope
     case 'out_of_scope':
-      notify('I could not understand you ' + user + '.', 'Voice Assistent', 'warning');
+      text = 'Sorry, I could not understand you ' + user + '.'
+      notify(text, 'Voice Assistent', 'warning');
+      break;
+    case 'lesser_then_min_confidence':
+      text = "Sorry, I couldn't understand you."
+      notify(text, 'Voice Assistent', 'warning');
       break;
     }
+  msg.text = text;
+  speechSynthesis.speak(msg);
 }
 
 /**
@@ -327,7 +360,7 @@ var execute_intent = function(intent, response) {
 };
 
 // makes the post request to the RASA-NLU server
-var make_post_request = function(message) {
+var make_post_request = function(message, record_bool) {
   var xhttp = new XMLHttpRequest();
 
   xhttp.onreadystatechange = function() {
@@ -342,6 +375,9 @@ var make_post_request = function(message) {
 
       if (confidence < min_confidence) {
         console.log('confidence is less than min_confidence of ' + min_confidence)
+        if (record_bool) {
+          make_notify('lesser_then_min_confidence', '')
+        }
         return;
       }
 
@@ -387,7 +423,8 @@ var handle = GroupChatMsg.find().observe({
         //check if the sender of the message is the client
         if (VoiceAssistent.state.on){
           if (item.sender == Auth.userID) {
-            make_post_request(item.message)
+            var record_bool=false;
+            make_post_request(item.message, record_bool)
           }
         }
   }
