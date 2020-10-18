@@ -414,7 +414,7 @@ var make_post_request = function(message, record_bool) {
 
 var initializing = true; //util variable for subscribing to the group-chat in the meteor DB
 var last_intent = null; //set last intent to null as default
-var min_confidence = 0.3 //set the min_confidence to 0.3
+var min_confidence = 0.24 //set the min_confidence to 0.3
 var min_match_raiting = 0.5
 
 //subscribe to the GroupChatMsg
