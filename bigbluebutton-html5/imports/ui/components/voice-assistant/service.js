@@ -68,7 +68,7 @@ var make_notify = function(kind, user) {
       notify(text, 'Voice Assistent', 'warning')
       break;
     case 'mute_guessed_already_muted':
-      textg = 'I guessed that you meant ' + user + '. But ' + user + ' is already muted.'
+      text = 'I guessed that you meant ' + user + '. But ' + user + ' is already muted.'
       notify(text , 'Voice Assistent', 'success');
       break;
 
