@@ -253,7 +253,7 @@ class AudioControls extends PureComponent {
 
       <Button
         label={"Summarize"}
-        onClick={makeSummary}
+        onClick={this.makeSummary}
         color={'primary'}
         ghost={false}
         disabled={disable}
