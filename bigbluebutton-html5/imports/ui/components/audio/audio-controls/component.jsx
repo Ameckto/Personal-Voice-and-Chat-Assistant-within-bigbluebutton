@@ -110,6 +110,13 @@ class AudioControls extends PureComponent {
 
   }
 
+  // Soniya: Summarize Button onClick
+  makeSummary() {
+      alert('Open Meeting Summary');
+      const url = 'https://ltbbb1.informatik.uni-hamburg.de/html5client_niklas/summarize';
+      window.open(url, "_blank");
+  }
+
   handleButtonPress() {
 
     this.setState({color_record: red});
@@ -244,8 +251,14 @@ class AudioControls extends PureComponent {
         >
         </Button>
 
-
-
+      <Button
+        label={"Summarize"}
+        onClick={makeSummary}
+        color={'primary'}
+        ghost={false}
+        disabled={disable}
+        >
+      </Button>
 
       </span>
 
