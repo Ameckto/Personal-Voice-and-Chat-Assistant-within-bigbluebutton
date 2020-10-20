@@ -151,6 +151,7 @@ docker run -it -p 5000:5000 max-speech-to-text-converter
 
 ## String similarity test
 
+It only runs on chrome as of right now
 
 
 ## License

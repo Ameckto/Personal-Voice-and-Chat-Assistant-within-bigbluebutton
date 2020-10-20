@@ -129,6 +129,12 @@ var make_notify = function(kind, user) {
       text = 'Sorry, I could not understand you ' + user + '.'
       notify(text, 'Voice Assistent', 'warning');
       break;
+
+    case 'summarize':
+      text = 'I have created a summary for you!.'
+      notify(text, 'Voice Assistent', 'success');
+    break;
+
     case 'lesser_then_min_confidence':
       text = "Sorry, I couldn't understand you."
       notify(text, 'Voice Assistent', 'warning');
@@ -351,7 +357,10 @@ var execute_intent = function(intent, response) {
       break;
 
     case 'summarize':
-      // inject code summarization
+      alert('Open Meeting Summary');
+      const url = 'https://ltbbb1.informatik.uni-hamburg.de/html5client_niklas/summarize';
+      window.open(url, "_blank");
+      make_notify('summarize', '');
       break;
 
     case 'out_of_scope':
