@@ -4,7 +4,7 @@ This project is about integrating an extension in the [bigbluebutton](https://gi
 *here will be a video*
 
 <p align="center">
-  <img src="images/Architecture.png" width="500" height="300" title="Architecture" style="margin-left: -200px;">
+  <img src="images/Architecture.svg" width="500" height="300" title="Architecture" style="margin-left: -100px;">
 </p>
 
 ## Table of contents
