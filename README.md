@@ -3,6 +3,8 @@ This project is about integrating an extension in the [bigbluebutton](https://gi
 
 *here will be a video*
 
+![alt text](https://github.com/Ameckto/Personal-Voice-and-Chat-Assistant-within-bigbluebutton/blob/develop/images/Architecture.png)
+
 ## Table of contents
 
 * [Installation](#installation)
