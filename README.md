@@ -10,7 +10,7 @@ This project is about integrating an extension in the [bigbluebutton](https://gi
   * [Natural Language Understanding API](#natural-language-understanding-api)
   * [Automatic Speech Recognition API](#automatic-speech-recognition-api)
   * [Setting up a Hybrid Server](#setting-up-a-hybrid-server)
-  * [Optional: Meeting Summary Extension](#optional:-meeting-summary-extension)
+  * [Optional Meeting Summary Extension](#optional:-meeting-summary-extension)
 * [Start the Hybrid Server](#start-the-hybrid-server)
 * [What is the benefit for the user](#what-is-the-benefit-for-the-end-client)
 * [How to continue this project](#how-to-continue-this-project)
@@ -136,7 +136,7 @@ and the ASR-API threw'
 
 * `www.example.de/asr/model/predict`
 
-## Optional: Meeting Summary Extension
+## Optional Meeting Summary Extension
 
 You can also add the functionality to get a summary of the ongoing meeting if you install this guide here: [Summary Feature Server](https://github.com/vksoniya/SummaryFeatureFlaskServer).
 
