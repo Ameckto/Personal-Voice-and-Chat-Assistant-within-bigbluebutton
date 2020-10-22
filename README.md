@@ -3,7 +3,9 @@ This project is about integrating an extension in the [bigbluebutton](https://gi
 
 *here will be a video*
 
-![alt text](https://github.com/Ameckto/Personal-Voice-and-Chat-Assistant-within-bigbluebutton/blob/develop/images/Architecture.png)
+<p align="center">
+  <img src="images/Architecture.png" width="400" height="200" title="Architecture" style="margin-left: -200px;">
+</p>
 
 ## Table of contents
 
