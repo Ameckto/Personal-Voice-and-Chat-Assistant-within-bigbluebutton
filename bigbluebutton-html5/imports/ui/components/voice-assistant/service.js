@@ -357,9 +357,9 @@ var execute_intent = function(intent, response) {
       break;
 
     case 'summarize':
-      alert('Open Meeting Summary');
       const url = 'https://ltbbb1.informatik.uni-hamburg.de/html5client_niklas/summarize';
       window.open(url, "_blank");
+
       make_notify('summarize', '');
       break;
 
