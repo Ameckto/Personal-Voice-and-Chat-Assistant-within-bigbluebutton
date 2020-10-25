@@ -3,6 +3,8 @@ This project is about integrating an extension in the [bigbluebutton](https://gi
 
 *here will be a video*
 
+
+[![Watch the video](images/Demo.png)](https://www.youtube.com/watch?v=SxJrHGBdCqU&feature=youtu.be&ab_channel=Niklasv.B)
 <p align="center">
   <img src="images/Architecture.png" width="500" height="300" title="Architecture">
 </p>
