@@ -390,6 +390,10 @@ var make_post_request = function(message, record_bool) {
         }
         return;
       }
+      if (record_bool) {
+        execute_intent(intent, response);
+        return;
+      }
 
       if (typeof(intent) != undefined) {
         if (intent.includes("+")) { // multy intent
