@@ -4,7 +4,7 @@ This project is about integrating an extension in the [bigbluebutton](https://gi
 
 [![Demo](images/Demo.png)](https://www.youtube.com/watch?v=SxJrHGBdCqU&feature=youtu.be&ab_channel=Niklasv.B)
 
-![Architecture](images/Architecture.png)]
+![Architecture](images/Architecture.png)
 
 
 ## Table of contents
