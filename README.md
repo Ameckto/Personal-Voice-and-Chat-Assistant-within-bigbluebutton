@@ -1,13 +1,11 @@
 ## About this project
 This project is about integrating an extension in the [bigbluebutton](https://github.com/bigbluebutton) (open source web conferencing) application which makes it possible to either chat or speak with a personal assistent by communicating with a [Natural Language Understanding API](https://github.com/Ameckto/Natural-Language-Understanding-API) in English.
 
-*here will be a video*
 
+[![Demo](images/Demo.png)](https://www.youtube.com/watch?v=SxJrHGBdCqU&feature=youtu.be&ab_channel=Niklasv.B)
 
-[![Watch the video](images/Demo.png)](https://www.youtube.com/watch?v=SxJrHGBdCqU&feature=youtu.be&ab_channel=Niklasv.B)
-<p align="center">
-  <img src="images/Architecture.png" width="500" height="300" title="Architecture">
-</p>
+![Architecture](images/Architecture.png)]
+
 
 ## Table of contents
 
