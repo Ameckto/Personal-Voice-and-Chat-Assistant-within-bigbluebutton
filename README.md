@@ -14,7 +14,6 @@ This project is about integrating an extension in the [bigbluebutton](https://gi
   * [Setting up a Hybrid Server](#setting-up-a-hybrid-server)
   * [Optional Meeting Summary Extension](#optional-meeting-summary-extension)
 * [Start the Hybrid Server](#start-the-hybrid-server)
-* [What is the benefit for the user](#what-is-the-benefit-for-the-end-client)
 * [How to continue this project](#how-to-continue-this-project)
 * [String similarity test](#string-similarity-test)
 * [License](#license)
@@ -184,17 +183,17 @@ sudo -i
 
 Now your personal voice assistent within the bigbluebutton application should be ready to be used! 
 
-## What is the benefit for the user
-
-The user can do this...
-
 ## How to continue this project
+
+The current architecture looks like this:
+![Architecture](images/Architecture.png)
 
 Known Bug:
 
-As of right now this extension is not running in the Firefox Browser.
+As of right now this extension is not running in the Firefox Browser duo to the Recorder class. This sould be fixed for a production environment.
 
-![Architecture](images/Architecture.png)
+
+
 
 
 ## String similarity test
