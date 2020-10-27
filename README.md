@@ -1,10 +1,8 @@
 ## About this project
-This project is about integrating an extension in the [bigbluebutton](https://github.com/bigbluebutton) (open source web conferencing) application which makes it possible to either chat or speak with a personal assistent by communicating with a [Natural Language Understanding API](https://github.com/Ameckto/Natural-Language-Understanding-API) in English.
+This project is about integrating an extension in the [bigbluebutton](https://github.com/bigbluebutton) (open source web conferencing) application which makes it possible to either chat or speak with a personal assistent by communicating with a [Natural Language Understanding API](https://github.com/nvbogu/Natural-Language-Understanding-API) in English.
 
 
 [![Demo](images/Demo.png)](https://www.youtube.com/watch?v=SxJrHGBdCqU&feature=youtu.be&ab_channel=Niklasv.B)
-
-![Architecture](images/Architecture.png)
 
 
 ## Table of contents
@@ -47,11 +45,11 @@ Install the string similarity package by running:
 npm install string-similarity --save
 ```
 
-It is also nessesary to roll back some code changes which I have used for my development process: [commit](https://github.com/Ameckto/bigbluebutton/commit/37941d1cf4f10301790b12491854cea3676d84ad). Basicly you just need to remove the `_niklas` everywhere necessary, which locations are mentioned all in the commit above.
+It is also nessesary to roll back some code changes which I have used for my development process: [commit](https://github.com/nvbogu/bigbluebutton/commit/37941d1cf4f10301790b12491854cea3676d84ad). Basicly you just need to remove the `_niklas` everywhere necessary, which locations are mentioned all in the commit above.
 
 ## Natural Language Understanding API
 
-In order to identify the intent of the user and his mentioned entities like *"hey bigbluebutton mute Steffen"* which would result in a `wake_up+mute` intent and the entity Steffen you need to install this [Natural Language Understanding API](https://github.com/Ameckto/Natural-Language-Understanding-API).
+In order to identify the intent of the user and his mentioned entities like *"hey bigbluebutton mute Steffen"* which would result in a `wake_up+mute` intent and the entity Steffen you need to install this [Natural Language Understanding API](https://github.com/nvbogu/Natural-Language-Understanding-API).
 
 ## Automatic Speech Recognition API
 
@@ -101,7 +99,7 @@ Start the server
 docker run -it -p 5000:5000 max-speech-to-text-converter
 ```
 
-Now the only thing you have to do to be able to access our NLU-API and our ASR-API within one server accessable threw your NGNIX webserver is to change your `reverse-proxy.conf` file. Here just need to add another `location` and change a bit the first one from your [Natural Language Understanding API](https://github.com/Ameckto/Natural-Language-Understanding-API).
+Now the only thing you have to do to be able to access our NLU-API and our ASR-API within one server accessable threw your NGNIX webserver is to change your `reverse-proxy.conf` file. Here just need to add another `location` and change a bit the first one from your [Natural Language Understanding API](https://github.com/nvbogu/Natural-Language-Understanding-API).
 
 You can do this by navigate to the site-variables folder by running:
 
@@ -194,7 +192,9 @@ The user can do this...
 
 Known Bug:
 
-As of right now this extension is not running in the Firefox Browser. 
+As of right now this extension is not running in the Firefox Browser.
+
+![Architecture](images/Architecture.png)
 
 
 ## String similarity test
@@ -209,7 +209,7 @@ The testfile is located at:
 bigbluebutton-html5/tests/string_similarity_test/string_similarity_test.ipynb
 ```
 
-It is also possible to take a look at the test with the jupyter nbviewer [here](https://nbviewer.jupyter.org/github/Ameckto/Personal-Voice-and-Chat-Assistant-within-bigbluebutton/blob/develop/bigbluebutton-html5/tests/string_similarity_test/string_similarity_test.ipynb).
+It is also possible to take a look at the test with the jupyter nbviewer [here](https://nbviewer.jupyter.org/github/nvbogu/Personal-Voice-and-Chat-Assistant-within-bigbluebutton/blob/develop/bigbluebutton-html5/tests/string_similarity_test/string_similarity_test.ipynb).
 
 
 ## License
