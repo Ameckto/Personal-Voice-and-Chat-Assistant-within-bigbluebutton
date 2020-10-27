@@ -205,11 +205,13 @@ As of right now this extension is not running in the Firefox Browser duo to the 
 
 ## String similarity test
 
-To be able to just mute the person called Niklas in the meeting but have entered a version of Niklas e.g. Niklas_93 a string similarity package called [string-similarity](https://www.npmjs.com/package/string-similarity) is used.
+To be able to mute a person which name is falsely identified by the ASR-Server or by the user entering the name in the chat wrong there is a string (name) similarity method used to even identify those cases. 
 
-There is a test 
+E.g. Niklas should be muted but there is only Niklas_93 in the current meeting.
 
-The testfile is located at:
+This string-similarity method is provided by the [string-similarity](https://www.npmjs.com/package/string-similarity) package.
+
+A test (file) of this method is located at:
 
 ```sh
 bigbluebutton-html5/tests/string_similarity_test/string_similarity_test.ipynb
@@ -217,8 +219,6 @@ bigbluebutton-html5/tests/string_similarity_test/string_similarity_test.ipynb
 
 It is also possible to take a look at the test with the jupyter nbviewer [here](https://nbviewer.jupyter.org/github/nvbogu/Personal-Voice-and-Chat-Assistant-within-bigbluebutton/blob/develop/bigbluebutton-html5/tests/string_similarity_test/string_similarity_test.ipynb).
 
-
 ## License
 
 This project is open source for everyone. 
-
