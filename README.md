@@ -185,16 +185,23 @@ Now your personal voice assistent within the bigbluebutton application should be
 
 ## How to continue this project
 
+To get a better understanding of the project I have created the fallowing images to illustrate different functionalies and where they are located.
+
 The current architecture looks like this:
 ![Architecture](images/Architecture.png)
+
+The communication between the client and the NLU-Server looks like this: 
+![Architecture](images/NLU-Server-Sequence.png)
+
+The communication between the client and the ASR-Server looks like this: 
+![Architecture](images/ASR-Server-Sequence.png)
+
+The files which I have changed are located here: 
+![Architecture](images/Client-Architecture.png)
 
 Known Bug:
 
 As of right now this extension is not running in the Firefox Browser duo to the Recorder class. This sould be fixed for a production environment.
-
-
-
-
 
 ## String similarity test
 
