@@ -45,7 +45,7 @@ Install the string similarity package by running:
 npm install string-similarity --save
 ```
 
-It is also nessesary to roll back some code changes which I have used for my development process: [commit](https://github.com/nvbogu/bigbluebutton/commit/37941d1cf4f10301790b12491854cea3676d84ad). Basicly you just need to remove the `_niklas` everywhere necessary, which locations are mentioned all in the commit above.
+It is also nessesary to roll back some code changes which I have used for my development process: [commit](https://github.com/nvbogu/Personal-Voice-and-Chat-Assistant-within-bigbluebutton/commit/37941d1cf4f10301790b12491854cea3676d84ad). Basicly you just need to remove the `_niklas` everywhere necessary, which locations are mentioned all in the commit above.
 
 ## Natural Language Understanding API
 
