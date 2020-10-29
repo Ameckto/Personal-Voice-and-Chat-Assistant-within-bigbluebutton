@@ -117,12 +117,6 @@ Edit the reverse-proxy.conf file by running:
 vim reverse-proxy.conf
 ```
 
-Edit the reverse-proxy.conf file by running:
-
-```sh
-vim reverse-proxy.conf
-```
-
 Change your one location variable to two location variables now and add a path to it like 'location /nlu/' and 'location /asr/. 
 
 ```sh
@@ -145,6 +139,9 @@ and the ASR-API threw'
 ## Optional Meeting Summary Extension
 
 You can also add the functionality to get a summary of the ongoing meeting if you install this guide here: [Summary Feature Server](https://github.com/vksoniya/SummaryFeatureFlaskServer).
+
+You also need to change the url of the summary server in this  
+`bigbluebutton-html5/imports/ui/omponents/voice-assistant/service.js` file and there in the `execute_intent` function accordingly.
 
 ## Start the Hybrid Server
 
