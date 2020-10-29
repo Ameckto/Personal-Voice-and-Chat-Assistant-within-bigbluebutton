@@ -32,7 +32,7 @@ By fallowing the guide you need to change the fallowing:
 * don't fork their bigbluebutton repository, fork mine
 * continue fallowing the guide, just clone this repository into your `~/dev` folder and not the one mentioned in the guide
 
-Now you need to install the string similarity package which is used to be able to identify missspelled names or nicknames as users within a bigbluebutton meeting without actually typing the 100% correct name like Niklas will be identified as Niklas_93 if Niklas is present and online within the meeting.
+Now you need to install the string similarity package.  You can find more information about what it does in this section: [String similarity test](#string-similarity-test)
 
 Navigate to your bigbluebutton-html5 folder by running: 
 ```sh
@@ -210,19 +210,15 @@ As of right now this extension is not running in the Firefox Browser duo to the 
 
 ## String similarity test
 
-To be able to mute a person which name is falsely identified by the ASR-Server or by the user entering the name in the chat wrong there is a string (name) similarity method used to even identify those cases. 
+The string similarity package is used to be able to identify missspelled names or nicknames as users within a bigbluebutton meeting without actually typing the 100% correct name like Niklas will be identified as Niklas_93 if Niklas is present and online within the meeting.
 
-E.g. Niklas should be muted but there is only Niklas_93 in the current meeting.
-
-This string-similarity method is provided by the [string-similarity](https://www.npmjs.com/package/string-similarity) package.
-
-A test (file) of this method is located at:
+A test (file) for this package and some use cases is located at:
 
 ```sh
 bigbluebutton-html5/tests/string_similarity_test/string_similarity_test.ipynb
 ```
 
-It is also possible to take a look at the test with the jupyter nbviewer [here](https://nbviewer.jupyter.org/github/nvbogu/Personal-Voice-and-Chat-Assistant-within-bigbluebutton/blob/develop/bigbluebutton-html5/tests/string_similarity_test/string_similarity_test.ipynb).
+It is also possible to take a look at the test with the jupyter nbviewer here: https://nbviewer.jupyter.org/github/nvbogu/Personal-Voice-and-Chat-Assistant-within-bigbluebutton/blob/develop/bigbluebutton-html5/tests/string_similarity_test/string_similarity_test.ipynb
 
 ## License
 
