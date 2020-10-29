@@ -46,6 +46,11 @@ npm install string-similarity --save
 
 It is also nessesary to roll back some code changes which I have used for my development process: [commit](https://github.com/nvbogu/Personal-Voice-and-Chat-Assistant-within-bigbluebutton/commit/37941d1cf4f10301790b12491854cea3676d84ad). Basicly you just need to remove the `_niklas` everywhere necessary, which locations are mentioned all in the commit above.
 
+`Hint:` Later, when you installed the ASR-Server and the NLU-Server you need to change their URLs in the client accordingly. 
+The URL for the ASR-Server is in the `bigbluebutton/bigbluebutton-html5/imports/ui/components/audio/audio-controls/component.jsx` file and there in the `createPostRequest` function.
+
+The URL for the NLU-Server is in the `bigbluebutton-html5/imports/ui/omponents/voice-assistant/service.js` file and there in the `make_post_request` function.
+
 ## Natural Language Understanding API
 
 In order to identify the intent of the user and his mentioned entities like *"hey bigbluebutton mute Steffen"* which would result in a `wake_up+mute` intent and the entity Steffen you need to install this [Natural Language Understanding API](https://github.com/nvbogu/Natural-Language-Understanding-API).
