@@ -210,9 +210,9 @@ As of right now this extension is not running in the Firefox Browser duo to the 
 
 ## String similarity test
 
-The string similarity package is used to be able to identify missspelled names or nicknames as users within a bigbluebutton meeting without actually typing the 100% correct name like Niklas will be identified as Niklas_93 if Niklas is present and online within the meeting.
+The string similarity package is used to be able to identify missspelled names or nicknames as users within a bigbluebutton meeting without actually typing the 100% correct name like Niklas_93 will be identified as Niklas_93 in the meeting even if you only said or typed Niklas.
 
-A test (file) for this package and some use cases is located at:
+A test (file) for this package, some use cases including their confidences is located at:
 
 ```sh
 bigbluebutton-html5/tests/string_similarity_test/string_similarity_test.ipynb
