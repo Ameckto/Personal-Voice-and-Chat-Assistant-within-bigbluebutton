@@ -20,7 +20,7 @@ var notify = function(text, title, type) {
     type: type, // 'success', 'warning', 'error'
     position: 'bottom-right', // 'top-right', 'bottom-right', 'top-left', 'bottom-left'
     autoClose: true, // auto close
-    duration: 10000, // 5 seconds
+    duration: 10000, // 10 seconds
     showRemoveButton: true // shows close button
   })
 }
@@ -130,11 +130,13 @@ var make_notify = function(kind, user) {
       notify(text, 'Voice Assistent', 'warning');
       break;
 
+    // manage the summarization functionality
     case 'summarize':
       text = 'I have created a summary for you!.'
       notify(text, 'Voice Assistent', 'success');
     break;
 
+    // manage the "could not understand functionality"
     case 'lesser_then_min_confidence':
       text = "Sorry, I couldn't understand you."
       notify(text, 'Voice Assistent', 'warning');
@@ -417,7 +419,7 @@ var make_post_request = function(message, record_bool) {
       }
     }
   }
-  //RASA-Server domnain
+  //RASA-Server (NLU) domnain
   var url = "https://niklasproject.de/nlu/model/parse";
   xhttp.open("POST", url);
   xhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
@@ -427,8 +429,8 @@ var make_post_request = function(message, record_bool) {
 
 var initializing = true; //util variable for subscribing to the group-chat in the meteor DB
 var last_intent = null; //set last intent to null as default
-var min_confidence = 0.3 //set the min_confidence to 0.3
-var min_match_raiting = 0.5
+var min_confidence = 0.3 //set the min_confidence for an intent to 0.3
+var min_match_raiting = 0.5 //set the min_confidence for the string similarity (guess name) functionality to 0.5
 
 //subscribe to the GroupChatMsg
 var handle = GroupChatMsg.find().observe({
@@ -446,9 +448,9 @@ var handle = GroupChatMsg.find().observe({
 
 initializing = false;
 
-var test_similarity_script = require("./test/string_similarity_test");
+var test_similarity_script = require("./test/string_similarity_test"); //loa the test similarity script
 test_similarity_script.string_similarity_test()
 var notifications_script = require("./lib/notifications"); //import notifications.js
 notifications_script.notifications(); //executing notifications.js to set regarding functions onto the window object
 
-window.make_post_request = make_post_request
+window.make_post_request = make_post_request;
